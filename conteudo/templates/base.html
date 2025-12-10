@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,21 +10,32 @@
 <body>
     <header>
         <nav>
-            <a href="/"><h2>SONAR 🐟</h2></a>
-
+            <a href="/"><h2>Sonar🐟</h2></a>
             <div>
-
-                <a href="/contato">Contato</a>
+                <a href="{% url 'contato' %}">contato</a>
+                <a href="/">Home</a>
             </div>
         </nav>
-
-        <main>
-            <div class= > <!-- PRECISA DE NOME PARA O CSS!!!  -->
-                {% block conteudo %}
-                {% endblock %}
-            </div>
-        </main>
-
     </header>
+    <main>
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <h3>Sessão 1</h3>
+                <a href="#" class="sidebar-item" title="Opção 1 muito longo para testar se o ... funciona">Opção 1 longo para testar se o ... funciona</a>
+                <a href="#" class="sidebar-item" title="Opção 2">Opção 1</a>
+                <a href="#" class="sidebar-item" title="Opção 3">Opção 2"</a>
+            </div>
+            <div class="sidebar-section">
+                <h3>Sessão 2</h3>
+                <a href="#" class="sidebar-item">Opção 1</a>
+                <a href="#" class="sidebar-item">Opção 2</a>
+            </div>
+        </aside>
+        {% block conteudo %}
+        {% endblock %}
+    </main>
+
+    <footer>© 2025 Sonar - Inclusão para Todos</footer>
+    
 </body>
 </html>
