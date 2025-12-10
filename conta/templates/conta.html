@@ -1,0 +1,47 @@
+{% extends 'base.html' %} 
+{% load static %}
+
+{% block title %}Meu Perfil{% endblock %}
+
+{% block content %}
+    <div class="profile-container">
+        <h1>Página de Perfil</h1>
+        
+        {% if user.is_authenticated %}
+            
+            <div class="profile-details">
+                <h3>Informações Pessoais</h3>
+                
+                <p><strong>Nome de Usuário:</strong> {{ user.username }}</p>
+                <p><strong>Nome Completo:</strong> {{ user.first_name }} {{ user.last_name }}</p>
+                <p><strong>Email:</strong> {{ user.email }}</p>
+                
+                <hr>
+                
+                <h4>Status</h4>
+                <p><strong>Membro Desde:</strong> {{ user.date_joined|date:"d/m/Y" }}</p>
+                <p><strong>Último Login:</strong> {{ user.last_login|date:"H:i - d/m/Y" }}</p>
+                
+                {% if user.is_staff %}
+                    <p class="badge staff-badge">Acesso à Administração</p>
+                {% endif %}
+            </div>
+            
+            <div class="profile-actions">
+                <a href="{% url 'edit_profile' %}" class="btn btn-primary">Editar Perfil</a>
+                
+                <a href="{% url 'password_change' %}" class="btn btn-secondary">Mudar Senha</a>
+                
+                <a href="{% url 'logout' %}" class="btn btn-danger">Sair</a>
+            </div>
+
+        {% else %}
+            <p>Você precisa estar logado para ver esta página.</p>
+            <a href="{% url 'login' %}">Fazer Login</a>
+        {% endif %}
+        
+    </div>
+{% endblock %}
+
+
+<!-- meu deus cara -->

@@ -38,10 +38,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+<<<<<<< HEAD
     
     # --- TEUS APPS (Adicionei aqui) ---
     'conta',
     'conteudo',
+=======
+    'conteudo',
+    'conta',
+>>>>>>> 83435bb284b14250d038352b4a9a34de504d9959
 ]
 
 MIDDLEWARE = [
@@ -115,9 +120,30 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+<<<<<<< HEAD
 # Configuração para ler a pasta static da raiz
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+=======
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+]
+
+# Default primary key field type
+# https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# settings.py
+
+# Redireciona para esta URL após o login bem-sucedido
+# (Você deve criar uma view para esta URL, como a página inicial)
+LOGIN_REDIRECT_URL = '/'
+
+# Redireciona para esta URL caso o acesso seja negado por falta de autenticação
+LOGIN_URL = '/login/'  # Onde sua página de login estará
+>>>>>>> 83435bb284b14250d038352b4a9a34de504d9959
