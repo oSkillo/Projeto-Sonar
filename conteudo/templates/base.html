@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sonar</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/"><h2>SONAR 🐟</h2></a>
+
+            <div>
+
+                <a href="/contato">Contato</a>
+            </div>
+        </nav>
+
+        <main>
+            <div class= > <!-- PRECISA DE NOME PARA O CSS!!!  -->
+                {% block conteudo %}
+                {% endblock %}
+            </div>
+        </main>
+
+    </header>
+</body>
+</html>
