@@ -1,0 +1,44 @@
+{% extends 'base.html' %} 
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-dark text-white">
+                    <h4>📞 Suporte Sonar</h4>
+                </div>
+                <div class="card-body">
+                    {% if enviado %}
+                        <div class="alert alert-success">
+                            <h5>✅ Recebemos a tua mensagem!</h5>
+                            <p>A equipa entrará em contato em breve.</p>
+                            <a href="/" class="btn btn-sm btn-success">Voltar ao Início</a>
+                        </div>
+                    {% else %}
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label>Nome</label>
+                                {{ form.nome }}
+                            </div>
+                            <div class="mb-3">
+                                <label>E-mail</label>
+                                {{ form.email }}
+                            </div>
+                            <div class="mb-3">
+                                <label>Assunto</label>
+                                {{ form.assunto }}
+                            </div>
+                            <div class="mb-3">
+                                <label>Mensagem</label>
+                                {{ form.mensagem }}
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Enviar</button>
+                        </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
