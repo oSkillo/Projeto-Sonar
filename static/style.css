@@ -1,0 +1,13 @@
+/* --- PALETA DE CORES --- */
+:root {
+    /* --- CORES NEUTRAS (Dark) --- */
+    --background-color: #0F172A;       /* Slate (Azul acinzentado muito escuro) */
+    --primary-surface: #1E293B;        /* Um tom acima para destacar cards */
+    
+    /* --- ACENTO --- */
+    --accent-color: #38BDF8;           /* Azul Celeste brilhante (bom contraste no escuro) */
+    
+    /* --- TEXTO --- */
+    --text-main: #F9FAFB;              /* Branco "sujo" (evita ofuscamento) */
+    --text-secondary: #9CA3AF;         /* Cinza claro para leitura secundária */
+}
