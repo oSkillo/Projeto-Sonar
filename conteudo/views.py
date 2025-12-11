@@ -7,3 +7,6 @@ def home_view(request):
 
 def contato_view(request):
     return render(request, 'contato.html')
+
+def sobre_view(request):
+    return render(request, 'sobre.html')
