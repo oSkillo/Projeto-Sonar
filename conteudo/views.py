@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Divergencia, Grau, Serie, Materia, MaterialPDF
-from django.contrib.auth authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 
 
