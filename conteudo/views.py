@@ -24,6 +24,12 @@ def login_user(request):
             return redirect('login')
     else:
         return render(request, 'athenticate')
+    
+#View de Logout do usuario    
+def logout_user(request):
+    logout(request)
+    messages.success(request, ('Você foi deslogado'))
+    return redirect('base')
 
 # Nova View para a página "Outras"
 def outras_divergencias(request):
