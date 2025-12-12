@@ -1,17 +1,4 @@
-<<<<<<< HEAD
-/* --- PALETA DE CORES --- */
-:root {
-    /* --- CORES NEUTRAS (Dark) --- */
-    --background-color: #0F172A;       /* Slate (Azul acinzentado muito escuro) */
-    --primary-surface: #1E293B;        /* Um tom acima para destacar cards */
-    
-    /* --- ACENTO --- */
-    --accent-color: #38BDF8;           /* Azul Celeste brilhante (bom contraste no escuro) */
-    
-    /* --- TEXTO --- */
-    --text-main: #F9FAFB;              /* Branco "sujo" (evita ofuscamento) */
-    --text-secondary: #9CA3AF;         /* Cinza claro para leitura secundária */
-=======
+
 /* Container da Grade */
 .cards-container {
     display: flex;
@@ -119,5 +106,4 @@
 
 .fechar-modal:hover {
     color: #e74c3c; /* Fica vermelho ao passar o mouse */
->>>>>>> 37e718db4a2ba273b88ef1bdd25888ca3e2240fa
 }
