@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -135,4 +136,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = '/'
 
 # Redireciona para esta URL caso o acesso seja negado por falta de autenticação
-LOGIN_URL = '/login/'  # Onde sua página de login estará
+LOGIN_URL = '/login/'  # Onde sua página de login estará]]
+
+# Permite que o site seja aberto em iframes do mesmo domínio (necessário para o modal de PDF)
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+
+# URL que o navegador usa
+MEDIA_URL = '/media/' 
+
+# Onde o computador salva os arquivos
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
