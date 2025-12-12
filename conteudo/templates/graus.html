@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block conteudo %}
+<h2 style="text-align: center; margin-top: 30px;">Qual o grau de suporte para {{ divergencia.nome }}?</h2>
+
+<div class="cards-container">
+    {% for item in items %}
+        <a href="{% url 'listar_series_com_grau' divergencia.slug item.slug %}" class="card-opcao">
+            <h3>{{ item.nome }}</h3>
+        </a>
+    {% endfor %}
+</div>
+{% endblock %}
