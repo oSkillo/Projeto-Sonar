@@ -8,6 +8,18 @@
     <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
 <body>
+    {% include 'events/navbar.html'%}
+    <div class="container">
+        {%if messages %}
+            {% for message in messages %}
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">{{ message }}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+            {% endfor %}
+        {% endif %}
+        {% block content %}
+        {% endblock %}
+    </div>
     <header>
         <nav>
             <a href="/"><h2>Sonar🐟</h2></a>
@@ -24,6 +36,15 @@
                 <a href="#" class="sidebar-item" title="Opção 1 muito longo para testar se o ... funciona">Opção 1 longo para testar se o ... funciona</a>
                 <a href="#" class="sidebar-item" title="Opção 2">Opção 1</a>
                 <a href="#" class="sidebar-item" title="Opção 3">Opção 2"</a>
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Login</a>
+                </li>
+                {% endif %}
             </div>
             <div class="sidebar-section">
                 <h3>Sessão 2</h3>
