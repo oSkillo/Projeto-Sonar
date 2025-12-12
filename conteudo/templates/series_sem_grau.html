@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block conteudo %}
+<h2 style="text-align: center; margin-top: 30px;">Qual a série do aluno?</h2>
+<p style="text-align: center; color: #666;">Divergência: {{ divergencia.nome }}</p>
+
+<div class="cards-container">
+    {% for item in items %}
+        <a href="{% url 'listar_materias_sem_grau' divergencia.slug item.slug %}" class="card-opcao">
+            <h3>{{ item.nome }}</h3>
+        </a>
+    {% endfor %}
+</div>
+{% endblock %}
