@@ -54,7 +54,8 @@ def listar_series_com_grau(request, divergencia_slug, grau_slug):
     })
 
 def listar_materias_com_grau(request, divergencia_slug, grau_slug, serie_slug):
-    materias = Materia.objects.all()
+    serie = get_object_or_404(Serie,slug=serie_slug)
+    materias = serie.materias.all()
     return render(request, 'materias_graus.html', {
         'items': materias, 'divergencia_slug': divergencia_slug, 'grau_slug': grau_slug, 'serie_slug': serie_slug
     })
