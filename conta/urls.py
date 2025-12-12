@@ -7,6 +7,5 @@ urlpatterns = [
     path('perfil/', views.conta, name='conta'),
     path('perfil/editar/', views.edit_profile, name='edit_profile'),
     path('admin/', admin.site.urls),
-    path('', include('events.urls')),
     path('perfil/', include('django.contrib.auth.urls')),
 ]
