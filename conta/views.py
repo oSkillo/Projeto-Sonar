@@ -2,9 +2,14 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
 from .forms import CustomUserChangeForm
 
 # O decorator @login_required garante que apenas usuários logados acessem esta view.
+
+def login_user(request):
+    return render(request, "authenticate/login.html", {})
+
 @login_required
 def user_profile(request):
     """
