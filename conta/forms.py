@@ -1,32 +1,21 @@
-# meu_app/forms.py
-
-from django import forms
-from django.contrib.auth.models import User
-
-# Importamos UserChangeForm para facilitar, mas o modificamos.
-# Se você estiver usando um modelo de Usuário customizado, importe-o.
 from django.contrib.auth.forms import UserChangeForm
+from django.contrib.auth import get_user_model
+
+# Obtém o modelo de usuário ativo, seja o padrão ou o customizado.
+User = get_user_model() 
 
 class CustomUserChangeForm(UserChangeForm):
-    # Campos que queremos que o usuário edite.
-    # Excluímos 'password', 'last_login', 'date_joined' e 'username' (opcionalmente)
+    # Opcional: Aqui você pode adicionar campos específicos que não estão no modelo base.
     
-    # Tornando o email obrigatório no formulário de edição
-    email = forms.EmailField(required=True)
-
     class Meta:
         model = User
-        fields = (
-            'Nome', 
-            'Sobrenome', 
-            'email'
-        )
-        # Se quiser permitir que o usuário mude o username:
-        # fields = ('username', 'Nome', 'Sobrenome', 'email')
-
-    # Este construtor remove o campo de senha que o UserChangeForm adiciona por padrão.
+        # CAMPOS CORRETOS: use os nomes exatos do seu modelo de usuário
+        fields = ('first_name', 'last_name', 'email') 
+        # Se você estiver usando um campo 'username' e quiser exibi-lo:
+        # fields = ('username', 'first_name', 'last_name', 'email')
+        
+    # Remove o campo 'password' do formulário. Ele é gerenciado separadamente.
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Remove a mensagem de ajuda sobre a senha
         if 'password' in self.fields:
-             del self.fields['password']
+            del self.fields['password']
