@@ -2,7 +2,7 @@
 {% block conteudo %}
 <h2 style="text-align: center; margin-top: 30px;">{{ titulo }}</h2>
 
-<div class="cards-container">
+<div class="cards-container cards-verticais">
     {% for item in items %}
         <a href="{% url 'divergencias' item.slug %}" class="card-opcao">
             {% if item.imagem %}

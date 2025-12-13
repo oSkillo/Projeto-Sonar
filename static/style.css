@@ -20,21 +20,42 @@
 }
 
 body {
-    background-color: var(--background-color);
+    background-color: #1a0b2e; /* Cor escura do fundo */
     color: var(--text-main);
-    font-family: 'Segoe UI'; /* - Mudei a fonte - */
-    height: 100vh; 
-    /* overflow: hidden; - nâo sei o q faz */
+    font-family: 'Segoe UI';
+    min-height: 100vh;
     display: flex;
-    flex-direction: column;/* - deixa as coisas empilhadas - */
+    flex-direction: column;
+    margin: 0;
+
+    /* ADICIONE ISSO AQUI: */
+    overflow-x: hidden; /* Bloqueia qualquer rolagem para os lados */
+    width: 100%;        /* Garante que o corpo não exceda a largura da janela */
 }
 
 
 
 
-
 header {
-    height: 100px;
+    height: 80px;
+    
+    /* 1. Cor de fundo: Usamos RGBA para dar transparência (0.7 = 70% visível) 
+       Usei um tom escuro (quase preto azulado) para combinar com o tema */
+    background-color: rgba(15, 23, 42, 0.50); 
+    
+    /* 2. O efeito BLUR (Desfoque): É isso que faz o "vidro" */
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px); /* Necessário para funcionar em iPhones/Macs */
+    
+    z-index: 10;
+    
+    /* 3. Borda sutil: Troquei a borda cinza sólida por uma branca bem transparente, 
+       fica mais elegante no estilo "vidro" */
+    
+    /* (Opcional) Se quiser que a barra fique FIXA no topo enquanto você rola a página, 
+       descomente as duas linhas abaixo: */
+    /* position: sticky; */
+    /* top: 0; */
 }
 
 
@@ -43,26 +64,14 @@ header {
 
 /* --- NAVBAR --- */
 .header-navbar__content {
-    /* background-color: var(--primary-surface); */
-    /* padding: 1rem 2rem; */
-    /* display: flex; */
-    /* justify-content: space-between; */
-    /* align-items: center; */
-    /* height: 100%;  */
-    
-    /* Aqui eu não entendi nada */
-    border-bottom: 1px solid var(--accent-color);
-    /* box-shadow: 0 4px 15px rgba(0,0,0,0.3); */
-    /*flex-shrink: 0;  Impede a navbar de ser esmagada */
-
     position: relative;
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
     height: 100%;
-    margin: 0 auto;
-    padding: 0;
+    padding: 0 20px;
+    /* boxshadow aqui!!!!!!!!!!!!! */
 }
 
 .header-navbar__content-logo {
@@ -82,8 +91,12 @@ header {
     text-align: center;
 }
 .sidebar-toggle button {
-    padding: 8px;
     background: transparent;
+    border: none;
+    color: var(--accent-color); /* Ícone azul */
+    cursor: pointer;
+    font-size: 24px;
+    padding: 5px;
 }
 
 .navbar-logo {
@@ -93,10 +106,13 @@ header {
     text-decoration: none;
 }
 .navbar-logo > a {
-    text-decoration: none;
     transition: color 0.3s; /* detalhe fdp em */
-    font-family: sans-serif;
-    font-size: 50px;
+    text-decoration: none;
+    color: var(--accent-color);
+    font-size: 190%;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 .navbar-logo > a:hover {
     color: var(--accent-color);
@@ -130,8 +146,8 @@ header {
   transition: color 0.3s; /* detalhe fdp em */
 }
 .header-navbar__btn:hover {
-    color: var(--accent-color);
-    background-color: var(--background-color);
+    background-color: var(--accent-color);
+    color: #000;
 }
 
 
@@ -435,45 +451,146 @@ div:hover {
 
 
 /* <<<<<<< HEAD */
-/* Container da Grade */
+/* Container dos cards */
 .cards-container {
     display: flex;
+    justify-content: center; /* Centraliza a linha de baixo (os 3 cards) */
+    align-items: center;
     flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-    padding: 30px;
+    
+    /* ESPAÇAMENTO: Usa gap em % para ser responsivo */
+    gap: 2%; 
+    
+    /* LARGURA: Ocupa 95% da tela em dispositivos menores */
+    width: 95%;
+    
+    /* TRAVA DE SEGURANÇA: 
+       Isso impede que os cards fiquem gigantes em monitores largos.
+       1100px é um bom tamanho para caber 4 cards lado a lado sem estourar a altura. */
+    max-width: 1100px; 
+    
+    margin: 0 auto; /* Centraliza o bloco na tela */
+    padding: 2% 0;
 }
-
-/* O Card */
+/* Card base (igual imagem 2) */
 .card-opcao {
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 12px;
-    width: 200px;
-    height: 160px;
+    /* MATEMÁTICA DO 4 POR LINHA:
+       23% * 4 cards = 92%.
+       Sobra 8% de espaço para distribuir entre os gaps (2%).
+       Isso garante que caibam exatamente 4. O 5º card cai para a próxima linha.
+    */
+    flex: 0 0 23%; 
+    
+    /* Garante o formato QUADRADO perfeito */
+    aspect-ratio: 1 / 1; 
+
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(6px);
+    border-radius: 12%; /* Borda arredondada proporcional */
+    
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    text-decoration: none;
-    color: #444;
-    transition: transform 0.3s, box-shadow 0.3s;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-}
+    text-align: center;
 
-.card-opcao:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 15px rgba(0,0,0,0.1);
-    border-color: #007bff;
-    color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    
+    /* Fonte ajustável: Mínimo 16px, Ideal 1.8vw, Máximo 24px 
+       Isso impede letras gigantes */
+    font-size: clamp(16px, 1.8vw, 24px); 
+    font-weight: 600;
+    line-height: 1.2;
+
+    box-shadow: 0 10px 20px rgba(0,0,0,0.6);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s;
+
+    margin-bottom: 2%;
+    
 }
 
 .card-opcao h3 {
-    margin-top: 15px;
-    font-size: 1.1rem;
-    text-align: center;
-    padding: 0 10px;
+    width: 100%;
+    padding: 10%;
+    margin: 0;
+    font-size: inherit;
+    overflow-wrap: break-word;  /* Permite quebrar palavras longas */
+    word-break: break-word;     /* Força a quebra agressiva se necessário */
+    hyphens: auto;              /* Adiciona hífen (-) automaticamente se possível */
 }
+
+/* Hover */
+.card-opcao:hover {
+    transform: scale(1.05);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.   );
+    background: rgba(56, 189, 248, 0.1);
+}
+
+/* Removemos a regra antiga do span que estava com font-size: 10%, 
+   pois ela pode deixar o texto minúsculo ou ilegível no novo formato */
+.card-opcao span {
+    display: block;
+    padding: 0;
+}
+
+.cards-container.cards-verticais {
+    display: flex;
+    flex-wrap: wrap; /* Permite quebrar linha se a tela for muito pequena (celular) */
+    justify-content: center; /* Centraliza os cards na tela */
+    align-items: center;
+    
+    /* Remove a barra de rolagem lateral */
+    overflow-x: visible; 
+    
+    /* Aumenta o espaçamento entre os cards grandes */
+    gap: 40px; 
+    
+    /* Ocupa quase toda a largura para dar sensação de preenchimento */
+    width: 95%;
+    max-width: 1600px; 
+    
+    margin: 0 auto;
+    padding-bottom: 40px;
+}
+
+.cards-verticais .card-opcao {
+    /* Mantém o formato retangular (Vertical) */
+    aspect-ratio: 2 / 3 !important; 
+    
+    /* MÁGICA DO TAMANHO:
+       flex: 1 1 300px;
+       - O primeiro 1: Pode crescer para ocupar espaço vazio.
+       - O segundo 1: Pode encolher se faltar espaço.
+       - 300px: É o tamanho ideal base (bem maior que antes).
+    */
+    flex: 1 1 300px !important;
+    
+    /* Limite máximo para não ficarem gigantes em monitores ultrawide */
+    max-width: 20%; 
+    
+    /* Garante que não fiquem muito pequenos */
+    min-width: 250px; 
+
+    border-radius: 30px; /* Bordas mais arredondadas para combinar com o tamanho */
+    margin: 0; /* Remove margens manuais */
+}
+
+/* Ajuste para telas menores (Notebooks pequenos e Tablets) */
+@media (max-width: 1024px) {
+    .cards-verticais .card-opcao {
+        max-width: 300px; /* Um pouco menor para caberem 3 lado a lado se possível */
+    }
+}
+
+/* Ajuste para Celular */
+@media (max-width: 768px) {
+    .cards-verticais .card-opcao {
+        /* No celular, eles vão ficar um embaixo do outro para ficarem grandes e legíveis */
+        flex: 1 1 100% !important; 
+        max-width: 350px; 
+    }
+}
+
 
 /* Card do PDF (Final) */
 .pdf-item {
@@ -542,4 +659,105 @@ div:hover {
 
 .fechar-modal:hover {
     color: #e74c3c; /* Fica vermelho ao passar o mouse */
+}
+
+/* ===============================
+   ESTILIZAÇÃO MODELO DA 2ª IMAGEM
+   (SEM QUEBRAR SIDEBAR / NAVBAR)
+================================ */
+
+main {
+    position: relative;
+    flex: 1; 
+    /* Removemos qualquer background, transform ou overflow daqui */
+}
+
+/* Garante que o conteúdo (cards, textos) fique acima do fundo */
+main > * {
+    position: relative;
+    z-index: 2;
+}
+
+main::before {
+    content: "";
+    
+    /* FIXO: A imagem "cola" na tela e ignora a rolagem, 
+       resolvendo o problema de cortar quando a página é longa */
+    position: fixed; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    
+    /* SEU WALLPAPER */
+    background: 
+        linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.8)),
+        url('/static/img/wallpaper fundo do mar.png'); 
+        
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    
+    z-index: 0; /* Fica atrás do conteúdo */
+
+    /* --- O TRUQUE DO ZOOM --- */
+    /* Começamos com a imagem 10% maior que a tela.
+       Assim, temos "sobra" de imagem para brincar. */
+    transform: scale(1.1); 
+    
+    transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* --- QUANDO ABRE A SIDEBAR --- */
+main.is-open::before {
+    /* A imagem "encolhe" voltando ao tamanho normal (1.0) 
+       e vai um pouquinho para a direita (30px). 
+       Como ela estava em 1.1, voltar para 1.0 não cria bordas vazias! */
+    transform: scale(1.0) translateX(30px);
+}
+/* Cria o movimento de "respirar" (vai e volta) */
+@keyframes zoomLento {
+    0% {
+        transform: scale(1); /* Tamanho original */
+    }
+    50% {
+        transform: scale(1.1); /* Aumenta 10% */
+    }
+    100% {
+        transform: scale(1); /* Volta ao original */
+    }
+}
+
+/* Título central */
+.titulo-pagina {
+    text-align: center;
+    font-size: 2.4rem;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    font-weight: 600;
+}
+
+
+/* Sidebar – estilo da imagem 2 */
+.sidebar-menu {
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(10px);
+}
+
+/* Botões da sidebar */
+.main-menu__item {
+    background: rgba(255,255,255,0.05);
+    border-radius: 12px;
+    padding: 0 16px;
+    transition: background 0.2s ease;
+}
+
+.main-menu__item:hover {
+    background: rgba(255,255,255,0.15);
+}
+
+/* Footer discreto */
+footer {
+    background: rgba(12, 12, 12, 0.7);
+    backdrop-filter: blur(6px);
 }
