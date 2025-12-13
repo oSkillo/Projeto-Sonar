@@ -1,5 +1,7 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Divergencia, Grau, Serie, Materia, MaterialPDF
+from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
 
 
 # View da Home (Alterada)
@@ -7,6 +9,27 @@ def home_view(request):
     # Pega só quem tem a caixinha marcada
     divergencias_capa = Divergencia.objects.filter(destaque_home=True)
     return render(request, 'divergencias.html', {'items': divergencias_capa})
+
+# View de login do usuario
+def login_user(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username = username, password = password )
+        if user is not None:
+            login(request, user)
+            return redirect('base')
+        else:
+            messages.success(request, ('Houve um erro ao tentar logar, tente novamente!'))
+            return redirect('login')
+    else:
+        return render(request, 'athenticate')
+    
+#View de Logout do usuario    
+def logout_user(request):
+    logout(request)
+    messages.success(request, ('Você foi deslogado'))
+    return redirect('base')
 
 # Nova View para a página "Outras"
 def outras_divergencias(request):
