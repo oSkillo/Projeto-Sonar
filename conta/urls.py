@@ -1,10 +1,12 @@
-# meu_app/urls.py
-
 from django.urls import path
 from . import views
 
 urlpatterns = [
-    # Mapeia a URL /perfil/ para a view user_profile
-    path('perfil/', views.conta, name='conta'),
-    path('perfil/editar/', views.edit_profile, name='edit_profile'),
+    # Mapeia o URL para a view 'perfil_usuario' e nomeia o caminho como 'perfil'
+    path('perfil/', views.perfil_usuario, name='perfil'),
+    
+    # Se você quiser adicionar funcionalidade para mudar a senha (opcional)
+    # path('mudar_senha/', views.mudar_senha, name='mudar_senha'), 
+    
+    # Você pode ter outras URLs aqui (login, logout, etc.)
 ]
