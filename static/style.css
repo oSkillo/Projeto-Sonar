@@ -549,8 +549,9 @@ div:hover {
     width: 95%;
     max-width: 1600px; 
     
-    margin: 0 auto;
-    padding-bottom: 40px;
+    margin: 100px auto 0 auto; 
+    
+    padding: 0% 0;
 }
 
 .cards-verticais .card-opcao {
@@ -760,4 +761,31 @@ main.is-open::before {
 footer {
     background: rgba(12, 12, 12, 0.7);
     backdrop-filter: blur(6px);
+}
+
+/* --- BOTÃO VOLTAR --- */
+.btn-voltar {
+    display: inline-block;
+    padding: 12px 32px;
+    
+    /* Usa as cores do seu tema */
+    background-color: var(--primary-surface); 
+    color: var(--text-main);
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Borda sutil */
+    
+    border-radius: 8px; /* Arredondamento padrão do seu site */
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.btn-voltar:hover {
+    /* Efeito de destaque azul ciano */
+    background-color: var(--accent-color);
+    color: #0F172A; /* Texto escuro para contraste no azul */
+    transform: translateY(-3px); /* Leve subida */
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.4); /* Brilho neon */
 }
