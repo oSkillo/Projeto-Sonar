@@ -5,7 +5,7 @@ from django.contrib import admin
 urlpatterns = [
     path('', views.home_view, name='base'),
     path('contato/', views.contato_view, name='contato'),
-    path('metologia/', views.metodologia_view, name='metodologia'),
+    path('metodologia/', views.metodologia_view, name='metodologia'),
     path('sobre/', views.sobre_view, name='sobre'),
     path('busca/', views.busca_view, name='busca'),
     path('busca-live/', views.buscar_dados_json, name='busca_live'),

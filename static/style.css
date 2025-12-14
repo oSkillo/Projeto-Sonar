@@ -150,7 +150,20 @@ header {
     color: #000;
 }
 
+.header-navbar__content-barra > div {
+    display: flex !important;       /* Transforma em linha flexível */
+    flex-direction: row !important; /* Garante direção horizontal */
+    align-items: center !important; /* Alinha verticalmente no centro */
+    gap: 25px !important;           /* Espaço entre os links */
+    width: 100%;                    /* Garante que ocupe o espaço */
+    justify-content: flex-end;      /* Joga tudo para a direita */
+}
 
+/* Remove a largura de 100% dos botões individuais para eles não esticarem */
+.header-navbar__btn {
+    width: auto !important; 
+    white-space: nowrap; /* Impede que o texto quebre linha */
+}
 
 
 
