@@ -182,26 +182,27 @@ header {
     /* align-items: center; */
 }
 .sidebar-menu {
-    width: 280px; /* Largura igual a do YouTube */
-    background-color: var(--primary-surface); /* Cor de fundo bem escura (estilo YouTube) */
-    /* Se quiser usar a sua cor roxa, troque por: var(--primary-surface); */
+    /* --- ESTRUTURA FLEXBOX (O SEGREDO DO FOOTER) --- */
+    display: flex;             /* Transforma em container flexível */
+    flex-direction: column;    /* Organiza itens em coluna (um embaixo do outro) */
+    justify-content: space-between; /* Empurra o footer para o final */
     
-    /* height: 100vh; */
-    /*color: var(--text-main);*/
-    /*overflow-y: auto;  Cria barra de rolagem só na sidebar se precisar */
-    /* padding: 12px; */
-    /*border-right: 0.8px solid var(--accent-color);  Linha divisória sutil */
-    
+    /* --- POSICIONAMENTO PADRÃO (NÃO MEXER) --- */
     position: fixed;
     top: 0;
     left: 0;
     z-index: 3;
-    /* display: none; */
     width: 320px;
-    height: 100%;
-    height: 100dvh;
-    /* border-right: 1px solid var(--accent-color); */
+    height: 100dvh; /* Altura total da tela */
+    
+    /* --- VISUAL (PRETO TRANSPARENTE) --- */
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 5px 0 15px rgba(0, 0, 0, 0.5);
 
+    /* --- ANIMAÇÃO (NÃO MEXER) --- */
     transform: translateX(-100%);
     transition: transform 0.3s ease-in-out, visibility 0.3s ease-in-out;
     visibility: hidden;
@@ -211,21 +212,23 @@ header {
     display: block;
 }
 
+/* Estado Aberto (Mantém a lógica original) */
 .sidebar-menu.is-open {
-    /* display: block; */
     transform: translateX(0);
     visibility: visible;
 }
 
-
-
+/* --- WRAPPER DOS ITENS (ONDE ESTÃO OS BOTÕES) --- */
 .sidebar-menu__wrapper {
-    overflow-y: auto;
-    height: calc(100% - 100px);
-    margin-top: 100px;
+    /* Ocupa todo o espaço disponível, empurrando o footer pra baixo */
+    flex: 1; 
+    overflow-y: auto; /* Permite rolar só os botões se a lista for grande */
+    
+    margin-top: 100px; /* Espaço do Header */
+    height: auto;      /* IMPORTANTE: Removemos o height fixo antigo */
+    
     padding: 0 14px 0 24px;
     scrollbar-width: thin;
-    /* scrollbar-color: transparent transparent; */
 }
 
 .sidebar-menu__container {
@@ -245,48 +248,57 @@ li {
     unicode-bidi: isolate;
 }
 .separador {
-    display: block;
-    height: 1px;
-    margin: 8px 0;
-    border-top: 0;
-    border-right: 0;
-    border-bottom: 1px solid var(--accent-color);
-    border-left: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin: 16px 0;
 }
 
 /* O Item do Menu (Link) */
 .main-menu__item {
-    /* 1. Comportamento de bloco para o corte funcionar bem */
-    /* display: block;  */
-    
-    /* 2. Altura e Alinhamento Vertical */
-    /* height: 40px;  */
-    line-height: 40px; /* Truque: line-height igual ao height centraliza o texto */
-    
-    /* 3. Estética */
-    /* padding: 0 12px; */
-    border-radius: 12px;
-    /* color: var(--text-main); */
-    /* text-decoration: none; */
-    /* transition: background-color 0.2s; */
-    /* cursor: pointer; */
-
+    /* --- ESTRUTURA (Mantida para funcionamento) --- */
     display: flex;
     align-items: center;
-    height: 56px;
-    margin-top: 0;
-
-
-    /* 4. A TRINDADE DOS TRÊS PONTINHOS (...) */
-    /* Agora aplicamos direto no item, já que não tem ícone */
-    white-space: nowrap;      /* Texto numa linha só */
-    overflow: hidden;         /* Corta o excesso */
-    text-overflow: ellipsis;  /* Adiciona o "..." */
+    height: 56px; /* Altura confortável para toque/clique */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 40px;
+    
+    /* --- VISUAL NOVO (BOTOES BONITINHOS) --- */
+    /* Espaçamento entre os botões */
+    margin-bottom: 8px; 
+    padding: 0 16px;
+    
+    /* Cor de fundo levemente mais clara que a sidebar para destacar o botão */
+    background: rgba(255, 255, 255, 0.03);
+    
+    /* Borda muito sutil e arredondada */
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    
+    /* Cor do texto */
+    color: var(--text-main);
+    font-weight: 500;
+    
+    /* Transição suave para o hover */
+    transition: all 0.3s ease;
+    cursor: pointer; /* Garante que pareça clicável */
 }
-
 /* Efeito Hover (Igual ao do YouTube) */
 .main-menu__item:hover {
-    background-color: rgba(255, 255, 255, 0.1); /* Fundo cinza claro ao passar o mouse */
+    /* Fundo azulzinho transparente (mesma lógica do card-opcao:hover) */
+    background: rgba(56, 189, 248, 0.15); 
+    
+    /* Texto fica na cor de destaque */
+    color: var(--accent-color);
+    
+    /* Borda brilha levemente na cor de destaque */
+    border-color: rgba(56, 189, 248, 0.3);
+    
+    /* Leve deslocamento para a direita para dar sensação de movimento */
+    transform: translateX(5px);
+    
+    /* Sombra suave */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 /* Espaço entre ícone e texto */
@@ -350,19 +362,38 @@ main {
     }
 }
 
+.sidebar-footer {
+    padding: 20px 24px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1); /* Linha divisória fina */
+    background: rgba(0, 0, 0, 0.2); /* Fundo levemente mais escuro */
+    flex-shrink: 0; /* Garante que o footer nunca encolha ou suma */
+}
 
+.footer-links {
+    margin-bottom: 12px;
+    display: flex;
+    flex-wrap: wrap; /* Quebra linha se precisar */
+    gap: 8px; /* Espaço entre os links */
+}
 
+.footer-links a {
+    font-size: 12px;
+    color: #aaa; /* Cinza claro estilo YouTube */
+    text-decoration: none;
+    font-weight: 600;
+    line-height: 1.2;
+}
 
+.footer-links a:hover {
+    text-decoration: underline;
+    color: #fff;
+}
 
-/* --- o footer --- */
-footer {
-    background-color: var(--primary-surface);
-    color: var(--text-secondary);
-    text-align: center;
-    padding: 1rem;
-    margin-top: auto;
-    /* - border-top: 1px solid rgba(255,255,255,0.05); - */
-    height: 60px;
+.footer-copyright {
+    font-size: 11px;
+    color: #717171; /* Cinza bem escuro para o copyright */
+    margin-top: 16px;
+    font-family: sans-serif;
 }
 
 
@@ -470,7 +501,7 @@ div:hover {
     max-width: 1100px; 
     
     margin: 0 auto; /* Centraliza o bloco na tela */
-    padding: 2% 0;
+    padding: 1% 0;
 }
 /* Card base (igual imagem 2) */
 .card-opcao {
@@ -505,7 +536,9 @@ div:hover {
     box-shadow: 0 10px 20px rgba(0,0,0,0.6);
     transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s;
 
-    margin-bottom: 2%;
+    margin: 2% auto 0 auto; 
+    
+    padding: 0% 0;
     
 }
 
@@ -533,6 +566,40 @@ div:hover {
     padding: 0;
 }
 
+.cards-container.modo-series {
+    gap: 0%; /* Reduz o espaçamento (antes era 2%) */
+    justify-content: center; /* Força a centralização */
+}
+/* Opcional: Se quiser que a última linha fique AINDA mais colada, 
+   podemos forçar margens negativas, mas o gap menor já deve resolver. */
+
+
+/* --- 2. Página de MATÉRIAS (Cards menores = Mais colunas) --- */
+.cards-container.modo-materias {
+    /* Aumenta a largura máxima para caber mais coisa se a tela for grande */
+    max-width: 1460px; 
+    gap: 0%;
+}
+
+.cards-container.modo-materias .card-opcao {
+    /* Mágica das Colunas:
+       - Antes era 18% (cabiam 5).
+       - Mudando para 13%, cabem 7 cards por linha!
+       Isso vai puxar os cards de baixo para cima.
+    */
+    flex: 0 0 18%; 
+    
+    /* Ajusta a fonte levemente para não quebrar no card menor */
+    font-size: clamp(16px, 1.8vw, 24px); 
+}
+
+/* Ajuste para telas menores (Notebooks) só nessa página */
+@media (max-width: 1366px) {
+    .cards-container.modo-materias .card-opcao {
+        flex: 0 0 15%; /* Cabe 6 por linha em notebooks */
+    }
+}
+
 .cards-container.cards-verticais {
     display: flex;
     flex-wrap: wrap; /* Permite quebrar linha se a tela for muito pequena (celular) */
@@ -549,9 +616,9 @@ div:hover {
     width: 95%;
     max-width: 1600px; 
     
-    margin: 100px auto 0 auto; 
+    margin: 0% auto 0 auto; 
     
-    padding: 0% 0;
+    padding: 2% 0;
 }
 
 .cards-verticais .card-opcao {
@@ -591,6 +658,7 @@ div:hover {
         max-width: 350px; 
     }
 }
+
 
 
 /* Card do PDF (Final) */
@@ -767,7 +835,8 @@ footer {
 .btn-voltar {
     display: inline-block;
     padding: 12px 32px;
-    
+    margin-bottom: 0px;    
+    margin-top: 0px;    
     /* Usa as cores do seu tema */
     background-color: var(--primary-surface); 
     color: var(--text-main);

@@ -51,6 +51,10 @@ def contato_view(request):
 def sobre_view(request):
     return render(request, 'sobre.html')
 
+def metodologia_view(request):
+    return render(request, 'metodologia.html')
+
+
 #aqui é a função q decide o caminho (com grau ou sem grau)
 
 def detalhe_divergencia(request, divergencia_slug):
@@ -106,7 +110,8 @@ def listar_pdfs_com_grau(request, divergencia_slug, grau_slug, serie_slug, mater
 # caminho sem grau!
 
 def listar_materias_sem_grau(request, divergencia_slug, serie_slug):
-    materias = Materia.objects.all()
+    serie = get_object_or_404(Serie,slug=serie_slug)
+    materias = serie.materias.all()
     return render(request, 'materias_sem_grau.html', {
         'items': materias, 'divergencia_slug': divergencia_slug, 'serie_slug': serie_slug
     })

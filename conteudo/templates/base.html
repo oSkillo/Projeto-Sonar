@@ -35,8 +35,8 @@
             <div class="header-navbar__content-barra" data-component="user-auth">
                 
                 <div>
-                    <a href="{% url 'contato' %}" class="header-navbar__btn">
-                        <strong>Contato</strong>
+                    <a href="{% url 'metodologia' %}" class="header-navbar__btn">
+                        <strong>Metodologia</strong>
                     </a>
                 </div>
                 
@@ -66,111 +66,150 @@
             <aside class="sidebar-menu__wrapper"> <!-- Aqui fica a Sidebar(Oculta naturalmente) -->
                 <div class="sidebar-menu__container">
                     <div class="main-menu">
-                        <li href="#" class="main-menu__item" title="Opção 1 muito longo para testar se o ... funciona">Opção 1 longo para testar se o ... funciona</li>
-                        <li href="#" class="main-menu__item" title="Opção 2">Opção 1</li>
-                        <li href="#" class="main-menu__item" title="Opção 3">Opção 2"</li>
-                        <li class="separador"></li>
-                        <li href="#" class="main-menu__item">Opção 1</li>
-                        <li href="#" class="main-menu__item">Opção 2</li>
-                        <li href="#" class="main-menu__item">Opção 1</li>
-                        <li href="#" class="main-menu__item">Opção 2</li>
-                        <li href="#" class="main-menu__item">Opção 1</li>
-                        <li href="#" class="main-menu__item">Opção 2</li>
-                        <li href="#" class="main-menu__item">Opção 1</li>
-                        <li href="#" class="main-menu__item">Opção 2</li>
-                        <li href="#" class="main-menu__item">Opção 1</li>
-                        <li href="#" class="main-menu__item">Opção 2</li>
-                        <li href="#" class="main-menu__item">Opção 1</li>
-                        <li href="#" class="main-menu__item">Opção 2</li>
-                        <li href="#" class="main-menu__item">Opção 1</li>
-                        <li href="#" class="main-menu__item">Opção 2</li>
-                        <li href="#" class="main-menu__item">Opção 1</li>
-                        <li href="#" class="main-menu__item">Opção 2</li>
+                        
+                        <a href="/" style="text-decoration: none;" class="main-menu__item">Início</a>
+                        <div class="separador"></div>
+                        <div style="padding-left: 16px; margin-bottom: 8px; font-size: 12px; color: #888; text-transform: uppercase; font-weight: bold;">Navegação Rápida</div>
+
+                        {% for div in sidebar_divergencias %}
+                            <a href="{% url 'divergencias' div.slug %}" class="main-menu__item" title="{{ div.nome }}" style="text-decoration: none;">
+                                {{ div.nome }}
+                            </a>
+                        {% empty %}
+                            {% endfor %}
+
+                        <div class="separador"></div>
+                        <a href="#" class="main-menu__item" title="Perfil" style="text-decoration: none;">Perfil</a>
+                        <a href="{% url 'contato' %}" class="main-menu__item" title="Contato" style="text-decoration: none;">Contato</a>
+                        <a href="#" class="main-menu__item" title="Tema da Página" style="text-decoration: none;">Tema da Página</a>
                     </div>
                 </div>
             </aside>
+            
+                <div class="sidebar-footer">
+                    <div class="footer-links">
+                        <a href="/sobre/">Sobre</a>   
+                        <a href="#">Imprensa</a>
+                        <a href="#">Direitos autorais</a>
+                        <a href="#">Entre em contato</a>
+                        <a href="#">Criadores</a>
+                        <a href="#">Desenvolvedores</a>
+                    </div>
+                    <div class="footer-links">
+                        <a href="#">Termos</a>
+                        <a href="#">Privacidade</a>
+                        <a href="#">Política e Segurança</a>
+                        <a href="/metodologia/">Como funciona o Sonar</a>
+                    </div>
+                    <div class="footer-copyright">
+                        © 2025 Sonar LLC
+                    </div>
+                </div>
+                </div> <div id="sidebar-overlay" class="sidebar-overlay"></div>
+        </header>
+
         </div>
         <div id="sidebar-overlay" class="sidebar-overlay"></div>
     </header>
-
-
-
-
 
     <main id="main">
         {% block conteudo %}
         {% endblock %}
     </main>
 
-    <footer>© 2025 Sonar - Inclusão para Todos</footer>
-    
     <script>
-        // const botao = document.querySelectorAll("[data-abrir-modal]")
-        // const botao = document.getElementById("abrir-sidebar");
-        // const menu = document.getElementById("menu");
-        // const overlay = document.getElementById("overlay");
-
-        // botao.addEventListener('click', function() {
-        //     // Sua lógica aqui
-        //     // console.log("Cliquei!");
-        //     menu.style.display = "block";
-        //     overlay.style.display = "block";
-        // });
-
-        // Primeiro, selecionamos todos os botões que têm esse atributo
-        const botoes = document.querySelectorAll('[abrir-menu]');
-
-        botoes.forEach(botao => {
-            botao.addEventListener('click', () => {
-                // Pega o ID do alvo (ex: "menu-principal")
-                const alvoId = botao.getAttribute('abrir-menu');
-                
-                // Seleciona o elemento que tem esse ID
-                const menu = document.getElementById("sidebar-menu");
-
-                const overlay = document.getElementById("sidebar-overlay");
-
-                const main = document.getElementById("main");
-                
-                // O toggle faz a mágica: adiciona ou remove a classe
-                if (menu) {
-                    menu.classList.toggle('is-open');
-                    overlay.classList.toggle('is-open');
-                    main.classList.toggle('is-open');
-                }
+        // --- BLOQUEIO DO BOTÃO VOLTAR NA HOME ---
+        // Se a url for apenas "/" (Home), impede de voltar
+        if (window.location.pathname === '/') {
+            // Cria um estado no histórico para "prender" o usuário
+            history.pushState(null, null, window.location.href);
+            
+            // Sempre que ele tentar voltar (clicar no botão do mouse ou do navegador)
+            window.addEventListener('popstate', function () {
+                // Empurra ele de volta para a página atual
+                history.pushState(null, null, window.location.href);
             });
-        });
+        }
 
+        document.addEventListener("DOMContentLoaded", function() {
+            // 1. Seleciona os elementos
+            const botoes = document.querySelectorAll('[abrir-menu]');
+            const menu = document.getElementById("sidebar-menu");
+            const overlay = document.getElementById("sidebar-overlay");
+            const main = document.getElementById("main");
 
+            // --- LÓGICA DE PERSISTÊNCIA (Local Storage) ---
 
-        window.onclick = function(event) {
-            if (event.target == overlay) {
-                menu.style.display = "none";
-                overlay.style.display = "none";
+            // Função para aplicar o estado (Abrir ou Fechar)
+            function setMenuState(isOpen, animate = true) {
+                if (!animate) {
+                    menu.style.transition = 'none';
+                    main.style.transition = 'none';
+                    overlay.style.transition = 'none';
+                }
+
+                if (isOpen) {
+                    menu.classList.add('is-open');
+                    overlay.classList.add('is-open');
+                    main.classList.add('is-open');
+                } else {
+                    menu.classList.remove('is-open');
+                    overlay.classList.remove('is-open');
+                    main.classList.remove('is-open');
+                }
+
+                localStorage.setItem('sidebarAberta', isOpen);
+
+                if (!animate) {
+                    void menu.offsetWidth; 
+                    setTimeout(() => {
+                        menu.style.transition = '';
+                        main.style.transition = '';
+                        overlay.style.transition = '';
+                    }, 50);
+                }
             }
-        }
 
+            // 2. Verifica se já estava aberto antes
+            const estadoSalvo = localStorage.getItem('sidebarAberta') === 'true';
+            
+            if (estadoSalvo) {
+                setMenuState(true, false); 
+            }
 
-        // 1. Seleciona o componente principal
-        const component = document.querySelector('[data-component="user-auth"]');
+            // --- EVENTOS DE CLIQUE ---
 
-        // 2. Encontra os "alvos" (targets) lá dentro usando os atributos data
-        const loginTarget = component.querySelector('[data-target="loginButton"]');
-        const menuTarget = component.querySelector('[data-target="userMenu"]');
+            // 3. Clique nos botões de abrir/fechar
+            botoes.forEach(botao => {
+                botao.addEventListener('click', () => {
+                    const isCurrentlyOpen = menu.classList.contains('is-open');
+                    setMenuState(!isCurrentlyOpen, true); 
+                });
+            });
 
-        // 3. Simulação de verificação de login
-        const usuarioEstaLogado = true; // Mude para true para testar
+            // 4. Clique no Overlay para fechar
+            if (overlay) {
+                overlay.addEventListener('click', () => {
+                    setMenuState(false, true);
+                });
+            }
 
-        if (usuarioEstaLogado) {
-            // Esconde a div do botão
-            loginTarget.style.display = 'none';
-            // Mostra a div do menu
-            menuTarget.style.display = 'block';
-        } else {
-            // Garante que o botão aparece
-            loginTarget.style.display = 'block';
-            menuTarget.style.display = 'none';
-        }
+            // --- LÓGICA DE LOGIN ---
+            const component = document.querySelector('[data-component="user-auth"]');
+            if (component) {
+                const loginTarget = component.querySelector('[data-target="loginButton"]');
+                const menuTarget = component.querySelector('[data-target="userMenu"]');
+                const usuarioEstaLogado = true; // Mude para testar
+
+                if (usuarioEstaLogado) {
+                    if(loginTarget) loginTarget.style.display = 'none';
+                    if(menuTarget) menuTarget.style.display = 'block';
+                } else {
+                    if(loginTarget) loginTarget.style.display = 'block';
+                    if(menuTarget) menuTarget.style.display = 'none';
+                }
+            }
+        });
     </script>
 
 </body>
