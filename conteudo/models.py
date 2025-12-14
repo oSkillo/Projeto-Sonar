@@ -5,8 +5,6 @@ class Divergencia(models.Model):
     slug = models.SlugField(unique=True)
     imagem = models.ImageField(upload_to='divergencias/', blank=True, null=True)
     tem_graus = models.BooleanField(default=False)
-    
-    # NOVO CAMPO: Define se aparece na capa ou na página "Outras"
     destaque_home = models.BooleanField(default=False, verbose_name="Aparecer na Home?")
 
     def __str__(self):

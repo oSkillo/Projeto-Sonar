@@ -2,7 +2,7 @@
 {% block conteudo %}
 <h2 style="text-align: center; margin-top: 30px;">{{ titulo }}</h2>
 
-<div class="cards-container">
+<div class="cards-container cards-verticais">
     {% for item in items %}
         <a href="{% url 'divergencias' item.slug %}" class="card-opcao">
             {% if item.imagem %}
@@ -13,7 +13,7 @@
     {% endfor %}
 </div>
 
-<div style="text-align: center; margin-top: 20px;">
-    <a href="{% url 'base' %}">Voltar para o Início</a>
+<div style="text-align: center; margin-top: 40px; margin-bottom: 40px;">
+        <a href="javascript:history.back()" style="color: whitesmoke;" class="btn-voltar">← Voltar</a>
 </div>
 {% endblock %}

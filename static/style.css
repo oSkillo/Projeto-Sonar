@@ -10,6 +10,7 @@
     /* --- TEXTO --- */
     --text-main: #F9FAFB;              /* Branco "sujo" (evita ofuscamento) */
     --text-secondary: #9CA3AF;         /* Cinza claro para leitura secundária */
+<<<<<<< HEAD
 }
 
 /* --- RESET BÁSICO --- */
@@ -442,53 +443,753 @@ div:hover {
     gap: 20px;
     justify-content: center;
     padding: 30px;
+=======
+>>>>>>> 0278d0651b058406c9404f690caa28be67351a19
 }
 
-/* O Card */
-.card-opcao {
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 12px;
-    width: 200px;
-    height: 160px;
+/* --- RESET BÁSICO --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #1a0b2e; /* Cor escura do fundo */
+    color: var(--text-main);
+    font-family: 'Segoe UI';
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    color: #444;
-    transition: transform 0.3s, box-shadow 0.3s;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    margin: 0;
+
+    /* ADICIONE ISSO AQUI: */
+    overflow-x: hidden; /* Bloqueia qualquer rolagem para os lados */
+    width: 100%;        /* Garante que o corpo não exceda a largura da janela */
 }
 
-.card-opcao:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 15px rgba(0,0,0,0.1);
-    border-color: #007bff;
-    color: #007bff;
+
+
+
+header {
+    height: 80px;
+    
+    /* 1. Cor de fundo: Usamos RGBA para dar transparência (0.7 = 70% visível) 
+       Usei um tom escuro (quase preto azulado) para combinar com o tema */
+    background-color: rgba(15, 23, 42, 0.50); 
+    
+    /* 2. O efeito BLUR (Desfoque): É isso que faz o "vidro" */
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px); /* Necessário para funcionar em iPhones/Macs */
+    
+    z-index: 10;
+    
+    /* 3. Borda sutil: Troquei a borda cinza sólida por uma branca bem transparente, 
+       fica mais elegante no estilo "vidro" */
+    
+    /* (Opcional) Se quiser que a barra fique FIXA no topo enquanto você rola a página, 
+       descomente as duas linhas abaixo: */
+    /* position: sticky; */
+    /* top: 0; */
+}
+
+
+
+
+
+/* --- NAVBAR --- */
+.header-navbar__content {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+    padding: 0 20px;
+    /* boxshadow aqui!!!!!!!!!!!!! */
+}
+
+.header-navbar__content-logo {
+    z-index: 4;
+    display: flex;
+    align-items: center;
+    width: 320px;
+    min-width: 320px;
+    height: 100%;
+    padding: 30px 0 30px 32px;
+    background: transparent;
+    align-content: center;
+    gap: 12px;
+}
+
+.sidebar-toggle {
+    text-align: center;
+}
+.sidebar-toggle button {
+    background: transparent;
+    border: none;
+    color: var(--accent-color); /* Ícone azul */
+    cursor: pointer;
+    font-size: 24px;
+    padding: 5px;
+}
+
+.navbar-logo {
+    flex: 1 1;
+    width: auto;
+    max-width: 158px;
+    text-decoration: none;
+}
+.navbar-logo > a {
+    transition: color 0.3s; /* detalhe fdp em */
+    text-decoration: none;
+    color: var(--accent-color);
+    font-size: 190%;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.navbar-logo > a:hover {
+    color: var(--accent-color);
+}
+
+.header-navbar__content-barra {
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    padding: 22px 32px 22px 0;
+    gap: 20px;
+}
+
+.header-navbar__btn {
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  /* border: 10px; */
+  height: 100%;
+  width: 100%;
+  /* border-color: var(--accent-color); */
+  background-color: var(--primary-surface); /* Cor do print */
+  color: var(--text-main);
+  text-decoration: none;
+  border-radius: 8px;
+  font-family: sans-serif;
+  transition: color 0.3s; /* detalhe fdp em */
+}
+.header-navbar__btn:hover {
+    background-color: var(--accent-color);
+    color: #000;
+}
+
+.header-navbar__content-barra > div {
+    display: flex !important;       /* Transforma em linha flexível */
+    flex-direction: row !important; /* Garante direção horizontal */
+    align-items: center !important; /* Alinha verticalmente no centro */
+    gap: 25px !important;           /* Espaço entre os links */
+    width: 100%;                    /* Garante que ocupe o espaço */
+    justify-content: flex-end;      /* Joga tudo para a direita */
+}
+
+/* Remove a largura de 100% dos botões individuais para eles não esticarem */
+.header-navbar__btn {
+    width: auto !important; 
+    white-space: nowrap; /* Impede que o texto quebre linha */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* --- SIDEBAR --- */
+
+.sidebar-overlay {
+    display: none; /* Escondido por padrão */
+    position: fixed; /* Fica fixo na tela mesmo se rolar */
+    /* z-index: 10; Fica acima de tudo */
+    /* left: 0; */
+    /* top: 0; */
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5); /* Preto com transparência */
+    z-index: 2;
+    top: 0;
+    left: 0;
+    /* Centralizar o modal na tela */
+    /* justify-content: center; */
+    /* align-items: center; */
+}
+.sidebar-menu {
+    /* --- ESTRUTURA FLEXBOX (O SEGREDO DO FOOTER) --- */
+    display: flex;             /* Transforma em container flexível */
+    flex-direction: column;    /* Organiza itens em coluna (um embaixo do outro) */
+    justify-content: space-between; /* Empurra o footer para o final */
+    
+    /* --- POSICIONAMENTO PADRÃO (NÃO MEXER) --- */
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 3;
+    width: 320px;
+    height: 100dvh; /* Altura total da tela */
+    
+    /* --- VISUAL (PRETO TRANSPARENTE) --- */
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 5px 0 15px rgba(0, 0, 0, 0.5);
+
+    /* --- ANIMAÇÃO (NÃO MEXER) --- */
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out, visibility 0.3s ease-in-out;
+    visibility: hidden;
+}
+
+.sidebar-overlay.is-open {
+    display: block;
+}
+
+/* Estado Aberto (Mantém a lógica original) */
+.sidebar-menu.is-open {
+    transform: translateX(0);
+    visibility: visible;
+}
+
+/* --- WRAPPER DOS ITENS (ONDE ESTÃO OS BOTÕES) --- */
+.sidebar-menu__wrapper {
+    /* Ocupa todo o espaço disponível, empurrando o footer pra baixo */
+    flex: 1; 
+    overflow-y: auto; /* Permite rolar só os botões se a lista for grande */
+    
+    margin-top: 100px; /* Espaço do Header */
+    height: auto;      /* IMPORTANTE: Removemos o height fixo antigo */
+    
+    padding: 0 14px 0 24px;
+    scrollbar-width: thin;
+}
+
+.sidebar-menu__container {
+    padding-bottom: 40px;
+}
+
+.main-menu {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    font-family: Poppins, sans-serif;
+    font-size: 16px;
+    gap: 12px;
+}
+
+li {
+    unicode-bidi: isolate;
+}
+.separador {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin: 16px 0;
+}
+
+/* O Item do Menu (Link) */
+.main-menu__item {
+    /* --- ESTRUTURA (Mantida para funcionamento) --- */
+    display: flex;
+    align-items: center;
+    height: 56px; /* Altura confortável para toque/clique */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 40px;
+    
+    /* --- VISUAL NOVO (BOTOES BONITINHOS) --- */
+    /* Espaçamento entre os botões */
+    margin-bottom: 8px; 
+    padding: 0 16px;
+    
+    /* Cor de fundo levemente mais clara que a sidebar para destacar o botão */
+    background: rgba(255, 255, 255, 0.03);
+    
+    /* Borda muito sutil e arredondada */
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    
+    /* Cor do texto */
+    color: var(--text-main);
+    font-weight: 500;
+    
+    /* Transição suave para o hover */
+    transition: all 0.3s ease;
+    cursor: pointer; /* Garante que pareça clicável */
+}
+/* Efeito Hover (Igual ao do YouTube) */
+.main-menu__item:hover {
+    /* Fundo azulzinho transparente (mesma lógica do card-opcao:hover) */
+    background: rgba(56, 189, 248, 0.15); 
+    
+    /* Texto fica na cor de destaque */
+    color: var(--accent-color);
+    
+    /* Borda brilha levemente na cor de destaque */
+    border-color: rgba(56, 189, 248, 0.3);
+    
+    /* Leve deslocamento para a direita para dar sensação de movimento */
+    transform: translateX(5px);
+    
+    /* Sombra suave */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Espaço entre ícone e texto */
+.main-menu__item span.material-symbols-outlined {
+    margin-right: 20px;
+    font-size: 24px;
+    flex-shrink: 0; /* Impede o ícone de ser "esmagado" (quebrar linha) */
+
+}
+
+.main-menu__item span:last-child {
+    /* A MÁGICA DOS TRÊS PONTINHOS: */
+    white-space: nowrap; /* Não deixa o texto ir para a linha de baixo */
+    overflow: hidden; /* Corta o que passar do limite */
+    text-overflow: ellipsis; /* Adiciona o "..." no final */
+}
+main {
+    transition: padding-left 0.3s ease-in-out;
+}
+
+@media (min-width: 1600px) {
+    
+    main {
+        /* padding-left: 280px;  Mesma largura da sidebar */
+        transition: padding-left 0.3s ease-in-out; /* Animação suave se redimensionar */
+    }
+    main.is-open {
+        transform: translateX(0);
+        transition: padding-left 0.3s ease-in-out;
+        padding-left: 320px;
+    }
+
+    .sidebar-menu {
+        width: 320px;
+        z-index: 0;
+        /*transform: translateX(0) !important;  Garante que não está escondida */
+        box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out, visibility 0.3s ease-in-out;
+        visibility: hidden;
+    }
+    .sidebar-menu.is-open { 
+        /* display: block; */
+        width: 320px;
+        z-index: 0;
+        transform: translateX(0);
+        visibility: visible;
+    }
+    
+    .sidebar-overlay {
+        display: none;
+        pointer-events: none;
+    }
+    .sidebar-overlay.is-open {
+        display: none;
+        pointer-events: none;
+    }
+    .header-navbar__content {
+        width: 100%; /* Garante que ocupe o espaço restante */
+    }
+}
+
+.sidebar-footer {
+    padding: 20px 24px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1); /* Linha divisória fina */
+    background: rgba(0, 0, 0, 0.2); /* Fundo levemente mais escuro */
+    flex-shrink: 0; /* Garante que o footer nunca encolha ou suma */
+}
+
+.footer-links {
+    margin-bottom: 12px;
+    display: flex;
+    flex-wrap: wrap; /* Quebra linha se precisar */
+    gap: 8px; /* Espaço entre os links */
+}
+
+.footer-links a {
+    font-size: 12px;
+    color: #aaa; /* Cinza claro estilo YouTube */
+    text-decoration: none;
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+    color: #fff;
+}
+
+.footer-copyright {
+    font-size: 11px;
+    color: #717171; /* Cinza bem escuro para o copyright */
+    margin-top: 16px;
+    font-family: sans-serif;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* === BARRA DE ROLAGEM CUSTOMIZADA (Scrollbar) === */
+
+/* 1. Funciona no Chrome, Edge, Safari e Opera */
+::-webkit-scrollbar {
+    width: 8px; /* Espessura da barra vertical */
+    height: 8px; /* Espessura da barra horizontal */ 
+}
+
+/* 2. O "trilho" por onde a barra corre */
+::-webkit-scrollbar-track {
+    background: transparent; /* Fundo transparente para ficar clean */
+    /* Se quiser uma cor de fundo no trilho, use: background: #0f172a; */
+}
+
+/* 3. A "pega" da barra (o que você arrasta) */
+::-webkit-scrollbar-thumb {
+    /*background-color: #475569;  Um cinza azulado que combina com seu tema */
+    border-radius: 20px;       /* Deixa bem redondinho (Pill shape) */
+    border: 2px solid transparent; /* Truque para dar um "respiro" nas bordas */
+    background-clip: content-box;  /* Faz a borda transparente funcionar */
+
+    background-color: transparent; /* Invisível */
+    transition: background-color 0.3s; /* Tenta suavizar (alguns browsers ignoram isso em scrollbar) */
+}
+
+body:hover::-webkit-scrollbar-thumb {
+    background-color: #475569; /* Sua cor cinza azulado original */
+}
+
+/* 4. Quando passa o mouse em cima da barra */
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--accent-color); /* Fica azul neon ao passar o mouse */
+}
+
+/* 5. Suporte para Firefox (O Firefox usa uma regra diferente) */
+* {
+    scrollbar-width: thin;          /* Deixa a barra fina */
+    scrollbar-color: transparent transparent /* #475569 transparent;  Cor da barra e cor do trilho */
+}
+
+body:hover,
+.sidebar-menu__wrapper:hover,
+div:hover {
+    scrollbar-color: #475569 transparent;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* A partir daqui o que o rafael fez */
+
+
+
+
+
+
+
+
+
+
+
+/* <<<<<<< HEAD */
+/* Container dos cards */
+.cards-container {
+    display: flex;
+    justify-content: center; /* Centraliza a linha de baixo (os 3 cards) */
+    align-items: center;
+    flex-wrap: wrap;
+    
+    /* ESPAÇAMENTO: Usa gap em % para ser responsivo */
+    gap: 2%; 
+    
+    /* LARGURA: Ocupa 95% da tela em dispositivos menores */
+    width: 95%;
+    
+    /* TRAVA DE SEGURANÇA: 
+       Isso impede que os cards fiquem gigantes em monitores largos.
+       1100px é um bom tamanho para caber 4 cards lado a lado sem estourar a altura. */
+    max-width: 1100px; 
+    
+    margin: 0 auto; /* Centraliza o bloco na tela */
+    padding: 1% 0;
+}
+/* Card base (igual imagem 2) */
+.card-opcao {
+    /* MATEMÁTICA DO 4 POR LINHA:
+       23% * 4 cards = 92%.
+       Sobra 8% de espaço para distribuir entre os gaps (2%).
+       Isso garante que caibam exatamente 4. O 5º card cai para a próxima linha.
+    */
+    flex: 0 0 23%; 
+    
+    /* Garante o formato QUADRADO perfeito */
+    aspect-ratio: 1 / 1; 
+
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(6px);
+    border-radius: 12%; /* Borda arredondada proporcional */
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    color: #fff;
+    text-decoration: none;
+    
+    /* Fonte ajustável: Mínimo 16px, Ideal 1.8vw, Máximo 24px 
+       Isso impede letras gigantes */
+    font-size: clamp(16px, 1.8vw, 24px); 
+    font-weight: 600;
+    line-height: 1.2;
+
+    box-shadow: 0 10px 20px rgba(0,0,0,0.6);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s;
+
+    margin: 2% auto 0 auto; 
+    
+    padding: 0% 0;
+    
 }
 
 .card-opcao h3 {
-    margin-top: 15px;
-    font-size: 1.1rem;
-    text-align: center;
-    padding: 0 10px;
+    width: 100%;
+    padding: 10%;
+    margin: 0;
+    font-size: inherit;
+    overflow-wrap: break-word;  /* Permite quebrar palavras longas */
+    word-break: break-word;     /* Força a quebra agressiva se necessário */
+    hyphens: auto;              /* Adiciona hífen (-) automaticamente se possível */
+}
+
+/* Hover */
+.card-opcao:hover {
+    transform: scale(1.05);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.   );
+    background: rgba(56, 189, 248, 0.1);
+}
+
+/* Removemos a regra antiga do span que estava com font-size: 10%, 
+   pois ela pode deixar o texto minúsculo ou ilegível no novo formato */
+.card-opcao span {
+    display: block;
+    padding: 0;
+}
+
+.cards-container.modo-series {
+    gap: 0%; /* Reduz o espaçamento (antes era 2%) */
+    justify-content: center; /* Força a centralização */
+}
+/* Opcional: Se quiser que a última linha fique AINDA mais colada, 
+   podemos forçar margens negativas, mas o gap menor já deve resolver. */
+
+
+/* --- 2. Página de MATÉRIAS (Cards menores = Mais colunas) --- */
+.cards-container.modo-materias {
+    /* Aumenta a largura máxima para caber mais coisa se a tela for grande */
+    max-width: 1460px; 
+    gap: 0%;
+}
+
+.cards-container.modo-materias .card-opcao {
+    /* Mágica das Colunas:
+       - Antes era 18% (cabiam 5).
+       - Mudando para 13%, cabem 7 cards por linha!
+       Isso vai puxar os cards de baixo para cima.
+    */
+    flex: 0 0 18%; 
+    
+    /* Ajusta a fonte levemente para não quebrar no card menor */
+    font-size: clamp(16px, 1.8vw, 24px); 
+}
+
+/* Ajuste para telas menores (Notebooks) só nessa página */
+@media (max-width: 1366px) {
+    .cards-container.modo-materias .card-opcao {
+        flex: 0 0 15%; /* Cabe 6 por linha em notebooks */
+    }
+}
+
+.cards-container.cards-verticais {
+    display: flex;
+    flex-wrap: wrap; /* Permite quebrar linha se a tela for muito pequena (celular) */
+    justify-content: center; /* Centraliza os cards na tela */
+    align-items: center;
+    
+    /* Remove a barra de rolagem lateral */
+    overflow-x: visible; 
+    
+    /* Aumenta o espaçamento entre os cards grandes */
+    gap: 40px; 
+    
+    /* Ocupa quase toda a largura para dar sensação de preenchimento */
+    width: 95%;
+    max-width: 1600px; 
+    
+    margin: 0% auto 0 auto; 
+    
+    padding: 2% 0;
+}
+
+.cards-verticais .card-opcao {
+    /* Mantém o formato retangular (Vertical) */
+    aspect-ratio: 2 / 3 !important; 
+    
+    /* MÁGICA DO TAMANHO:
+       flex: 1 1 300px;
+       - O primeiro 1: Pode crescer para ocupar espaço vazio.
+       - O segundo 1: Pode encolher se faltar espaço.
+       - 300px: É o tamanho ideal base (bem maior que antes).
+    */
+    flex: 1 1 300px !important;
+    
+    /* Limite máximo para não ficarem gigantes em monitores ultrawide */
+    max-width: 20%; 
+    
+    /* Garante que não fiquem muito pequenos */
+    min-width: 250px; 
+
+    border-radius: 30px; /* Bordas mais arredondadas para combinar com o tamanho */
+    margin: 0; /* Remove margens manuais */
+}
+
+/* Ajuste para telas menores (Notebooks pequenos e Tablets) */
+@media (max-width: 1024px) {
+    .cards-verticais .card-opcao {
+        max-width: 300px; /* Um pouco menor para caberem 3 lado a lado se possível */
+    }
+}
+
+/* Ajuste para Celular */
+@media (max-width: 768px) {
+    .cards-verticais .card-opcao {
+        /* No celular, eles vão ficar um embaixo do outro para ficarem grandes e legíveis */
+        flex: 1 1 100% !important; 
+        max-width: 350px; 
+    }
+}
+
+/* Se os cards não ficarem lado a lado, adicione isso ao container deles */
+.container-dos-pdfs { /* Troque pelo nome real da classe pai, ex: .modal-corpo */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
 }
 
 /* Card do PDF (Final) */
 .pdf-item {
-    background: #fff;
-    border-left: 5px solid #e74c3c; /* Vermelho PDF */
-    padding: 20px;
-    margin-bottom: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 80%;
-    margin-left: auto;
-    margin-right: auto;
+    /* FORMA E TAMANHO (Força o formato retangular em pé) */
+    aspect-ratio: 2 / 3 !important;
+    width: 240px !important;       /* Largura fixa para ficar igual ao outro */
+    max-width: 90vw !important;    /* Segurança para mobile */
+    min-height: 350px !important;  /* Altura mínima para caber tudo */
+    margin: 15px !important;       /* Espaço em volta */
+    
+    /* VISUAL "DARK GLASS" */
+    background: rgba(0, 0, 0, 0.6) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 20px !important; /* Bordas arredondadas */
+    border-left: 1px solid rgba(255, 255, 255, 0.08) !important; /* Remove a borda lateral grossa antiga */
+
+    /* ALINHAMENTO INTERNO (Tudo centralizado) */
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: space-between !important; /* Espalha conteúdo (Topo, Meio, Baixo) */
+    padding: 20px !important;
+    text-align: center !important;
+    
+    /* TRANSIÇÃO SUAVE */
+    transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3) !important;
+}
+
+/* 2. HOVER (Efeito ao passar o mouse) */
+.pdf-item:hover {
+    transform: translateY(-8px) !important;
+    background: rgba(56, 189, 248, 0.15) !important; /* Azul translúcido */
+    border-color: rgba(56, 189, 248, 0.5) !important;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.5) !important;
+}
+
+/* 3. TEXTOS DENTRO DO CARD */
+/* Título */
+.pdf-item strong, 
+.pdf-item h3 {
+    color: #fff !important;
+    font-size: 1.1rem !important;
+    margin-bottom: 5px !important;
+    display: block !important;
+}
+
+/* Descrição (Série/Matéria) */
+.pdf-item small, 
+.pdf-item span,
+.pdf-item p {
+    color: #ccc !important;
+    font-size: 0.9rem !important;
+    display: block !important;
+}
+
+/* 4. BOTÕES/LINKS DENTRO DO CARD */
+/* Transforma o link de baixar em um botão bonito no fundo */
+.pdf-item .btn-baixar,
+.pdf-item a {
+    margin-top: auto !important; /* Empurra para o fundo do card */
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: #fff !important;
+    padding: 10px 20px !important;
+    border-radius: 50px !important;
+    text-decoration: none !important;
+    font-weight: bold !important;
+    transition: background 0.2s !important;
+}
+
+.pdf-item .btn-baixar:hover,
+.pdf-item a:hover {
+    background: var(--accent-color) !important; /* Azul neon no hover */
+    color: #000 !important;
 }
 
 .btn-baixar {
@@ -542,4 +1243,271 @@ div:hover {
 
 .fechar-modal:hover {
     color: #e74c3c; /* Fica vermelho ao passar o mouse */
+}
+
+/* ===============================
+   ESTILIZAÇÃO MODELO DA 2ª IMAGEM
+   (SEM QUEBRAR SIDEBAR / NAVBAR)
+================================ */
+
+main {
+    position: relative;
+    flex: 1; 
+    /* Removemos qualquer background, transform ou overflow daqui */
+}
+
+/* Garante que o conteúdo (cards, textos) fique acima do fundo */
+main > * {
+    position: relative;
+    z-index: 2;
+}
+
+main::before {
+    content: "";
+    
+    /* FIXO: A imagem "cola" na tela e ignora a rolagem, 
+       resolvendo o problema de cortar quando a página é longa */
+    position: fixed; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    
+    /* SEU WALLPAPER */
+    background: 
+        linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.8)),
+        url('/static/img/wallpaper fundo do mar.png'); 
+        
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    
+    z-index: 0; /* Fica atrás do conteúdo */
+
+    /* --- O TRUQUE DO ZOOM --- */
+    /* Começamos com a imagem 10% maior que a tela.
+       Assim, temos "sobra" de imagem para brincar. */
+    transform: scale(1.1); 
+    
+    transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* --- QUANDO ABRE A SIDEBAR --- */
+main.is-open::before {
+    /* A imagem "encolhe" voltando ao tamanho normal (1.0) 
+       e vai um pouquinho para a direita (30px). 
+       Como ela estava em 1.1, voltar para 1.0 não cria bordas vazias! */
+    transform: scale(1.0) translateX(30px);
+}
+/* Cria o movimento de "respirar" (vai e volta) */
+@keyframes zoomLento {
+    0% {
+        transform: scale(1); /* Tamanho original */
+    }
+    50% {
+        transform: scale(1.1); /* Aumenta 10% */
+    }
+    100% {
+        transform: scale(1); /* Volta ao original */
+    }
+}
+
+/* Título central */
+.titulo-pagina {
+    text-align: center;
+    font-size: 2.4rem;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    font-weight: 600;
+}
+
+
+/* Sidebar – estilo da imagem 2 */
+.sidebar-menu {
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(10px);
+}
+
+/* Botões da sidebar */
+.main-menu__item {
+    background: rgba(255,255,255,0.05);
+    border-radius: 12px;
+    padding: 0 16px;
+    transition: background 0.2s ease;
+}
+
+.main-menu__item:hover {
+    background: rgba(255,255,255,0.15);
+}
+
+/* Footer discreto */
+footer {
+    background: rgba(12, 12, 12, 0.7);
+    backdrop-filter: blur(6px);
+}
+
+/* --- BOTÃO VOLTAR --- */
+.btn-voltar {
+    display: inline-block;
+    padding: 12px 32px;
+    margin-bottom: 0px;    
+    margin-top: 0px;    
+    /* Usa as cores do seu tema */
+    background-color: var(--primary-surface); 
+    color: var(--text-main);
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Borda sutil */
+    
+    border-radius: 8px; /* Arredondamento padrão do seu site */
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.btn-voltar:hover {
+    /* Efeito de destaque azul ciano */
+    background-color: var(--accent-color);
+    color: #0F172A; /* Texto escuro para contraste no azul */
+    transform: translateY(-3px); /* Leve subida */
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.4); /* Brilho neon */
+}
+
+/* --- BARRA DE PESQUISA (Centralizada e Elegante) --- */
+.search-container {
+    /* 1. Posicionamento Absoluto no Centro */
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+
+    /* 2. Tamanho e Formato (Maior) */
+    display: flex;
+    align-items: center;
+    width: 25%; /* Bem mais larga por padrão */
+    height: 48px; /* Mais alta */
+    padding: 0 20px;
+    
+    /* 3. Visual "Glass" (Vidro) */
+    background-color: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 50px;
+    backdrop-filter: blur(5px); /* Desfoque leve atrás da barra */
+
+    /* 4. A Mágica da Animação Suave */
+    transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Quando passa o mouse ou clica para escrever */
+.search-container:hover,
+.search-container:focus-within {
+    width: 27%; /* Cresce um pouco, mas suavemente */
+    background-color: rgba(255, 255, 255, 0.12);
+    border-color: rgba(56, 189, 248, 0.5); /* Azul claro sutil na borda */
+    box-shadow: 0 8px 25px rgba(56, 189, 248, 0.15); /* Brilho suave */
+    transform: translateX(-50%) translateY(-2px); /* Flutua levemente para cima */
+}
+
+/* O Campo de Texto */
+.search-input {
+    flex: 1; /* Ocupa todo o espaço disponível */
+    background: transparent;
+    border: none;
+    outline: none;
+    
+    /* Texto */
+    color: var(--text-main);
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 16px; /* Letra maior */
+    font-weight: 500;
+    padding-right: 10px;
+}
+
+.search-input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+    font-weight: 400;
+}
+
+/* O Botão da Lupa */
+.search-btn {
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+/* Efeito na Lupa */
+.search-container:focus-within .search-btn {
+    color: var(--accent-color); /* Fica azul quando digita */
+    transform: scale(1.1);
+}
+
+/* --- LIVE SEARCH DROPDOWN --- */
+.search-dropdown {
+    position: absolute;
+    top: 100%; /* Cola logo abaixo da barra */
+    left: 0;
+    width: 100%; /* Mesma largura da barra */
+    
+    background: rgba(15, 23, 42, 0.95); /* Fundo escuro quase sólido */
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0 0 20px 20px; /* Arredonda só embaixo */
+    
+    max-height: 400px;
+    overflow-y: auto; /* Barra de rolagem se tiver muita coisa */
+    
+    display: none; /* Escondido por padrão */
+    flex-direction: column;
+    z-index: 1000;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    padding-top: 10px;
+    overflow-x: hidden;
+}
+
+/* Quando tem conteúdo, a gente mostra via JS */
+.search-dropdown.active {
+    display: flex;
+}
+
+/* Itens da lista */
+.search-result-item {
+    padding: 12px 20px;
+    color: #eee;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    transition: background 0.2s;
+    display: block;
+    text-align: left;
+}
+
+.search-result-item:hover {
+    background: rgba(56, 189, 248, 0.2); /* Azulzinho no hover */
+    color: #fff;
+}
+
+.search-result-item small {
+    display: block;
+    color: #94a3b8;
+    font-size: 0.85em;
+    margin-top: 2px;
+}
+
+/* Títulos das categorias (Divergências, PDFs...) */
+.search-category-title {
+    padding: 8px 20px;
+    font-size: 0.75em;
+    text-transform: uppercase;
+    color: var(--accent-color);
+    font-weight: bold;
+    background: rgba(0,0,0,0.2);
+    letter-spacing: 1px;
 }

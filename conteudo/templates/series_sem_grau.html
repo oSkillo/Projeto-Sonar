@@ -2,13 +2,15 @@
 
 {% block conteudo %}
 <h2 style="text-align: center; margin-top: 30px;">Qual a série do aluno?</h2>
-<p style="text-align: center; color: #666;">Divergência: {{ divergencia.nome }}</p>
 
-<div class="cards-container">
+<div class="cards-container modo-series">
     {% for item in items %}
         <a href="{% url 'listar_materias_sem_grau' divergencia.slug item.slug %}" class="card-opcao">
             <h3>{{ item.nome }}</h3>
         </a>
     {% endfor %}
+</div>
+<div style="text-align: center; margin-top: 40px; margin-bottom: 40px;">
+        <a href="javascript:history.back()" style="color: whitesmoke;" class="btn-voltar">← Voltar</a>
 </div>
 {% endblock %}
