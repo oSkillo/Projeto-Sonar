@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block conteudo %}
+<div class="titulo-pagina">
+    Resultados da busca por: "<em>{{ query }}</em>"
+</div>
+
+<div style="padding: 20px; max-width: 1200px; margin: 0 auto;">
+
+    {% if divergencias %}
+        <h2 style="color: var(--accent-color); border-bottom: 1px solid #333; padding-bottom: 10px; margin-top: 30px;">
+            🐟 Divergências e Temas
+        </h2>
+        <div class="cards-container">
+            {% for item in divergencias %}
+                <a href="{% url 'divergencias' item.slug %}" class="card-opcao">
+                    <h3>{{ item.nome }}</h3>
+                </a>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if materias or series %}
+        <h2 style="color: var(--accent-color); border-bottom: 1px solid #333; padding-bottom: 10px; margin-top: 40px;">
+            📚 Matérias e Séries
+        </h2>
+        <div class="cards-container modo-materias">
+            {% for mat in materias %}
+                <div class="card-opcao" style="background: rgba(255,255,255,0.05);">
+                    <h3>{{ mat.nome }} <br><span style="font-size: 0.6em; color: #aaa;">(Matéria)</span></h3>
+                </div>
+            {% endfor %}
+            
+            {% for ser in series %}
+                <div class="card-opcao" style="background: rgba(255,255,255,0.05);">
+                    <h3>{{ ser.nome }} <br><span style="font-size: 0.6em; color: #aaa;">(Série)</span></h3>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if pdfs %}
+        <h2 style="color: var(--accent-color); border-bottom: 1px solid #333; padding-bottom: 10px; margin-top: 40px;">
+            📄 Arquivos para Baixar
+        </h2>
+        <div style="display: flex; flex-direction: column; gap: 15px; margin-top: 20px;">
+            {% for pdf in pdfs %}
+                <div class="pdf-item">
+                    <div style="color: #333;">
+                        <strong style="font-size: 1.1em;">{{ pdf.titulo }}</strong>
+                        <div style="font-size: 0.9em; color: #666; margin-top: 4px;">
+                            <span>{{ pdf.materia.nome }}</span> • <span>{{ pdf.serie.nome }}</span>
+                            {% if pdf.divergencia %} • <span>{{ pdf.divergencia.nome }}</span>{% endif %}
+                        </div>
+                    </div>
+                    <a href="{{ pdf.arquivo_pdf.url }}" target="_blank" class="btn-baixar">
+                        Baixar PDF
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if not divergencias and not materias and not series and not pdfs %}
+        <div style="text-align: center; margin-top: 80px; margin-bottom: 80px; color: var(--text-secondary);">
+            <span class="material-symbols-outlined" style="font-size: 64px;color: whitesmoke;">Poxa, não encontramos nada...</span>
+            <p>Tente verificar a ortografia ou usar palavras mais simples.</p>
+        </div>
+    {% endif %}
+
+</div>
+{% endblock %}
