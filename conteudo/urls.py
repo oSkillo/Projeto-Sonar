@@ -5,6 +5,7 @@ from django.contrib import admin
 urlpatterns = [
     path('', views.home_view, name='base'),
     path('contato/', views.contato_view, name='contato'),
+    path('metologia/', views.metodologia_view, name='metodologia'),
     path('sobre/', views.sobre_view, name='sobre'),
     path('categoria/outras/', views.outras_divergencias, name='outras'),
     path('<slug:divergencia_slug>/', views.detalhe_divergencia, name='divergencias'),

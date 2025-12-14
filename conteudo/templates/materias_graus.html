@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 
 {% block conteudo %}
-<h2 style="text-align: center; margin-top: 30px;">Escolha a Matéria</h2>
+<h1 style="text-align: center; margin-top: 30px;">Escolha a Matéria</h1>
 
-<div class="cards-container">
+<div class="cards-container modo-materias">
     {% for item in items %}
         <a href="{% url 'listar_pdfs_com_grau' divergencia_slug grau_slug serie_slug item.slug %}" class="card-opcao">
             {% if item.imagem %}
@@ -14,9 +14,7 @@
     {% endfor %}
 </div>
 <div style="text-align: center; margin-top: 40px; margin-bottom: 40px;">
-    <a href="{% url 'listar_series_com_grau' divergencia_slug=divergencia_slug grau_slug=grau_slug %}" class="btn-voltar">
-        Voltar
-    </a>
+        <a href="javascript:history.back()" style="color: whitesmoke;" class="btn-voltar">← Voltar</a>
 </div>
 
 {% endblock %}
