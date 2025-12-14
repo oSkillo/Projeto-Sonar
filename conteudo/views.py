@@ -10,6 +10,9 @@ def home_view(request):
     divergencias_capa = Divergencia.objects.filter(destaque_home=True)
     return render(request, 'divergencias.html', {'items': divergencias_capa})
 
+def grau_view(request):
+    return render(request, 'graus.html')
+
 # View de login do usuario
 def login_user(request):
     if request.method == "POST":
@@ -75,6 +78,13 @@ def listar_series_com_grau(request, divergencia_slug, grau_slug):
     return render(request, 'series_grau.html', {
         'items': series, 'divergencia_slug': divergencia_slug, 'grau_slug': grau_slug
     })
+
+def listar_series_sem_grau(request, divergencia_slug):
+    series = Serie.objects.all()
+    return render(request, 'series_sem_grau.html', {
+        'items': series, 'divergencia_slug': divergencia_slug
+    })
+
 
 def listar_materias_com_grau(request, divergencia_slug, grau_slug, serie_slug):
     serie = get_object_or_404(Serie,slug=serie_slug)

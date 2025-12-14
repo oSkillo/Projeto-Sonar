@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block conteudo %}
-<h2 style="text-align: center; margin-top: 30px;">Escolha a Divergência</h2>
+<h1 style="text-align: center; margin-top: 4%;">Escolha a Divergência</h1>
 
 <div class="cards-container cards-verticais">
     {% for item in items %}
@@ -15,9 +15,6 @@
     <a href="{% url 'outras' %}" class="card-opcao">
         <h3>Outras Divergências</h3>
     </a>
-</div>
-<div style="text-align: center; margin-top: 20px;">
-    <a href="{% url 'base' %}">Voltar para o Início</a>
 </div>
 {% endblock %}
 
