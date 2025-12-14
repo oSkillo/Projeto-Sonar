@@ -659,21 +659,89 @@ div:hover {
     }
 }
 
+/* Se os cards não ficarem lado a lado, adicione isso ao container deles */
+.container-dos-pdfs { /* Troque pelo nome real da classe pai, ex: .modal-corpo */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
 
 /* Card do PDF (Final) */
 .pdf-item {
-    background: #fff;
-    border-left: 5px solid #e74c3c; /* Vermelho PDF */
-    padding: 20px;
-    margin-bottom: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 80%;
-    margin-left: auto;
-    margin-right: auto;
+    /* FORMA E TAMANHO (Força o formato retangular em pé) */
+    aspect-ratio: 2 / 3 !important;
+    width: 240px !important;       /* Largura fixa para ficar igual ao outro */
+    max-width: 90vw !important;    /* Segurança para mobile */
+    min-height: 350px !important;  /* Altura mínima para caber tudo */
+    margin: 15px !important;       /* Espaço em volta */
+    
+    /* VISUAL "DARK GLASS" */
+    background: rgba(0, 0, 0, 0.6) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 20px !important; /* Bordas arredondadas */
+    border-left: 1px solid rgba(255, 255, 255, 0.08) !important; /* Remove a borda lateral grossa antiga */
+
+    /* ALINHAMENTO INTERNO (Tudo centralizado) */
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: space-between !important; /* Espalha conteúdo (Topo, Meio, Baixo) */
+    padding: 20px !important;
+    text-align: center !important;
+    
+    /* TRANSIÇÃO SUAVE */
+    transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3) !important;
+}
+
+/* 2. HOVER (Efeito ao passar o mouse) */
+.pdf-item:hover {
+    transform: translateY(-8px) !important;
+    background: rgba(56, 189, 248, 0.15) !important; /* Azul translúcido */
+    border-color: rgba(56, 189, 248, 0.5) !important;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.5) !important;
+}
+
+/* 3. TEXTOS DENTRO DO CARD */
+/* Título */
+.pdf-item strong, 
+.pdf-item h3 {
+    color: #fff !important;
+    font-size: 1.1rem !important;
+    margin-bottom: 5px !important;
+    display: block !important;
+}
+
+/* Descrição (Série/Matéria) */
+.pdf-item small, 
+.pdf-item span,
+.pdf-item p {
+    color: #ccc !important;
+    font-size: 0.9rem !important;
+    display: block !important;
+}
+
+/* 4. BOTÕES/LINKS DENTRO DO CARD */
+/* Transforma o link de baixar em um botão bonito no fundo */
+.pdf-item .btn-baixar,
+.pdf-item a {
+    margin-top: auto !important; /* Empurra para o fundo do card */
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: #fff !important;
+    padding: 10px 20px !important;
+    border-radius: 50px !important;
+    text-decoration: none !important;
+    font-weight: bold !important;
+    transition: background 0.2s !important;
+}
+
+.pdf-item .btn-baixar:hover,
+.pdf-item a:hover {
+    background: var(--accent-color) !important; /* Azul neon no hover */
+    color: #000 !important;
 }
 
 .btn-baixar {
@@ -856,4 +924,142 @@ footer {
     color: #0F172A; /* Texto escuro para contraste no azul */
     transform: translateY(-3px); /* Leve subida */
     box-shadow: 0 0 15px rgba(56, 189, 248, 0.4); /* Brilho neon */
+}
+
+/* --- BARRA DE PESQUISA (Centralizada e Elegante) --- */
+.search-container {
+    /* 1. Posicionamento Absoluto no Centro */
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+
+    /* 2. Tamanho e Formato (Maior) */
+    display: flex;
+    align-items: center;
+    width: 25%; /* Bem mais larga por padrão */
+    height: 48px; /* Mais alta */
+    padding: 0 20px;
+    
+    /* 3. Visual "Glass" (Vidro) */
+    background-color: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 50px;
+    backdrop-filter: blur(5px); /* Desfoque leve atrás da barra */
+
+    /* 4. A Mágica da Animação Suave */
+    transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Quando passa o mouse ou clica para escrever */
+.search-container:hover,
+.search-container:focus-within {
+    width: 27%; /* Cresce um pouco, mas suavemente */
+    background-color: rgba(255, 255, 255, 0.12);
+    border-color: rgba(56, 189, 248, 0.5); /* Azul claro sutil na borda */
+    box-shadow: 0 8px 25px rgba(56, 189, 248, 0.15); /* Brilho suave */
+    transform: translateX(-50%) translateY(-2px); /* Flutua levemente para cima */
+}
+
+/* O Campo de Texto */
+.search-input {
+    flex: 1; /* Ocupa todo o espaço disponível */
+    background: transparent;
+    border: none;
+    outline: none;
+    
+    /* Texto */
+    color: var(--text-main);
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 16px; /* Letra maior */
+    font-weight: 500;
+    padding-right: 10px;
+}
+
+.search-input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+    font-weight: 400;
+}
+
+/* O Botão da Lupa */
+.search-btn {
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+/* Efeito na Lupa */
+.search-container:focus-within .search-btn {
+    color: var(--accent-color); /* Fica azul quando digita */
+    transform: scale(1.1);
+}
+
+/* --- LIVE SEARCH DROPDOWN --- */
+.search-dropdown {
+    position: absolute;
+    top: 100%; /* Cola logo abaixo da barra */
+    left: 0;
+    width: 100%; /* Mesma largura da barra */
+    
+    background: rgba(15, 23, 42, 0.95); /* Fundo escuro quase sólido */
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0 0 20px 20px; /* Arredonda só embaixo */
+    
+    max-height: 400px;
+    overflow-y: auto; /* Barra de rolagem se tiver muita coisa */
+    
+    display: none; /* Escondido por padrão */
+    flex-direction: column;
+    z-index: 1000;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    padding-top: 10px;
+    overflow-x: hidden;
+}
+
+/* Quando tem conteúdo, a gente mostra via JS */
+.search-dropdown.active {
+    display: flex;
+}
+
+/* Itens da lista */
+.search-result-item {
+    padding: 12px 20px;
+    color: #eee;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    transition: background 0.2s;
+    display: block;
+    text-align: left;
+}
+
+.search-result-item:hover {
+    background: rgba(56, 189, 248, 0.2); /* Azulzinho no hover */
+    color: #fff;
+}
+
+.search-result-item small {
+    display: block;
+    color: #94a3b8;
+    font-size: 0.85em;
+    margin-top: 2px;
+}
+
+/* Títulos das categorias (Divergências, PDFs...) */
+.search-category-title {
+    padding: 8px 20px;
+    font-size: 0.75em;
+    text-transform: uppercase;
+    color: var(--accent-color);
+    font-weight: bold;
+    background: rgba(0,0,0,0.2);
+    letter-spacing: 1px;
 }

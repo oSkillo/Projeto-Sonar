@@ -30,9 +30,19 @@
                 <div class="navbar-logo">
                     <a href="/"><strong>Sonar</strong></a>
                 </div>
+
             </div>
 
-            <div class="header-navbar__content-barra" data-component="user-auth">
+            <form action="{% url 'busca' %}" method="GET" class="search-container">
+                <input type="text" name="q" id="search-input" placeholder="Pesquisar..." class="search-input" autocomplete="off">
+                <button type="submit" class="search-btn">
+                    <span class="material-symbols-outlined">search</span>
+                </button>
+                
+                <div id="live-search-results" class="search-dropdown"></div>
+            </form>
+
+            <div class="header-navbar__content-barra" data-component="user-auth"><div>
                 
                 <div>
                     <a href="{% url 'metodologia' %}" class="header-navbar__btn">
@@ -56,9 +66,9 @@
                     <a href="#" class="header-navbar__btn">
                         <strong>Minha Conta</strong>
                     </a>
-            </div>
+                </div>
 
-</div>
+            </div>
 
         </div>
 
@@ -101,12 +111,10 @@
                         <a href="#">Política e Segurança</a>
                         <a href="/metodologia/">Como funciona o Sonar</a>
                     </div>
-                    <div class="footer-copyright">
-                        © 2025 Sonar LLC
-                    </div>
+                    <div class="footer-copyright">© 2025 Projeto Sonar</div>
                 </div>
+
                 </div> <div id="sidebar-overlay" class="sidebar-overlay"></div>
-        </header>
 
         </div>
         <div id="sidebar-overlay" class="sidebar-overlay"></div>
@@ -211,6 +219,169 @@
             }
         });
     </script>
+
+    <div id="modal-preview-global" class="modal-overlay" style="display: none;">
+    <div class="modal-conteudo" style="display: flex; flex-direction: column; height: 90vh; width: 90vw; max-width: 1200px;">
+        
+        <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 15px; border-bottom: 1px solid #eee;">
+            <div>
+                <h3 id="modal-titulo-texto" style="margin: 0; color: #333;">Visualizar Arquivo</h3>
+            </div>
+            <div style="display: flex; gap: 15px; align-items: center;">
+                <a id="modal-btn-baixar" href="#" download class="btn-baixar" style="background: var(--accent-color); color: #fff; padding: 8px 20px; font-size: 14px;">
+                    Baixar Agora
+                </a>
+                <span class="fechar-modal" onclick="fecharModalPreview()" style="font-size: 30px; cursor: pointer;">&times;</span>
+            </div>
+        </div>
+
+        <div style="flex: 1; background: #e5e5e5; margin-top: 15px; border-radius: 8px; overflow: hidden;">
+            <iframe id="modal-iframe" src="" width="100%" height="100%" style="border: none;"></iframe>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    // --- FUNÇÕES GLOBAIS DO MODAL ---
+    function abrirModalPreview(urlArquivo, tituloArquivo) {
+        const modal = document.getElementById('modal-preview-global');
+        if(modal) {
+            document.getElementById('modal-iframe').src = urlArquivo;
+            document.getElementById('modal-titulo-texto').innerText = tituloArquivo;
+            document.getElementById('modal-btn-baixar').href = urlArquivo;
+            modal.style.display = 'flex';
+        }
+    }
+
+    function fecharModalPreview() {
+        const modal = document.getElementById('modal-preview-global');
+        if(modal) {
+            modal.style.display = 'none';
+            document.getElementById('modal-iframe').src = '';
+        }
+    }
+
+    // Fechar ao clicar fora
+    const modalEl = document.getElementById('modal-preview-global');
+    if(modalEl){
+        modalEl.addEventListener('click', function(e) {
+            if (e.target === this) fecharModalPreview();
+        });
+    }
+
+    // --- LÓGICA DA BARRA DE PESQUISA ---
+    document.addEventListener('DOMContentLoaded', function() {
+        const input = document.getElementById('search-input');
+        const resultsBox = document.getElementById('live-search-results');
+        const searchContainer = document.querySelector('.search-container');
+        let timeout = null;
+
+        if (input) {
+            input.addEventListener('input', function() {
+                const query = this.value.trim();
+                clearTimeout(timeout); 
+
+                if (query.length === 0) {
+                    fecharDropdown();
+                    return;
+                }
+
+                timeout = setTimeout(() => {
+                    fetch(`/busca-live/?q=${encodeURIComponent(query)}`)
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error("Erro no servidor (verifique urls.py)");
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            let html = '';
+                            
+                            // Verifica se veio alguma coisa
+                            const temDivergencia = data.divergencias && data.divergencias.length > 0;
+                            const temMateria = data.materias && data.materias.length > 0;
+                            const temPdf = data.pdfs && data.pdfs.length > 0;
+
+                            if (!temDivergencia && !temMateria && !temPdf) {
+                                resultsBox.innerHTML = '<div class="search-result-item" style="color: #aaa; text-align: center; padding: 15px;">Nenhum resultado encontrado.</div>';
+                                abrirDropdown();
+                                return;
+                            }
+
+                            // 1. SEÇÃO DIVERGÊNCIAS
+                            if (temDivergencia) {
+                                html += '<div class="search-category-title">Divergências</div>';
+                                data.divergencias.forEach(item => {
+                                    html += `<a href="${item.url}" class="search-result-item"><strong>${item.nome}</strong></a>`;
+                                });
+                            }
+
+                            // 2. SEÇÃO MATÉRIAS
+                            if (temMateria) {
+                                html += '<div class="search-category-title">Matérias</div>';
+                                data.materias.forEach(item => {
+                                    html += `
+                                        <a href="${item.url}" class="search-result-item" style="display: flex; justify-content: space-between; align-items: center;">
+                                            <div>
+                                                <span style="font-weight: bold; color: #fff;">📚 ${item.nome}</span>
+                                                <small style="display: block; color: var(--accent-color);">${item.info}</small>
+                                            </div>
+                                            <span class="material-symbols-outlined" style="font-size: 16px; color: #aaa;">arrow_forward</span>
+                                        </a>`;
+                                });
+                            }
+
+                            // 3. SEÇÃO PDFs
+                            if (temPdf) {
+                                html += '<div class="search-category-title">Arquivos PDF</div>';
+                                data.pdfs.forEach(item => {
+                                    // Atenção: Usamos aspas simples escapadas nos argumentos da função
+                                    html += `
+                                        <div class="search-result-item" style="cursor: pointer;" 
+                                             onclick="abrirModalPreview('${item.url_arquivo}', '${item.titulo}')">
+                                            📄 ${item.titulo}
+                                            <small style="display:block; color: #94a3b8;">${item.info}</small>
+                                        </div>`;
+                                });
+                            }
+
+                            resultsBox.innerHTML = html;
+                            abrirDropdown();
+                        })
+                        .catch(error => {
+                            console.error("Erro na busca:", error);
+                            resultsBox.innerHTML = '<div class="search-result-item" style="color: #ff6b6b; text-align: center;">Erro ao buscar. Verifique o console.</div>';
+                            abrirDropdown();
+                        });
+                }, 300);
+            });
+        }
+
+        function abrirDropdown() {
+            resultsBox.classList.add('active');
+            if(searchContainer) {
+                searchContainer.style.borderRadius = '20px 20px 0 0';
+                searchContainer.style.backgroundColor = 'rgba(15, 23, 42, 0.95)';
+            }
+        }
+
+        function fecharDropdown() {
+            resultsBox.classList.remove('active');
+            if(searchContainer) {
+                searchContainer.style.borderRadius = '50px';
+                searchContainer.style.backgroundColor = '';
+            }
+        }
+
+        // Fechar ao clicar fora
+        document.addEventListener('click', function(e) {
+            if (searchContainer && !searchContainer.contains(e.target)) {
+                fecharDropdown();
+            }
+        });
+    });
+</script>
 
 </body>
 </html>
