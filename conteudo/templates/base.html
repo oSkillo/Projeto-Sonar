@@ -67,21 +67,25 @@
                 <div class="sidebar-menu__container">
                     <div class="main-menu">
                         
-                        <a href="/" style="text-decoration: none;" class="main-menu__item">Início</a>
+                        <a href="/" style="text-decoration: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;" class="main-menu__item">Início</a>
                         <div class="separador"></div>
                         <div style="padding-left: 16px; margin-bottom: 8px; font-size: 12px; color: #888; text-transform: uppercase; font-weight: bold;">Navegação Rápida</div>
 
                         {% for div in sidebar_divergencias %}
-                            <a href="{% url 'divergencias' div.slug %}" class="main-menu__item" title="{{ div.nome }}" style="text-decoration: none;">
+                            <a href="{% url 'divergencias' div.slug %}" class="main-menu__item" style="text-decoration: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"  title="{{ div.nome }}">
+                                
+                                <span style="margin-right: 16px; font-size: 18px; width: 24px; text-align: center;">
+                                    {{ div.emoji }}
+                                </span> 
+                                
                                 {{ div.nome }}
                             </a>
-                        {% empty %}
-                            {% endfor %}
+                        {% endfor %}
 
                         <div class="separador"></div>
-                        <a href="#" class="main-menu__item" title="Perfil" style="text-decoration: none;">Perfil</a>
-                        <a href="{% url 'contato' %}" class="main-menu__item" title="Contato" style="text-decoration: none;">Contato</a>
-                        <a href="#" class="main-menu__item" title="Tema da Página" style="text-decoration: none;">Tema da Página</a>
+                        <a href="#" class="main-menu__item" title="Perfil" style="text-decoration: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Perfil</a>
+                        <a href="{% url 'contato' %}" class="main-menu__item" title="Contato" style="text-decoration: none; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Contato</a>
+                        <a href="#" class="main-menu__item" title="Tema da Página" style="text-decoration: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Tema da Página</a>
                     </div>
                 </div>
             </aside>
