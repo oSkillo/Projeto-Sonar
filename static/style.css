@@ -1185,7 +1185,7 @@ footer {
 }
 
 /* 2. NOTEBOOKS (1024px - 1200px) */
-@media (max-width: 1500px) {
+@media (max-width: 1590px) {
     .esconder-cedo { display: none !important; }
     .grupo-institucional { display: block !important; }
 }

@@ -126,7 +126,7 @@ def login_user(request):
             login(request, user)
             return redirect('base')
         else:
-            messages.success(request, ('Houve um erro ao tentar logar, tente novamente!'))
+            messages.success(request, ('Usuário ou Senha incorretos. Tente novamente!'))
             return redirect('entrar')
     else:
         return render(request, 'login.html')
@@ -134,7 +134,7 @@ def login_user(request):
 #View de Logout do usuario    
 def logout_user(request):
     logout(request)
-    messages.success(request, ('Você foi deslogado'))
+    messages.success(request, (''))
     return redirect('base')
 
 @login_required(login_url='entrar') # Se não tiver logado, manda pro login
