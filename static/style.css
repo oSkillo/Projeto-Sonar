@@ -152,23 +152,62 @@ header {
 }
 
 .header-navbar__btn {
-  display: flex;
-  align-items: center;
-  padding: 10px 20px;
-  /* border: 10px; */
-  height: 100%;
-  width: 100%;
-  /* border-color: var(--accent-color); */
-  background-color: var(--primary-surface); /* Cor do print */
-  color: var(--text-main);
-  text-decoration: none;
-  border-radius: 8px;
-  font-family: sans-serif;
-  transition: color 0.3s; /* detalhe fdp em */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    /* Altura e Largura */
+    height: 100%;
+    width: auto;
+    padding: 8px 25px;         /* Um pouco mais de espaço lateral */
+    
+    /* --- EFEITO DE VIDRO (Igual ao do Perfil) --- */
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    
+    /* Tipografia e Borda */
+    color: var(--text-main);
+    text-decoration: none;
+    border-radius: 50px;       /* Pílula redonda */
+    font-family: 'Segoe UI', sans-serif;
+    font-weight: 600;          /* Texto um pouco mais forte */
+    font-size: 0.95rem;
+    
+    /* Transições */
+    transition: all 0.3s ease;
+    white-space: nowrap;
 }
+
+/* Efeito Hover (Ao passar o mouse) */
 .header-navbar__btn:hover {
-    background-color: var(--accent-color);
-    color: #000;
+    background: rgba(255, 255, 255, 0.15);     /* Fica mais claro */
+    border-color: rgba(255, 255, 255, 0.3);    /* Borda brilha */
+    color: var(--accent-color);                /* Texto fica azul neon */
+    
+    transform: translateY(-2px);               /* Sobe levemente */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Sombra suave */
+}
+
+.header-navbar__btn.btn-destaque {
+    /* Aumenta o espaçamento interno (Deixa o botão mais "gordinho") */
+    padding: 10px 40px; 
+    
+    /* Aumenta levemente a letra */
+    font-size: 1.1rem;
+    
+    /* Borda um pouco mais visível para destacar */
+    border-color: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.1); /* Fundo um pouco mais claro que os outros */
+}
+
+/* Efeito Hover exclusivo para o botão de Entrar */
+.header-navbar__btn.btn-destaque:hover {
+    background: var(--accent-color); /* Fica azul neon sólido ao passar o mouse */
+    color: #0F172A;                  /* Texto escuro para contraste */
+    border-color: var(--accent-color);
+    box-shadow: 0 0 20px rgba(56, 189, 248, 0.4); /* Brilho intenso */
+    transform: scale(1.05);          /* Cresce um pouquinho */
 }
 
 .header-navbar__content-barra > div {
@@ -1322,4 +1361,72 @@ body.no-scroll {
     touch-action: none;          /* Bloqueia gestos de toque no fundo (mobile) */
     position: fixed;             /* Garante que não scrolle mesmo em iOS teimoso */
     width: 100%;
+}
+
+.nav-profile-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;       /* Deixa redonda */
+    object-fit: cover;        /* Garante que a foto não fique esticada */
+    border: 2px solid var(--accent-color); /* Bordinha azul neon */
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: block;           /* Remove espaços fantasmas abaixo da imagem */
+    cursor: pointer;
+}
+
+.nav-profile-img:hover {
+    transform: scale(1.1);    /* Cresce um pouquinho ao passar o mouse */
+    box-shadow: 0 0 10px var(--accent-color); /* Brilho neon */
+}
+
+/* Ajuste específico para o Mobile, caso precise de tamanho diferente */
+.mobile-profile-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-user-card {
+    display: flex;
+    align-items: center;       /* Alinha texto e foto no centro vertical */
+    gap: 15px;                 /* Espaço entre o nome e a foto */
+    
+    /* Visual de Vidro (Glass) */
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50px;       /* Borda totalmente redonda (Pill) */
+    
+    /* Padding estratégico: Mais espaço na esquerda pro texto respirar */
+    padding: 5px 5px 5px 20px; 
+    
+    text-decoration: none;     /* Remove sublinhado do link */
+    transition: all 0.3s ease;
+}
+
+/* Efeito Hover: Fica mais claro e sobe um pouquinho */
+.nav-user-card:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Texto do Nome */
+.nav-user-name {
+    color: var(--text-main);
+    font-weight: 600;
+    font-size: 0.95rem;        /* Tamanho confortável */
+    white-space: nowrap;       /* Garante que o nome não quebre linha */
+}
+
+/* Foto Maior (Aumentada de 40px para 50px) */
+.nav-profile-img-large {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    
+    /* Borda Colorida (Acento) */
+    border: 2px solid var(--accent-color);
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
 }
