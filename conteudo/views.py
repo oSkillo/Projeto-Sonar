@@ -1,12 +1,12 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Divergencia, Grau, Serie, Materia, MaterialPDF
+from .models import Divergencia, Grau, Serie, Materia, MaterialPDF, Perfil
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import JsonResponse
 from django.urls import reverse
 from django.db.models import Q
 from unidecode import unidecode
-
 
 # View da Home (Alterada)
 def home_view(request):
@@ -126,16 +126,26 @@ def login_user(request):
             login(request, user)
             return redirect('base')
         else:
-            messages.success(request, ('Houve um erro ao tentar logar, tente novamente!'))
-            return redirect('login')
+            messages.success(request, ('Usuário ou Senha incorretos. Tente novamente!'))
+            return redirect('entrar')
     else:
-        return render(request, 'athenticate')
+        return render(request, 'login.html')
     
 #View de Logout do usuario    
 def logout_user(request):
     logout(request)
-    messages.success(request, ('Você foi deslogado'))
+    messages.success(request, (''))
     return redirect('base')
+
+@login_required(login_url='entrar') # Se não tiver logado, manda pro login
+def perfil_view(request):
+    # O Django é inteligente: como usamos OneToOneField, 
+    # podemos acessar o perfil direto pelo usuário (request.user.perfil).
+    # Mas, por segurança, usamos o get_or_create para evitar erro se o perfil não existir ainda.
+    
+    perfil, created = Perfil.objects.get_or_create(usuario=request.user)
+    
+    return render(request, 'perfil.html', {'perfil': perfil})
 
 # Nova View para a página "Outras"
 def outras_divergencias(request):

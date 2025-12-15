@@ -1,20 +1,126 @@
 {% extends 'base.html' %}
+{% load static %}
+
 {% block conteudo %}
-<h1 style="text-align: center; margin-top: 3%;">Escolha a Divergência</h1>
 
-<div class="cards-container cards-verticais">
-    {% for item in items %}
-        <a href="{% url 'divergencias' item.slug %}" class="card-opcao">
-            {% if item.imagem %}
-                <img src="{{ item.imagem.url }}" alt="{{ item.nome }}" style="max-height: 60px;">
-            {% endif %}
-            <h3>{{ item.nome }}</h3>
+{% if not user.is_authenticated %}
+
+    <div class="landing-container">
+        <div class="landing-content">
+            <h1 class="landing-title">Bem-vindo ao <span style="color: var(--accent-color);">Sonar</span></h1>
+            <p class="landing-text">
+                Uma plataforma dedicada a apoiar a inclusão escolar, oferecendo materiais adaptados 
+                para alunos com neurodivergências. Cadastre-se para acessar nosso acervo completo.
+            </p>
+            
+            <div class="landing-actions">
+                <a href="{% url 'entrar' %}" class="btn-destaque-landing">
+                    Acessar Plataforma
+                </a>
+                
+                <a href="{% url 'sobre' %}" class="btn-secundario-landing">
+                    Saiba Mais
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .landing-container {
+            height: 80vh; /* Ocupa quase a tela toda */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .landing-content {
+            max-width: 800px;
+            background: rgba(0, 0, 0, 0.4); /* Fundo escuro leve para leitura */
+            padding: 50px;
+            border-radius: 30px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .landing-title {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+
+        .landing-text {
+            font-size: 1.2rem;
+            color: #ccc;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .landing-actions {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .btn-destaque-landing {
+            padding: 15px 40px;
+            background: var(--accent-color);
+            color: #0f172a;
+            font-weight: bold;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .btn-destaque-landing:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
+        }
+
+        .btn-secundario-landing {
+            padding: 15px 40px;
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            font-weight: bold;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+        .btn-secundario-landing:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #fff;
+        }
+
+        /* Ajuste Mobile */
+        @media (max-width: 600px) {
+            .landing-title { font-size: 2.5rem; }
+            .landing-actions { flex-direction: column; }
+        }
+    </style>
+
+{% else %}
+
+    <h1 style="text-align: center; margin-top: 3%;">Escolha a Divergência</h1>
+
+    <div class="cards-container cards-verticais">
+        {% for item in items %}
+            <a href="{% url 'divergencias' item.slug %}" class="card-opcao">
+                {% if item.imagem %}
+                    <img src="{{ item.imagem.url }}" alt="{{ item.nome }}" style="max-height: 60px;">
+                {% endif %}
+                <h3>{{ item.nome }}</h3>
+            </a>
+        {% endfor %}
+
+        <a href="{% url 'outras' %}" class="card-opcao">
+            <h3> 🧬 Outras Divergências</h3>
         </a>
-    {% endfor %}
+    </div>
 
-    <a href="{% url 'outras' %}" class="card-opcao">
-        <h3> 🧬 Outras Divergências</h3>
-    </a>
-</div>
+{% endif %}
+
 {% endblock %}
-

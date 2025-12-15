@@ -1,5 +1,8 @@
 from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth import get_user_model
+from django import forms
+# Importamos o modelo Perfil que está lá no outro app (conteudo)
+from conteudo.models import Perfil
 
 # Obtém o modelo de usuário ativo, seja o padrão ou o customizado.
 User = get_user_model() 
@@ -19,3 +22,8 @@ class CustomUserChangeForm(UserChangeForm):
         super().__init__(*args, **kwargs)
         if 'password' in self.fields:
             del self.fields['password']
+
+class PerfilForm(forms.ModelForm):
+    class Meta:
+        model = Perfil
+        fields = ['foto']

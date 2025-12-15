@@ -47,23 +47,40 @@
 
             <div class="header-navbar__content-barra">
                 
-                <div class="botoes-desktop" data-component="user-auth">
+                <div class="botoes-desktop">
                     <div class="esconder-cedo">
-                        <a href="{% url 'metodologia' %}" class="header-navbar__btn"><strong>Metodologia</strong></a>
+                        <a href="{% url 'metodologia' %}" class="header-navbar__btn">Metodologia</a>
                     </div>
                     <div class="esconder-cedo">
-                        <a href="{% url 'sobre' %}" class="header-navbar__btn"><strong>Sobre</strong></a>
+                        <a href="{% url 'sobre' %}" class="header-navbar__btn">Sobre</a>
                     </div>
-                    <div data-target="loginButton">
-                        <a href="/" class="header-navbar__btn"><strong>Entrar</strong></a>
-                    </div>
-                    <div data-target="userMenu" style="display: none;">
-                        <a href="#" class="header-navbar__btn"><strong>Minha Conta</strong></a>
-                    </div>
+
+                    {% if user.is_authenticated %}
+                        <div>
+                            <a href="{% url 'perfil' %}" class="nav-user-card" title="Ir para meu perfil">
+                                <span class="nav-user-name">
+                                    Olá, {{ user.first_name|default:user.username }}
+                                </span>
+                                <img src="{{ user.perfil.foto.url }}" alt="Perfil" class="nav-profile-img-large">
+                            </a>
+                        </div>
+                    {% else %}
+                        <div>
+                            <a href="{% url 'login' %}" class="header-navbar__btn btn-destaque">
+                                Entrar
+                            </a>
+                        </div>
+                    {% endif %}
                 </div>
 
-                <div class="mobile-emoji-decorative">
-                    🟠
+                <div class="mobile-emoji-decorative mobile-profile-container">
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'perfil' %}">
+                            <img src="{{ user.perfil.foto.url }}" alt="Perfil" class="nav-profile-img" style="width: 50px; height: 50px;">
+                        </a>
+                    {% else %}
+                        <a href="{% url 'login' %}" style="text-decoration: none; font-size: 24px;">🟠</a>
+                    {% endif %}
                 </div>
             </div>
 
@@ -74,7 +91,8 @@
                             <a href="/" class="main-menu__item" style="text-decoration: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Início</a>
                             <div class="grupo-institucional sidebar-hidden-default">
                                 <div class="separador"></div>
-                                <span style="padding-left: 16px; font-size: 12px; color: #888; font-weight: bold;">INSTITUCIONAL</span>
+                                <div style="padding-left: 16px; font-size: 12px; color: #888; font-weight: bold;">INSTITUCIONAL</div>
+                                <br>
                                 <a href="{% url 'metodologia' %}" class="main-menu__item" style="text-decoration: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Metodologia</a>
                                 <a href="{% url 'sobre' %}" class="main-menu__item" style="text-decoration: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Sobre</a>
                             </div>
@@ -204,21 +222,7 @@
                 });
             }
 
-            // --- LÓGICA DE LOGIN ---
-            const component = document.querySelector('[data-component="user-auth"]');
-            if (component) {
-                const loginTarget = component.querySelector('[data-target="loginButton"]');
-                const menuTarget = component.querySelector('[data-target="userMenu"]');
-                const usuarioEstaLogado = true; // Mude para testar
 
-                if (usuarioEstaLogado) {
-                    if(loginTarget) loginTarget.style.display = 'none';
-                    if(menuTarget) menuTarget.style.display = 'block';
-                } else {
-                    if(loginTarget) loginTarget.style.display = 'block';
-                    if(menuTarget) menuTarget.style.display = 'none';
-                }
-            }
         });
     </script>
 
