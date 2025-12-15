@@ -36,5 +36,5 @@ class CustomUserCreationForm(UserCreationForm):
     # ou apenas definir o Model/Fields
     class Meta:
         model = User
-        fields = ('username', 'email', 'password ') # Exemplo: pedindo username e email
+        fields = ('username', 'email') # Exemplo: pedindo username e email
         # O UserCreationForm já trata as senhas por padrão
