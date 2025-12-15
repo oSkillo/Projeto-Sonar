@@ -56,4 +56,4 @@ def register(request):
         # Se for um GET, cria um formulário vazio para exibição
         form = CustomUserCreationForm()
         
-    return render(request, 'registration/register.html', {'form': form})
+    return render(request, 'conta/templates/registration.html', {'form': form})
