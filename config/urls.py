@@ -11,7 +11,6 @@ urlpatterns = [
     path('conta/', include('conta.urls')),
     path('accounts/', include('conta.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('accounts/register/', views.register, name='register'),
 ]
 
 if settings.DEBUG:
