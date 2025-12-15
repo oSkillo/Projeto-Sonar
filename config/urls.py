@@ -6,7 +6,10 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('conteudo.urls')),
-    path('conta/', include('conta.urls'))
+    path('conta/', include('conta.urls')),
+    path('accounts/', include('conta.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('accounts/register/', views.register, name='register'),
 ]
 
 if settings.DEBUG:
