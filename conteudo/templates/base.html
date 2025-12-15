@@ -18,107 +18,114 @@
 <body>
 
     <header>
+        
+    <div class="header-navbar__content">
 
-        <div class="header-navbar__content">
-
-            <div class="header-navbar__content-logo">
-                <div class="sidebar-toggle">
-                     <button abrir-menu=""> <!-- id="abrir-sidebar" -->
-                        <i>🐟</i>
-                    </button>
-                </div>
-                <div class="navbar-logo">
-                    <a href="/"><strong>Sonar</strong></a>
-                </div>
-
-            </div>
-
-            <form action="{% url 'busca' %}" method="GET" class="search-container">
-                <input type="text" name="q" id="search-input" placeholder="Pesquisar..." class="search-input" autocomplete="off">
-                <button type="submit" class="search-btn">
-                    <span class="material-symbols-outlined">search</span>
+        <div class="header-navbar__content-logo">
+            <div class="sidebar-toggle desktop-only">
+                 <button abrir-menu>
+                    <i>🐟</i>
                 </button>
-                
-                <div id="live-search-results" class="search-dropdown"></div>
-            </form>
-
-            <div class="header-navbar__content-barra" data-component="user-auth"><div>
-                
-                <div>
-                    <a href="{% url 'metodologia' %}" class="header-navbar__btn">
-                        <strong>Metodologia</strong>
-                    </a>
-                </div>
-                
-                <div>
-                    <a href="{% url 'sobre' %}" class="header-navbar__btn">
-                        <strong>Sobre</strong>
-                    </a>
-                </div>
-
-                <div data-target="loginButton">
-                    <a href="/" class="header-navbar__btn">
-                        <strong>Entrar</strong>
-                    </a>
-                </div>
-
-                <div data-target="userMenu" style="display: none;">
-                    <a href="#" class="header-navbar__btn">
-                        <strong>Minha Conta</strong>
-                    </a>
-                </div>
-
             </div>
-
+            <div class="navbar-logo">
+                <a href="/"><strong>Sonar</strong></a>
+            </div>
         </div>
 
-        <div id="sidebar-menu" class="sidebar-menu"> <!-- id="menu" -->
-            <aside class="sidebar-menu__wrapper"> <!-- Aqui fica a Sidebar(Oculta naturalmente) -->
-                <div class="sidebar-menu__container">
-                    <div class="main-menu">
-                        
-                        <a href="/" style="text-decoration: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;" class="main-menu__item">Início</a>
-                        <div class="separador"></div>
-                        <div style="padding-left: 16px; margin-bottom: 8px; font-size: 12px; color: #888; text-transform: uppercase; font-weight: bold; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Navegação Rápida</div>
+        <form action="{% url 'busca' %}" method="GET" class="search-container">
+            <input type="text" name="q" id="search-input" placeholder="Pesquisar..." class="search-input" autocomplete="off">
+            <button type="submit" class="search-btn">
+                <span class="material-symbols-outlined">search</span>
+            </button>
+            <div id="live-search-results" class="search-dropdown"></div>
+        </form>
 
-                        {% for div in sidebar_divergencias %}
-                            <a href="{% url 'divergencias' div.slug %}" class="main-menu__item" title="{{ div.nome }}" style="text-decoration: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
-                                {{ div.nome }}
-                            </a>
-                        {% empty %}
-                            {% endfor %}
-
-                        <div class="separador"></div>
-                        <a href="#" class="main-menu__item" title="Perfil" style="text-decoration: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Perfil</a>
-                        <a href="{% url 'contato' %}" class="main-menu__item" title="Contato" style="text-decoration: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Contato</a>
-                        <a href="#" class="main-menu__item" title="Tema da Página" style="text-decoration: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Tema da Página</a>
-                    </div>
-                </div>
-            </aside>
+        <div class="header-navbar__content-barra desktop-only" data-component="user-auth">
+            <div>
+                <a href="{% url 'metodologia' %}" class="header-navbar__btn"><strong>Metodologia</strong></a>
+            </div>
+            <div>
+                <a href="{% url 'sobre' %}" class="header-navbar__btn"><strong>Sobre</strong></a>
+            </div>
             
-                <div class="sidebar-footer">
-                    <div class="footer-links">
-                        <a href="/sobre/">Sobre</a>   
-                        <a href="#">Imprensa</a>
-                        <a href="#">Direitos autorais</a>
-                        <a href="#">Entre em contato</a>
-                        <a href="#">Criadores</a>
-                        <a href="#">Desenvolvedores</a>
-                    </div>
-                    <div class="footer-links">
-                        <a href="#">Termos</a>
-                        <a href="#">Privacidade</a>
-                        <a href="#">Política e Segurança</a>
-                        <a href="/metodologia/">Como funciona o Sonar</a>
-                    </div>
-                    <div class="footer-copyright">© 2025 Projeto Sonar</div>
+            {% if user.is_authenticated %}
+                <div>
+                    <a href="{% url 'perfil' %}" class="header-navbar__btn"><strong>Minha Conta</strong></a>
                 </div>
-
-                </div> <div id="sidebar-overlay" class="sidebar-overlay"></div>
-
+            {% else %}
+                <div>
+                    <a href="{% url 'login' %}" class="header-navbar__btn"><strong>Entrar</strong></a>
+                </div>
+            {% endif %}
         </div>
-        <div id="sidebar-overlay" class="sidebar-overlay"></div>
-    </header>
+
+        <div class="mobile-profile-trigger mobile-only">
+            <button abrir-menu class="btn-perfil-mobile">
+                {% if user.is_authenticated %}
+                    <span class="material-symbols-outlined" style="font-size: 32px; color: var(--accent-color);">account_circle</span>
+                {% else %}
+                    <span class="material-symbols-outlined" style="font-size: 32px; color: #fff;">login</span>
+                {% endif %}
+            </button>
+        </div>
+
+    </div>
+
+    <div id="sidebar-menu" class="sidebar-menu"> 
+        <aside class="sidebar-menu__wrapper"> 
+            <div class="sidebar-menu__container">
+                <div class="main-menu">
+                    
+                    <div class="mobile-only" style="margin-bottom: 20px; text-align: center;">
+                        <h2 style="color: var(--accent-color);">Menu</h2>
+                    </div>
+
+                    <a href="/" class="main-menu__item">
+                        <span class="material-symbols-outlined">home</span> Início
+                    </a>
+
+                    <a href="{% url 'metodologia' %}" class="main-menu__item mobile-only">
+                        <span class="material-symbols-outlined">menu_book</span> Metodologia
+                    </a>
+                    <a href="{% url 'sobre' %}" class="main-menu__item mobile-only">
+                        <span class="material-symbols-outlined">info</span> Sobre
+                    </a>
+
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'perfil' %}" class="main-menu__item mobile-only">
+                            <span class="material-symbols-outlined">person</span> Minha Conta
+                        </a>
+                         <a href="{% url 'logout' %}" class="main-menu__item mobile-only" style="color: #ff6b6b;">
+                            <span class="material-symbols-outlined">logout</span> Sair
+                        </a>
+                    {% else %}
+                        <a href="{% url 'login' %}" class="main-menu__item mobile-only">
+                            <span class="material-symbols-outlined">login</span> Entrar
+                        </a>
+                    {% endif %}
+                    
+                    <div class="separador"></div>
+                    <div style="padding-left: 16px; margin-bottom: 8px; font-size: 12px; color: #888; text-transform: uppercase; font-weight: bold;">Navegação Rápida</div>
+
+                    {% for div in sidebar_divergencias %}
+                        <a href="{% url 'divergencias' div.slug %}" class="main-menu__item">
+                            {{ div.nome }}
+                        </a>
+                    {% empty %}
+                        {% endfor %}
+
+                    <div class="separador"></div>
+                    <a href="{% url 'contato' %}" class="main-menu__item">Contato</a>
+                </div>
+            </div>
+        </aside>
+        
+        <div class="sidebar-footer">
+            <div class="footer-copyright">© 2025 Projeto Sonar</div>
+        </div>
+    </div>
+    <div id="sidebar-overlay" class="sidebar-overlay"></div>
+</header>
 
     <main id="main">
         {% block conteudo %}
