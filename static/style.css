@@ -14,32 +14,23 @@
 
 /* --- RESET BÁSICO --- */
 * {
-    /* Define que 1rem = 16px (padrão), mas permite o usuário dar zoom */
-    font-size: 100%; 
-}
-
-* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
 body {
-    background-color: #1a0b2e;
+    background-color: #1a0b2e; /* Cor escura do fundo */
     color: var(--text-main);
-    font-family: 'Segoe UI', system-ui, sans-serif;
+    font-family: 'Segoe UI';
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     margin: 0;
-    
-    /* Previne rolagem horizontal indesejada no celular */
-    overflow-x: hidden; 
-    width: 100%; 
-    
-    /* TAMANHO DE FONTE BASE RESPONSIVO */
-    /* No celular: 14px | No PC: cresce até 18px */
-    font-size: clamp(14px, 1vw + 0.5rem, 18px);
+
+    /* ADICIONE ISSO AQUI: */
+    overflow-x: hidden; /* Bloqueia qualquer rolagem para os lados */
+    width: 100%;        /* Garante que o corpo não exceda a largura da janela */
 }
 
 
@@ -69,7 +60,10 @@ header {
 
 
 
-
+.grupo-institucional,
+.grupo-conta {
+    display: none;
+}
 
 /* --- NAVBAR --- */
 .header-navbar__content {
@@ -84,17 +78,36 @@ header {
 }
 
 .header-navbar__content-logo {
-    z-index: 4;
+    display: flex; /* Isso coloca o peixe e o texto lado a lado */
+    align-items: center; /* Centraliza verticalmente */
+    gap: 15px; /* Espaço entre o peixe e o texto */
+    height: 100%;
+    position: relative; /* Necessário para o z-index funcionar */
+    z-index: 2000; /* Número alto para "furar" a sidebar e aparecer na frente */
+}
+
+.navbar-logo {
     display: flex;
     align-items: center;
-    
-    /* MUDANÇA AQUI: */
-    /* Antes: width: 320px; min-width: 320px; */
-    /* Agora: Ocupa espaço necessário, mas sem forçar barra */
-    width: auto; 
-    min-width: auto;
-    padding: 20px 0 20px 15px; /* Reduzi um pouco o padding */
-    gap: 12px;
+}
+
+/* Garante que o botão do peixe no desktop seja clicável */
+.sidebar-toggle.display-desktop button {
+    cursor: pointer;
+    pointer-events: auto;
+    background: transparent;
+    border: none;
+    font-size: 24px;
+    padding: 5px;
+}
+
+.logo-icon-mini {
+    display: none; 
+}
+
+/* 2. Garante que o texto SONAR apareça por padrão */
+.logo-text {
+    display: inline-block;
 }
 
 .sidebar-toggle {
@@ -110,10 +123,8 @@ header {
 }
 
 .navbar-logo {
-    flex: 1 1;
-    width: auto;
-    max-width: 158px;
-    text-decoration: none;
+    display: flex;
+    align-items: center;
 }
 .navbar-logo > a {
     transition: color 0.3s; /* detalhe fdp em */
@@ -161,17 +172,17 @@ header {
 }
 
 .header-navbar__content-barra > div {
-    display: flex !important;       /* Transforma em linha flexível */
-    flex-direction: row !important; /* Garante direção horizontal */
-    align-items: center !important; /* Alinha verticalmente no centro */
-    gap: 25px !important;           /* Espaço entre os links */
+    display: flex ;       /* Transforma em linha flexível */
+    flex-direction: row; /* Garante direção horizontal */
+    align-items: center; /* Alinha verticalmente no centro */
+    gap: 25px;           /* Espaço entre os links */
     width: 100%;                    /* Garante que ocupe o espaço */
     justify-content: flex-end;      /* Joga tudo para a direita */
 }
 
 /* Remove a largura de 100% dos botões individuais para eles não esticarem */
 .header-navbar__btn {
-    width: auto !important; 
+    width: auto; 
     white-space: nowrap; /* Impede que o texto quebre linha */
 }
 
@@ -188,16 +199,27 @@ header {
 
 /* --- SIDEBAR --- */
 
+.sidebar-toggle.display-desktop button {
+    cursor: pointer;
+    pointer-events: auto;
+    background: transparent;
+    border: none;
+    font-size: 24px;
+    padding: 5px;
+    display: block;
+    width: auto;
+}
+
 .sidebar-overlay {
     display: none; /* Escondido por padrão */
     position: fixed; /* Fica fixo na tela mesmo se rolar */
     /* z-index: 10; Fica acima de tudo */
     /* left: 0; */
     /* top: 0; */
-    width: 100vw;
+    width: 100%;
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.5); /* Preto com transparência */
-    z-index: 2;
+    z-index: 1000;
     top: 0;
     left: 0;
     /* Centralizar o modal na tela */
@@ -214,8 +236,8 @@ header {
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 3;
-    width: min(320px, 85vw); 
+    z-index: 1001;
+    width: 320px;
     height: 100dvh; /* Altura total da tela */
     
     /* --- VISUAL (PRETO TRANSPARENTE) --- */
@@ -671,6 +693,15 @@ div:hover {
     .cards-verticais .card-opcao {
         max-width: 300px; /* Um pouco menor para caberem 3 lado a lado se possível */
     }
+    .sidebar-toggle.display-desktop {
+        display: none !important;
+    }
+
+    /* Ajuste para garantir que a distribuição fique: Menu -- Lupa -- Emoji Laranja */
+    .header-navbar__content {
+        justify-content: space-between !important;
+        align-items: center !important;
+    }
 }
 
 /* Ajuste para Celular */
@@ -1087,92 +1118,208 @@ footer {
     letter-spacing: 1px;
 }
 
-.mobile-only {
-    display: none !important;
+/* =========================================
+   ESTILOS MOBILE (Sobrescrevem o Desktop)
+   ========================================= */
+
+/* 1. Classes Utilitárias (Para esconder/mostrar coisas) */
+/* =================================================================
+   RESPONSIVIDADE E LÓGICA MOBILE (SIDEBAR ESQUERDA + SANDUÍCHE)
+   ================================================================= */
+
+/* =================================================================
+   LAYOUT DO HEADER E RESPONSIVIDADE (CÓDIGO FINAL CORRIGIDO)
+   ================================================================= */
+
+/* --- 1. CONFIGURAÇÕES GERAIS DO HEADER (Para todas as telas) --- */
+
+/* =================================================================
+   RESPONSIVIDADE E LÓGICA MOBILE / TABLET (FINAL)
+   ================================================================= */
+
+/* 1. PADRÃO (Desktop > 1200px) */
+.mobile-only, .mobile-menu-toggle, .mobile-emoji-decorative, .mobile-search-trigger, .close-search-btn { 
+    display: none !important; 
+}
+.botoes-desktop, .desktop-only, .desktop-only-flex {
+    display: flex !important;
 }
 
-/* --- VERSÃO MOBILE (Tablets e Celulares - 1024px para baixo) --- */
-@media (max-width: 1024px) {
+/* 2. NOTEBOOKS (1024px - 1200px) */
+@media (max-width: 1500px) {
+    .esconder-cedo { display: none !important; }
+    .grupo-institucional { display: block !important; }
+}
 
-    /* 1. MOSTRAR ELEMENTOS MOBILE / ESCONDER ELEMENTOS PC */
-    .mobile-only {
-        display: flex !important; /* Mostra o ícone de perfil e links da sidebar */
+/* 3. TABLET (710px - 1024px) */
+@media (max-width: 1024px) {
+    .botoes-desktop, .desktop-only, .desktop-only-flex { display: none !important; }
+
+    /* HEADER: Distribui: Logo (Esq) -- Busca (Meio) -- Emoji (Dir) */
+    .header-navbar__content {
+        justify-content: space-between;
         align-items: center;
     }
-    
-    .desktop-only {
-        display: none !important; /* Esconde os links de texto "Sobre", "Metodologia" e o botão Peixe */
-    }
 
-    /* 2. LAYOUT DO HEADER (Logo - Busca - Perfil) */
-    .header-navbar__content {
-        justify-content: space-between; /* Espalha os itens */
-        gap: 10px; /* Espaço mínimo entre eles */
-    }
-
-    /* 3. LOGO NO MOBILE */
+    /* ESQUERDA */
     .header-navbar__content-logo {
-        width: auto !important; /* Não ocupa 320px */
-        min-width: auto !important;
-        padding: 0 !important;
-        flex-shrink: 0; /* Não deixa a logo esmagar */
+        width: auto !important; min-width: 0 !important; padding: 0 !important;
+        display: flex !important; align-items: center !important; flex-shrink: 0; 
     }
-    .navbar-logo a {
-        font-size: 1.5rem !important; /* Logo um pouco menor */
+    .mobile-menu-toggle {
+        display: flex !important; align-items: center; justify-content: center;
+        background: transparent; border: none; color: white; cursor: pointer;
+        padding: 5px; margin-right: 10px;
+    }
+    .mobile-menu-toggle span { font-size: 28px; }
+
+    /* DIREITA */
+    .header-navbar__content-barra {
+        display: flex !important; align-items: center !important; justify-content: flex-end !important;
+        width: auto !important; flex-shrink: 0;
+    }
+    .mobile-emoji-decorative {
+        display: block !important; font-size: 24px; padding: 0; cursor: default;
     }
 
-    /* 4. BARRA DE PESQUISA (Centro Flexível) */
+    /* SIDEBAR */
+    .sidebar-menu {
+        left: 0 !important; right: auto !important; transform: translateX(-100%) !important;
+        border-right: 1px solid rgba(255, 255, 255, 0.1); border-left: none; width: 280px; 
+    }
+    .sidebar-menu.is-open { transform: translateX(0) !important; }
+    .sidebar-menu__wrapper { margin-top: 80px; }
+    .grupo-conta { display: block !important; }
+
+    /* SEARCHBOX (TABLET: Visível no Meio) */
     .search-container {
-        position: relative !important;
-        left: auto !important;
-        transform: none !important;
-        
-        width: 100% !important; /* Tenta ocupar o espaço disponível */
-        flex: 1; /* Cresce para preencher o buraco entre Logo e Perfil */
-        
-        margin: 0 10px !important;
-        height: 40px !important; /* Um pouco mais baixa no celular */
+        position: relative !important; left: auto !important; transform: none !important;
+        width: 100% !important; max-width: 400px; margin: 0 10px;
     }
-    
-    .search-input {
-        width: 100%; /* Garante que o input use o espaço */
-    }
+}
 
-    /* 5. BOTÃO DE PERFIL (Gatilho da Sidebar) */
-    .mobile-profile-trigger {
-        flex-shrink: 0; /* Não deixa o botão esmagar */
-    }
-    
-    .btn-perfil-mobile {
+/* 4. CELULAR (< 710px) - AQUI VIRA LUPA */
+@media (max-width: 550px) {
+
+    /* --- GATILHO DA LUPA APARECE --- */
+    .mobile-search-trigger {
+        display: block !important;
         background: transparent;
         border: none;
+        font-size: 24px;
         cursor: pointer;
-        padding: 5px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: background 0.2s;
-    }
-    
-    .btn-perfil-mobile:active {
-        background: rgba(255,255,255,0.1);
+        z-index: 50;
+        position: static !important;
+        color: var(--accent-color);
+        margin-right: 15px; 
     }
 
-    /* 6. SIDEBAR NO MOBILE (Ajuste de camada) */
-    .sidebar-overlay {
-        z-index: 998 !important; /* Abaixo da sidebar, acima do resto */
+    .header-navbar__content-barra {
+        gap: 0; /* Remove gap extra entre lupa e emoji */
     }
-    .sidebar-menu {
-        z-index: 999 !important; /* Acima de tudo */
-        width: 85vw !important; /* Ocupa quase toda a tela */
-        max-width: 300px;
+
+    /* ESCONDE A LOGO E MENU QUANDO A BUSCA ABRE */
+    .header-navbar__content.busca-aberta .header-navbar__content-logo,
+    .header-navbar__content.busca-aberta .header-navbar__content-barra {
+        display: none !important;
+    }
+
+    /* --- COMPORTAMENTO DA SEARCHBOX NO CELULAR --- */
+    
+    /* Estado Padrão (FECHADO/ESCONDIDO) */
+    .search-container {
+        position: absolute !important; /* Volta a ser absoluto para não ocupar espaço */
+        right: 60px;
+        width: 0 !important;
+        opacity: 0;
+        visibility: hidden;
+        background: transparent;
+        z-index: 100;
+        border: none;
+        padding: 0;
+        transition: width 0.3s ease, opacity 0.3s ease;
+    }
+
+    /* Estado Ativo (ABERTO - CLICOU NA LUPA) */
+    .search-container.mobile-active {
+        position: relative !important;
+        right: auto;
+        left: auto;
+        width: 100% !important; 
+        height: 100%;
+        opacity: 1;
+        visibility: visible;
+        display: flex;
+        align-items: center;
+        padding: 0;
+        margin: 0;
+        background: transparent;
+        box-shadow: none;
+        border-radius: 0;
+        max-width: none; /* Remove o limite do tablet */
     }
     
-    /* 7. Ajuste dos links "Mobile Only" dentro da Sidebar */
-    .main-menu__item.mobile-only {
-        /* Estilo para destacar que esses eram da navbar */
-        border-left: 3px solid var(--accent-color);
-        background: rgba(255,255,255,0.02);
+    /* Estilo visual da barra cinza */
+    .search-container form {
+        width: 100%;
+        height: 40px; 
+        display: flex;
+        align-items: center;
+        flex-direction: row-reverse;
+        background: rgba(255,255,255,0.1);
+        border-radius: 50px;
+        padding: 0 5px;
+        border: 1px solid rgba(255,255,255,0.1);
     }
+
+    .search-input {
+        width: 100% !important;
+        background: transparent !important;
+        border: none !important;
+        color: white !important;
+        font-size: 16px !important;
+        padding: 0 10px !important;
+        height: 100%;
+    }
+
+    .search-btn {
+        display: flex !important;
+        background: transparent;
+        border: none;
+        color: var(--accent-color);
+        font-size: 22px;
+        padding: 0 10px;
+        cursor: pointer;
+        width: auto;
+    }
+
+    .close-search-btn {
+        display: block !important;
+        background: transparent;
+        border: none;
+        color: #94a3b8;
+        font-size: 20px;
+        padding: 0 10px;
+        cursor: pointer;
+    }
+
+    .header-navbar__content.busca-aberta #mobile-search-trigger {
+    display: none !important;
+    }
+}
+
+
+/* 5. LOGO RESPONSIVO (< 380px) */
+@media (max-width: 380px) {
+    .logo-text { display: none !important; }
+    .logo-icon-mini { display: inline-block !important; font-size: 30px; line-height: 1; font-style: normal; margin-left: 5px; }
+    .header-navbar__content-logo { gap: 5px; }
+}
+
+body.no-scroll {
+    overflow: hidden !important; /* Corta o que passar da tela */
+    height: 100vh !important;    /* Trava a altura no tamanho da tela */
+    touch-action: none;          /* Bloqueia gestos de toque no fundo (mobile) */
+    position: fixed;             /* Garante que não scrolle mesmo em iOS teimoso */
+    width: 100%;
 }
