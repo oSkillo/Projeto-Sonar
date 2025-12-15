@@ -1,6 +1,8 @@
 from django.urls import path, include
 from . import views 
 from django.contrib import admin
+from conta import views
+from conteudo import views
 
 urlpatterns = [
     path('', views.home_view, name='base'),

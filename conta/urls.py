@@ -1,5 +1,7 @@
 from django.urls import path
 from . import views
+from conta import views
+from conteudo import views
 
 urlpatterns = [
     # Mapeia o URL para a view 'perfil_usuario' e nomeia o caminho como 'perfil'
