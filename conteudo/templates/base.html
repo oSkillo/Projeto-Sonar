@@ -1,101 +1,98 @@
 <!DOCTYPE html>
-<html lang="pt-BR" xmlns:mso="urn:schemas-microsoft-com:office:office" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sonar</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'style.css' %}">
-
-<!--[if gte mso 9]><xml>
-<mso:CustomDocumentProperties>
-<mso:_ApprovalStatus msdt:dt="string">0</mso:_ApprovalStatus>
-<mso:_ApprovalAssignedTo msdt:dt="string"></mso:_ApprovalAssignedTo>
-<mso:_ApprovalRespondedBy msdt:dt="string"></mso:_ApprovalRespondedBy>
-</mso:CustomDocumentProperties>
-</xml><![endif]-->
 </head>
 <body>
 
-    <header>
-
+    <header id="site-header">
         <div class="header-navbar__content">
 
             <div class="header-navbar__content-logo">
-                <div class="sidebar-toggle">
-                     <button abrir-menu=""> <!-- id="abrir-sidebar" -->
+                
+                <button type="button" class="mobile-menu-toggle" id="mobile-menu-btn" abrir-menu="">
+                    <span class="material-symbols-outlined">menu</span>
+                </button>
+
+                <div class="sidebar-toggle display-desktop">
+                    <button abrir-menu=""> 
                         <i>🐟</i>
                     </button>
                 </div>
+                
                 <div class="navbar-logo">
-                    <a href="/"><strong>Sonar</strong></a>
+                    <a href="/">
+                        <strong class="logo-text">Sonar</strong>
+                        <span class="logo-icon-mini">🐟</span>
+                    </a>
                 </div>
-
             </div>
 
-            <form action="{% url 'busca' %}" method="GET" class="search-container">
+            <form action="{% url 'busca' %}" method="GET" class="search-container" id="search-form-container">
+                <button type="button" id="close-search-mobile" class="close-search-btn">✕</button>
                 <input type="text" name="q" id="search-input" placeholder="Pesquisar..." class="search-input" autocomplete="off">
                 <button type="submit" class="search-btn">
                     <span class="material-symbols-outlined">search</span>
                 </button>
-                
                 <div id="live-search-results" class="search-dropdown"></div>
             </form>
 
-            <div class="header-navbar__content-barra" data-component="user-auth"><div>
+            <button type="button" id="mobile-search-trigger" class="mobile-search-trigger">
+                <span class="material-symbols-outlined">search</span>
+            </button>
+
+            <div class="header-navbar__content-barra">
                 
-                <div>
-                    <a href="{% url 'metodologia' %}" class="header-navbar__btn">
-                        <strong>Metodologia</strong>
-                    </a>
-                </div>
-                
-                <div>
-                    <a href="{% url 'sobre' %}" class="header-navbar__btn">
-                        <strong>Sobre</strong>
-                    </a>
-                </div>
-
-                <div data-target="loginButton">
-                    <a href="/" class="header-navbar__btn">
-                        <strong>Entrar</strong>
-                    </a>
-                </div>
-
-                <div data-target="userMenu" style="display: none;">
-                    <a href="#" class="header-navbar__btn">
-                        <strong>Minha Conta</strong>
-                    </a>
-                </div>
-
-            </div>
-
-        </div>
-
-        <div id="sidebar-menu" class="sidebar-menu"> <!-- id="menu" -->
-            <aside class="sidebar-menu__wrapper"> <!-- Aqui fica a Sidebar(Oculta naturalmente) -->
-                <div class="sidebar-menu__container">
-                    <div class="main-menu">
-                        
-                        <a href="/" style="text-decoration: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;" class="main-menu__item">Início</a>
-                        <div class="separador"></div>
-                        <div style="padding-left: 16px; margin-bottom: 8px; font-size: 12px; color: #888; text-transform: uppercase; font-weight: bold; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Navegação Rápida</div>
-
-                        {% for div in sidebar_divergencias %}
-                            <a href="{% url 'divergencias' div.slug %}" class="main-menu__item" title="{{ div.nome }}" style="text-decoration: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
-                                {{ div.nome }}
-                            </a>
-                        {% empty %}
-                            {% endfor %}
-
-                        <div class="separador"></div>
-                        <a href="#" class="main-menu__item" title="Perfil" style="text-decoration: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Perfil</a>
-                        <a href="{% url 'contato' %}" class="main-menu__item" title="Contato" style="text-decoration: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Contato</a>
-                        <a href="#" class="main-menu__item" title="Tema da Página" style="text-decoration: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Tema da Página</a>
+                <div class="botoes-desktop" data-component="user-auth">
+                    <div class="esconder-cedo">
+                        <a href="{% url 'metodologia' %}" class="header-navbar__btn"><strong>Metodologia</strong></a>
+                    </div>
+                    <div class="esconder-cedo">
+                        <a href="{% url 'sobre' %}" class="header-navbar__btn"><strong>Sobre</strong></a>
+                    </div>
+                    <div data-target="loginButton">
+                        <a href="/" class="header-navbar__btn"><strong>Entrar</strong></a>
+                    </div>
+                    <div data-target="userMenu" style="display: none;">
+                        <a href="#" class="header-navbar__btn"><strong>Minha Conta</strong></a>
                     </div>
                 </div>
-            </aside>
-            
+
+                <div class="mobile-emoji-decorative">
+                    🟠
+                </div>
+            </div>
+
+            <div id="sidebar-menu" class="sidebar-menu"> 
+                <aside class="sidebar-menu__wrapper"> 
+                    <div class="sidebar-menu__container">
+                        <div class="main-menu">
+                            <a href="/" class="main-menu__item" style="text-decoration: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Início</a>
+                            <div class="grupo-institucional sidebar-hidden-default">
+                                <div class="separador"></div>
+                                <span style="padding-left: 16px; font-size: 12px; color: #888; font-weight: bold;">INSTITUCIONAL</span>
+                                <a href="{% url 'metodologia' %}" class="main-menu__item" style="text-decoration: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Metodologia</a>
+                                <a href="{% url 'sobre' %}" class="main-menu__item" style="text-decoration: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Sobre</a>
+                            </div>
+                            <div class="grupo-conta sidebar-hidden-default">
+                                <a href="#" class="main-menu__item" style="text-decoration: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Minha Conta</a>
+                            </div>
+                            <div class="separador"></div>
+                            <div style="padding-left: 16px; margin-bottom: 8px; font-size: 12px; color: #888; text-transform: uppercase; font-weight: bold;">Navegação Rápida</div>
+                            {% for div in sidebar_divergencias %}
+                                <a href="{% url 'divergencias' div.slug %}" class="main-menu__item" style="text-decoration: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">{{ div.nome }}</a>
+                            {% empty %}{% endfor %}
+                            <div class="separador"></div>
+                            <a href="#" class="main-menu__item" style="text-decoration: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Perfil</a>
+                            <a href="{% url 'contato' %}" class="main-menu__item" style="text-decoration: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Contato</a>
+                            <a href="#" class="main-menu__item" style="text-decoration: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Tema da Página</a>
+                        </div>
+                    </div>
+                </aside>
                 <div class="sidebar-footer">
                     <div class="footer-links">
                         <a href="/sobre/">Sobre</a>   
@@ -113,12 +110,11 @@
                     </div>
                     <div class="footer-copyright">© 2025 Projeto Sonar</div>
                 </div>
-
-                </div> <div id="sidebar-overlay" class="sidebar-overlay"></div>
-
-        </div>
+            </div> 
         <div id="sidebar-overlay" class="sidebar-overlay"></div>
     </header>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 
     <main id="main">
         {% block conteudo %}
@@ -126,7 +122,7 @@
     </main>
 
     <script>
-        // --- BLOQUEIO DO BOTÃO VOLTAR NA HOME ---
+    // --- BLOQUEIO DO BOTÃO VOLTAR NA HOME ---
         // Se a url for apenas "/" (Home), impede de voltar
         if (window.location.pathname === '/') {
             // Cria um estado no histórico para "prender" o usuário
@@ -160,10 +156,16 @@
                     menu.classList.add('is-open');
                     overlay.classList.add('is-open');
                     main.classList.add('is-open');
+                    
+                    // --- ADICIONE ESTA LINHA: TRAVA O SCROLL ---
+                    document.body.classList.add('no-scroll'); 
                 } else {
                     menu.classList.remove('is-open');
                     overlay.classList.remove('is-open');
                     main.classList.remove('is-open');
+                    
+                    // --- ADICIONE ESTA LINHA: DESTRAVA O SCROLL ---
+                    document.body.classList.remove('no-scroll');
                 }
 
                 localStorage.setItem('sidebarAberta', isOpen);
@@ -219,28 +221,6 @@
             }
         });
     </script>
-
-    <div id="modal-preview-global" class="modal-overlay" style="display: none;">
-    <div class="modal-conteudo" style="display: flex; flex-direction: column; height: 90vh; width: 90vw; max-width: 1200px;">
-        
-        <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 15px; border-bottom: 1px solid #eee;">
-            <div>
-                <h3 id="modal-titulo-texto" style="margin: 0; color: #333;">Visualizar Arquivo</h3>
-            </div>
-            <div style="display: flex; gap: 15px; align-items: center;">
-                <a id="modal-btn-baixar" href="#" download class="btn-baixar" style="background: var(--accent-color); color: #fff; padding: 8px 20px; font-size: 14px;">
-                    Baixar Agora
-                </a>
-                <span class="fechar-modal" onclick="fecharModalPreview()" style="font-size: 30px; cursor: pointer;">&times;</span>
-            </div>
-        </div>
-
-        <div style="flex: 1; background: #e5e5e5; margin-top: 15px; border-radius: 8px; overflow: hidden;">
-            <iframe id="modal-iframe" src="" width="100%" height="100%" style="border: none;"></iframe>
-        </div>
-
-    </div>
-</div>
 
 <script>
     // --- FUNÇÕES GLOBAIS DO MODAL ---
@@ -381,11 +361,61 @@
             }
         });
     });
+
+    document.addEventListener("DOMContentLoaded", function() {
+        const mobileTrigger = document.getElementById('mobile-search-trigger');
+        const searchForm = document.getElementById('search-form-container');
+        const closeBtn = document.getElementById('close-search-mobile');
+        const input = document.getElementById('search-input');
+        
+        // Selecionamos o container principal da navbar para controlar os outros elementos
+        const navbarContent = document.querySelector('.header-navbar__content');
+
+        // FUNÇÃO ABRIR
+        mobileTrigger.addEventListener('click', function() {
+            // Adiciona classe na busca
+            searchForm.classList.add('mobile-active');
+            // Adiciona classe no pai para esconder o resto
+            navbarContent.classList.add('busca-aberta');
+            
+            input.focus(); 
+        });
+
+        // FUNÇÃO FECHAR
+        function fecharBusca() {
+            searchForm.classList.remove('mobile-active');
+            navbarContent.classList.remove('busca-aberta');
+        }
+
+        closeBtn.addEventListener('click', fecharBusca);
+
+        // Fechar clicando fora (opcional)
+        document.addEventListener('click', function(event) {
+            const isClickInside = searchForm.contains(event.target) || mobileTrigger.contains(event.target);
+            if (!isClickInside && window.innerWidth < 470 && searchForm.classList.contains('mobile-active')) {
+                fecharBusca();
+            }
+        });
+    });
 </script>
 
-</body>
+
+    <div id="modal-preview-global" class="modal-overlay" style="display: none;">
+        <div class="modal-conteudo">
+            <span class="fechar-modal" onclick="fecharModalPreview()">×</span>
+            
+            <div style="margin-bottom: 15px; padding-right: 30px;">
+                <h3 id="modal-titulo-texto" style="margin: 0; color: #333; font-size: 1.2rem;">Visualização</h3>
+            </div>
+            
+            <iframe id="modal-iframe" src="" style="width: 100%; height: calc(100% - 80px); border: none; border-radius: 4px; background: #f1f1f1;"></iframe>
+            
+            <div style="position: absolute; bottom: 20px; right: 20px;">
+                <a id="modal-btn-baixar" href="" download class="btn-baixar">
+                    Baixar PDF
+                </a>
+            </div>
+        </div>
+    </div>
+    </body>
 </html>
-
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
-integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
