@@ -3,7 +3,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from conta import views
-from conteudo import views
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -11,7 +11,7 @@ urlpatterns = [
     path('conta/', include('conta.urls')),
     path('accounts/', include('conta.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('accounts/register/', views.register, name='register'),
+    
 ]
 
 if settings.DEBUG:
