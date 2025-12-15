@@ -2,48 +2,49 @@
 {% load static %}
 
 {% block conteudo %}
+
+<link rel="stylesheet" href="{% static 'css/estilos_materiais.css' %}">
+
 <div class="titulo-pagina">
-    Arquivos de: <span style="color: var(--accent-color);">{{ materia.nome }}</span>
+    Arquivos de: <span class="texto-destaque">{{ materia.nome }}</span>
 </div>
 
-<div style="width: 95%; max-width: 1400px; margin: 0 auto; margin-bottom: 20px;">
+<div class="container-voltar">
     <a href="javascript:history.back()" class="btn-voltar">← Voltar</a>
 </div>
 
-<div class="cards-container" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px;">
+<div class="cards-container">
     
     {% for item in pdfs %}
         <div class="pdf-item">
             
-            <div style="margin-bottom: 15px;">
-                <span class="material-symbols-outlined" style="font-size: 60px; color: var(--accent-color); opacity: 0.9;">
+            <div class="icon-wrapper">
+                <span class="material-symbols-outlined icon-pdf">
+                    picture_as_pdf
                 </span>
             </div>
 
-            <div style="width: 100%; margin-bottom: 10px;">
-                <h3 style="margin: 0; font-size: 1.1rem; color: #fff;">{{ item.titulo }}</h3>
-                <p style="margin: 5px 0 0 0; font-size: 0.9rem; color: #ccc;">
-                    {{ item.serie.nome }}
-                </p>
+            <div class="card-info">
+                <h3 class="card-titulo">{{ item.titulo }}</h3>
+                <p class="card-serie">{{ item.serie.nome }}</p>
             </div>
 
-            <div style="margin-top: auto; display: flex; gap: 10px; width: 100%; justify-content: center;">
-                
+            <div class="card-acoes">
                 <button onclick="abrirModalPreview('{{ item.arquivo_pdf.url }}', '{{ item.titulo }}')" 
-                        style="background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 8px 15px; border-radius: 50px; cursor: pointer;">
+                        class="btn-ver">
                     Ver
                 </button>
 
-                <a href="{{ item.arquivo_pdf.url }}" download class="btn-baixar" 
-                   style="background: var(--accent-color); color: #000; padding: 8px 15px; border-radius: 50px; text-decoration: none; font-weight: bold;">
+                <a href="{{ item.arquivo_pdf.url }}" download class="btn-baixar-custom">
                     Baixar
                 </a>
             </div>
 
         </div>
     {% empty %}
-        <p style="color: #aaa; font-size: 1.2rem; margin-top: 50px;">Nenhum material encontrado.</p>
+        <p class="msg-vazio">Nenhum material encontrado.</p>
     {% endfor %}
 
 </div>
+
 {% endblock %}
