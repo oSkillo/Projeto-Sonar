@@ -8,6 +8,7 @@ from django.urls import reverse
 from django.db.models import Q
 from unidecode import unidecode
 
+
 # View da Home (Alterada)
 def home_view(request):
     # Pega só quem tem a caixinha marcada
@@ -129,7 +130,7 @@ def login_user(request):
             messages.success(request, ('Usuário ou Senha incorretos. Tente novamente!'))
             return redirect('entrar')
     else:
-        return render(request, 'login.html')
+        return render(request, 'registration/login.html')
     
 #View de Logout do usuario    
 def logout_user(request):
@@ -237,3 +238,19 @@ def listar_pdfs_sem_grau(request, divergencia_slug, serie_slug, materia_slug):
         materia__slug=materia_slug
     )
     return render(request, 'pdfs.html', {'pdfs': pdfs})
+
+#contato 
+def pagina_contato(request):
+    if request.method == "POST":
+        # Aqui é onde pegamos os dados no futuro
+        nome = request.POST.get('nome')
+        email = request.POST.get('email')
+        mensagem = request.POST.get('mensagem')
+        
+        print(f"Mensagem recebida de {nome}: {mensagem}") # Vai aparecer no teu terminal preto
+        
+        # Aqui poderíamos enviar o email ou salvar no banco
+        # Por enquanto, só recarregamos a página
+        return render(request, 'contato.html', {'sucesso': True})
+
+    return render(request, 'contato.html')

@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block conteudo %}
+
+<div class="login-container">
+    
+    <div class="card-login">
+        
+        <h2 class="titulo-login">Acessar Conta</h2>
+
+        {% if form.errors %}
+            <div class="msg-erro-login">
+                <span class="material-symbols-outlined">error</span>
+                Usuário ou senha incorretos.
+            </div>
+        {% endif %}
+
+        <form method="POST" style="display: flex; flex-direction: column; gap: 20px;">
+            {% csrf_token %}
+
+            <div class="campo-input">
+                <label for="id_username">Usuário</label>
+                <div class="input-wrapper">
+                    <span class="material-symbols-outlined input-icon">person</span>
+                    <input type="text" name="username" id="id_username" placeholder="Digite seu usuário" required class="input-estilizado">
+                </div>
+            </div>
+
+            <div class="campo-input">
+                <label for="id_password">Senha</label>
+                <div class="input-wrapper">
+                    <span class="material-symbols-outlined input-icon">lock</span>
+                    <input type="password" name="password" id="id_password" placeholder="Digite sua senha" required class="input-estilizado">
+                </div>
+            </div>
+
+            <button type="submit" class="btn-entrar-login">
+                Entrar na Plataforma
+            </button>
+
+        </form>
+
+        <br>
+        <a class="btn-entrar-login" href="{% url 'contato' %}">
+            Não tem conta? Crie uma agora
+        </a>
+
+        <div style="text-align: center; margin-top: 20px;">
+            <a href="#" class="link-esqueci">Esqueceu a senha?</a>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
