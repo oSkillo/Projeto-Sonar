@@ -1,9 +1,10 @@
 from django.urls import path
 from . import views
 
+
 urlpatterns = [
     # Mapeia o URL para a view 'perfil_usuario' e nomeia o caminho como 'perfil'
-    path('perfil/', views.perfil_usuario, name='perfil'),
+    path('perfil_usuario/', views.perfil_usuario, name='perfil'),
     path('register/', views.register, name='register'),
     
     # Se você quiser adicionar funcionalidade para mudar a senha (opcional)
