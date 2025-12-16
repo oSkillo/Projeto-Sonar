@@ -2,6 +2,8 @@ from django.urls import path, include
 from . import views 
 from django.contrib import admin
 
+
+
 urlpatterns = [
     path('', views.home_view, name='base'),
     path('contato/', views.contato_view, name='contato'),
