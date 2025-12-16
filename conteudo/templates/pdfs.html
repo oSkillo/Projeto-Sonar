@@ -2,48 +2,106 @@
 {% load static %}
 
 {% block conteudo %}
+
+<link rel="stylesheet" href="{% static 'css/estilos_materiais.css' %}">
+
 <div class="titulo-pagina">
-    Arquivos de: <span style="color: var(--accent-color);">{{ materia.nome }}</span>
+    Arquivos de: <span class="texto-destaque">{{ materia.nome }}</span>
 </div>
 
-<div style="width: 95%; max-width: 1400px; margin: 0 auto; margin-bottom: 20px;">
-    <a href="javascript:history.back()" class="btn-voltar">← Voltar</a>
-</div>
-
-<div class="cards-container" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px;">
+<div class="cards-container">
     
+    {% if pdfs %}
+        <div style="width: 100%; display: flex; justify-content: center; gap: 15px; margin-bottom: 20px;">
+            <a href="javascript:history.back()" class="btn-voltar">← Voltar</a>
+            <a onclick="abrirModalPdf()" class="btn-adicionar">+ Adicionar</a>
+        </div>
+    {% endif %}
+
     {% for item in pdfs %}
         <div class="pdf-item">
             
-            <div style="margin-bottom: 15px;">
-                <span class="material-symbols-outlined" style="font-size: 60px; color: var(--accent-color); opacity: 0.9;">
+            <button class="btn-editar-card" 
+                    onclick="event.stopPropagation(); abrirModalEdicaoPdf('{% url 'editar_pdf' item.id %}', '{{ item.titulo }}')">
+                <span class="material-symbols-outlined">edit</span>
+            </button>
+
+            <div class="icon-wrapper">
+                <span class="material-symbols-outlined icon-pdf">
+                    picture_as_pdf
                 </span>
             </div>
 
-            <div style="width: 100%; margin-bottom: 10px;">
-                <h3 style="margin: 0; font-size: 1.1rem; color: #fff;">{{ item.titulo }}</h3>
-                <p style="margin: 5px 0 0 0; font-size: 0.9rem; color: #ccc;">
-                    {{ item.serie.nome }}
-                </p>
+            <div class="card-info">
+                <h3 class="card-titulo">{{ item.titulo }}</h3>
+                <p class="card-serie">{{ item.serie.nome }}</p>
             </div>
 
-            <div style="margin-top: auto; display: flex; gap: 10px; width: 100%; justify-content: center;">
-                
+            <div class="card-acoes">
                 <button onclick="abrirModalPreview('{{ item.arquivo_pdf.url }}', '{{ item.titulo }}')" 
-                        style="background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 8px 15px; border-radius: 50px; cursor: pointer;">
+                        class="btn-ver">
                     Ver
                 </button>
 
-                <a href="{{ item.arquivo_pdf.url }}" download class="btn-baixar" 
-                   style="background: var(--accent-color); color: #000; padding: 8px 15px; border-radius: 50px; text-decoration: none; font-weight: bold;">
+                <a href="{{ item.arquivo_pdf.url }}" download class="btn-baixar-custom">
                     Baixar
                 </a>
             </div>
 
         </div>
+
     {% empty %}
-        <p style="color: #aaa; font-size: 1.2rem; margin-top: 50px;">Nenhum material encontrado.</p>
+        
+        <div style="width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            
+            <p class="msg-vazio" style="margin-top: 5%; margin-bottom: 10%;">
+                Nenhum material encontrado.
+            </p>
+
+            <div>
+                <a href="javascript:history.back()" class="btn-voltar">← Voltar</a>
+                <a onclick="abrirModalPdf()" class="btn-adicionar">+ Adicionar</a>
+            </div>
+
+        </div>
+
     {% endfor %}
 
 </div>
+
+<div id="modal-editar-pdf" class="modal-overlay" style="display: none;">
+    <div class="modal-conteudo card-login" style="max-width: 500px; height: auto;">
+        <span class="fechar-modal" onclick="fecharModalEdicaoPdf()">×</span>
+        <h2 style="text-align: center; color: #fff; margin-bottom: 20px;">Editar PDF</h2>
+        
+        <form id="form-edicao-pdf" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div class="campo-input" style="margin-bottom: 15px;">
+                <label>Título:</label>
+                <input type="text" name="titulo" id="edit_titulo_pdf" class="input-estilizado">
+            </div>
+
+            <div class="campo-input" style="margin-bottom: 15px;">
+                <label>Trocar Arquivo:</label>
+                <input type="file" name="arquivo_pdf" class="input-estilizado" style="padding: 10px;">
+            </div>
+
+            <button type="submit" class="btn-entrar-login" style="width: 100%;">Salvar</button>
+            <button type="submit" name="deletar" value="true" class="btn-excluir" onclick="return confirm('Apagar este PDF?')">Excluir</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    function abrirModalEdicaoPdf(url, titulo) {
+        document.getElementById('form-edicao-pdf').action = url;
+        document.getElementById('edit_titulo_pdf').value = titulo;
+        document.getElementById('modal-editar-pdf').style.display = 'flex';
+    }
+    function fecharModalEdicaoPdf() {
+        document.getElementById('modal-editar-pdf').style.display = 'none';
+    }
+</script>
+
 {% endblock %}

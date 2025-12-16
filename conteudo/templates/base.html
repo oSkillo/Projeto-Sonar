@@ -9,6 +9,17 @@
 </head>
 <body>
 
+{% if messages %}
+    <div class="toast-container">
+        {% for message in messages %}
+            <div class="toast {{ message.tags }}">
+                <span>{{ message }}</span>
+                <button onclick="this.parentElement.remove()" class="toast-close">×</button>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
     <header id="site-header">
         <div class="header-navbar__content">
 

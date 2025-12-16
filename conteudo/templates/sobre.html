@@ -1,11 +1,91 @@
 {% extends 'base.html' %}
+{% load static %}
 
-{% block titulo %}Sobre - Sonar{% endblock %}
+{% block titulo %}Metodologia - Sonar{% endblock %}
 
 {% block conteudo %}
 
-    <h1>Sobre o Projeto Sonar</h1>
+<link rel="stylesheet" href="{% static 'css/sobre.css' %}">
+
+<div class="sobre-container">
+
+    <h1 class="main-title">Como o Projeto <span class="destaque">Sonar Funciona</span></h1>
     
-    <h2>esse é um texto de teste, vamos deixar assim pois eu quero que a dona do site escreva a historia dele e sobre como ele funcionará, ai eu atualizo aqui</h2>
+    <div class="content-card">
+        
+        <h2 class="section-title">🔒 Sistema de Assinatura para Escolas</h2>
+        <p class="texto-sobre">
+            O Projeto SONAR oferece um sistema de assinatura premium exclusivo para escolas. 
+            Este sistema garante o acesso contínuo e ilimitado a todos os recursos de alta qualidade, 
+            garantindo que a inclusão seja uma prioridade consistente na instituição.
+        </p>
+
+        <h2 class="section-title">📚 O Que a Escola Adquire?</h2>
+        <p class="texto-sobre">
+            Ao assinar o Projeto SONAR, a escola adquire uma licença de acesso total ao acervo digital. 
+            Os principais recursos incluem:
+        </p>
+
+        <ul class="lista-clean">
+            <li>
+                <strong>Biblioteca de PDFs:</strong> Acesso ilimitado ao vasto acervo de materiais educativos, 
+                adaptados para Autismo, TDAH e outras síndromes. Foco em aprendizado escolar e apoio comportamental.
+            </li>
+            <li>
+                <strong>Área do Professor:</strong> Módulos de treinamento e guias práticos atualizados mensalmente 
+                para capacitação contínua do corpo docente e estratégias de inclusão.
+            </li>
+            <li>
+                <strong>Novos Materiais Mensais:</strong> Todo mês, um pacote de novos PDFs, atividades e histórias sociais, 
+                garantindo frescor e relevância do conteúdo.
+            </li>
+        </ul>
+
+        <h2 class="section-title">🌐 Acessibilidade e Tecnologia Integrada</h2>
+        
+        <h3 style="color: #fff; margin-top: 20px;">1. Integração com API (Ferramenta Panda)</h3>
+        <p class="texto-sobre">
+            O SONAR disponibiliza uma API que permite ao sistema de gestão da escola conectar-se diretamente 
+            com a nossa biblioteca. Assim, professores podem buscar e anexar materiais em suas próprias 
+            plataformas de planejamento.
+        </p>
+
+        <h3 style="color: #fff; margin-top: 20px;">2. Áudio e Acessibilidade Visual</h3>
+        <ul class="lista-clean">
+            <li>
+                <strong>Apoio para Deficiência Visual:</strong> Materiais compatíveis com leitores de tela (áudio assistivo).
+            </li>
+            <li>
+                <strong>Leitura Acessível:</strong> Design inclusivo com cores, contrastes e fontes adequadas para dislexia.
+            </li>
+        </ul>
+
+        <h2 class="section-title">💸 Opções de Plano de Assinatura</h2>
+        <p class="texto-sobre">
+            Para atender à realidade orçamentária de diferentes instituições, oferecemos flexibilidade:
+        </p>
+
+        <ul class="lista-clean">
+            <li>
+                <strong>Plano Mensal:</strong> Pagamento a cada 30 dias. Ideal para períodos de teste ou planejamento de curto prazo.
+            </li>
+            <li>
+                <strong>Plano Anual:</strong> Pagamento único por 12 meses. Garante maior desconto (geralmente 2 meses gratuitos) 
+                e acesso ininterrupto.
+            </li>
+        </ul>
+
+        <h2 class="section-title">🤝 Apoio e Suporte Contínuo</h2>
+        <p class="texto-sobre">
+            O suporte não se limita aos arquivos digitais. A assinatura inclui <strong>Apoio Técnico Mensal</strong> 
+            para auxiliar na integração e garantir que todas as ferramentas de acessibilidade estejam funcionando perfeitamente.
+            <br><br>
+            <span class="texto-destaque">
+                O valor da assinatura é reinvestido na criação de novos materiais e tecnologias de inclusão.
+            </span>
+        </p>
+
+    </div>
+</div>
 
 {% endblock %}

@@ -19,18 +19,21 @@
     box-sizing: border-box;
 }
 
+html, body {
+    overflow-x: hidden; /* Bloqueia a rolagem horizontal em ambos */
+    max-width: 100%;    /* Garante que não ultrapasse a largura da tela */
+    margin: 0;          /* Remove margens padrões */
+    padding: 0;
+}
+
 body {
-    background-color: #1a0b2e; /* Cor escura do fundo */
+    background-color: #1a0b2e;
     color: var(--text-main);
     font-family: 'Segoe UI';
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    margin: 0;
-
-    /* ADICIONE ISSO AQUI: */
-    overflow-x: hidden; /* Bloqueia qualquer rolagem para os lados */
-    width: 100%;        /* Garante que o corpo não exceda a largura da janela */
+    width: 100%;
 }
 
 
@@ -1430,3 +1433,805 @@ body.no-scroll {
     border: 2px solid var(--accent-color);
     box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
 }
+
+
+
+
+/* --- ESTILOS GERAIS --- */
+
+/* Cor de destaque (usa a variável global do teu projeto) */
+.texto-destaque {
+    color: var(--accent-color);
+}
+
+/* Container do botão voltar */
+.container-voltar {
+    width: 95%;
+    max-width: 1400px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
+
+/* Grid principal onde ficam os cards */
+.cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+/* --- ESTILO DO CARD (PDF ITEM) --- */
+
+.pdf-item {
+    /* Adicione aqui estilos específicos do card se necessário, 
+       como background ou borda, caso ainda não existam no css global */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.05); /* Exemplo de fundo leve */
+    width: 200px; /* Ou o tamanho que preferires */
+}
+
+/* Ícones */
+.icon-wrapper {
+    margin-bottom: 15px;
+}
+
+.icon-pdf {
+    font-size: 60px;
+    color: var(--accent-color);
+    opacity: 0.9;
+}
+
+/* Textos dentro do card */
+.card-info {
+    width: 100%;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.card-titulo {
+    margin: 0;
+    font-size: 1.1rem;
+    color: #fff;
+}
+
+.card-serie {
+    margin: 5px 0 0 0;
+    font-size: 0.9rem;
+    color: #ccc;
+}
+
+/* --- BOTÕES --- */
+
+.card-acoes {
+    margin-top: auto;
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    justify-content: center;
+}
+
+.btn-ver {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #fff;
+    padding: 8px 15px;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-ver:hover {
+    background: rgba(255,255,255,0.1);
+}
+
+.btn-baixar-custom {
+    background: var(--accent-color);
+    color: #000;
+    padding: 8px 15px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+    font-size: 0.9rem;
+}
+
+.btn-baixar-custom:hover {
+    opacity: 0.9;
+}
+
+/* Mensagem quando não há arquivos */
+.msg-vazio {
+    color: #aaa;
+    font-size: 1.2rem;
+    margin-top: 50px;
+    text-align: center;
+    width: 100%;
+}
+
+/* Container Principal centralizado */
+.sobre-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: sans-serif; /* Ou a fonte do teu projeto */
+}
+
+/* Título Principal */
+.main-title {
+    text-align: center;
+    font-size: 2.5rem;
+    color: #fff; /* Branco para destaque */
+    margin-bottom: 40px;
+}
+
+.main-title .destaque {
+    color: var(--accent-color); /* Usa a cor global do projeto */
+}
+
+/* Cartão de Conteúdo (Fundo levemente transparente) */
+.content-card {
+    background-color: rgba(255, 255, 255, 0.05); /* Fundo sutil */
+    border-radius: 20px;
+    padding: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Subtítulos (Perguntas) */
+.section-title {
+    color: var(--accent-color);
+    font-size: 1.6rem;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid rgba(255,255,255,0.1); /* Linha fina abaixo */
+    padding-bottom: 10px;
+}
+
+/* Texto padrão */
+.texto-sobre {
+    color: #e0e0e0; /* Cinza claro para leitura confortável */
+    line-height: 1.8; /* Espaçamento entre linhas (importante para acessibilidade) */
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+}
+
+/* Destaque no meio do texto */
+.texto-destaque {
+    font-style: italic;
+    color: #fff;
+    font-weight: bold;
+}
+
+/* Listas (Pontos) */
+.lista-clean {
+    list-style: none; /* Remove bolinhas padrão */
+    padding-left: 0;
+}
+
+.lista-clean li {
+    margin-bottom: 12px;
+    color: #ccc;
+    line-height: 1.6;
+    padding-left: 20px;
+    position: relative;
+}
+
+/* Cria uma bolinha colorida personalizada para a lista */
+.lista-clean li::before {
+    content: "•";
+    color: var(--accent-color);
+    font-weight: bold;
+    font-size: 1.5em;
+    position: absolute;
+    left: 0;
+    top: -5px;
+}
+
+/* --- ESTRUTURA GERAL (Baseada no Sobre) --- */
+.metodologia-container {
+    max-width: 1000px; /* Um pouco mais largo por causa das tabelas */
+    margin: 0 auto;
+    padding: 20px;
+    font-family: sans-serif;
+}
+
+.main-title {
+    text-align: center;
+    font-size: 2.5rem;
+    color: #fff;
+    margin-bottom: 40px;
+}
+
+.section-title {
+    color: var(--accent-color);
+    font-size: 1.6rem;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding-bottom: 10px;
+}
+
+.texto-padrao {
+    color: #e0e0e0;
+    line-height: 1.8;
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+}
+
+/* --- ESTILOS NOVOS: TABELAS --- */
+.tabela-wrapper {
+    overflow-x: auto; /* Permite rolar a tabela em telemóveis */
+    margin-bottom: 30px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.tabela-sonar {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: rgba(255, 255, 255, 0.05);
+    color: #ddd;
+}
+
+.tabela-sonar th {
+    background-color: var(--accent-color);
+    color: #000; /* Texto preto para contraste com a cor de destaque */
+    padding: 15px;
+    text-align: left;
+    font-weight: bold;
+}
+
+.tabela-sonar td {
+    padding: 15px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    vertical-align: top;
+}
+
+.tabela-sonar tr:last-child td {
+    border-bottom: none;
+}
+
+/* Efeito zebrado leve nas linhas */
+.tabela-sonar tr:nth-child(even) {
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+/* --- ESTILOS NOVOS: CARDS DE TECNOLOGIA --- */
+.tech-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Duas colunas */
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.tech-card {
+    background: rgba(255,255,255,0.05);
+    padding: 25px;
+    border-radius: 15px;
+    border-left: 4px solid var(--accent-color); /* Linha colorida à esquerda */
+    transition: 0.3s;
+}
+
+.tech-card:hover {
+    background: rgba(255,255,255,0.08);
+    transform: translateY(-5px);
+}
+
+.tech-titulo {
+    color: #fff;
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Ajuste para telas pequenas (telemóveis) */
+@media (max-width: 768px) {
+    .tech-grid {
+        grid-template-columns: 1fr; /* Uma coluna apenas */
+    }
+}
+
+
+
+
+/* static/css/login.css */
+
+/* Centraliza na tela */
+.login-container {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+/* Cartão de Vidro (Glassmorphism) */
+.card-login {
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px); /* Suporte para Safari */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 40px;
+    width: 100%;
+    max-width: 450px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+}
+
+/* Título */
+.titulo-login {
+    text-align: center; 
+    margin-bottom: 30px; 
+    color: #fff; 
+    font-size: 2rem;
+}
+
+/* Labels */
+.campo-input label {
+    display: block;
+    color: var(--accent-color);
+    font-size: 0.9rem;
+    font-weight: bold;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Wrapper para ícone + input */
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-icon {
+    position: absolute;
+    left: 15px;
+    color: #aaa;
+    pointer-events: none;
+}
+
+/* Input Estilizado */
+.input-estilizado {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50px;
+    padding: 12px 20px 12px 45px; /* Espaço para o ícone */
+    color: #fff;
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.3s;
+}
+
+.input-estilizado:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.2); /* Azul neon suave */
+    background: rgba(0, 0, 0, 0.5);
+}
+
+/* Botão */
+.btn-entrar-login {
+    margin-top: 10px;
+    padding: 12px;
+    background: var(--accent-color);
+    color: #0f172a;
+    font-weight: bold;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-entrar-login:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
+}
+
+/* Mensagem de Erro */
+.msg-erro-login {
+    background: rgba(255, 99, 71, 0.2);
+    color: #ff6347;
+    border: 1px solid #ff6347;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.link-esqueci {
+    color: #94a3b8; 
+    font-size: 0.9rem; 
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.link-esqueci:hover {
+    color: #fff;
+}
+
+/* static/css/login.css */
+
+/* Centraliza na tela */
+.login-container {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+/* Cartão de Vidro (Glassmorphism) */
+.card-login {
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px); /* Suporte para Safari */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 40px;
+    width: 100%;
+    max-width: 450px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+}
+
+/* Título */
+.titulo-login {
+    text-align: center; 
+    margin-bottom: 30px; 
+    color: #fff; 
+    font-size: 2rem;
+}
+
+/* Labels */
+.campo-input label {
+    display: block;
+    color: var(--accent-color);
+    font-size: 0.9rem;
+    font-weight: bold;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Wrapper para ícone + input */
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-icon {
+    position: absolute;
+    left: 15px;
+    color: #aaa;
+    pointer-events: none;
+}
+
+/* Input Estilizado */
+.input-estilizado {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50px;
+    padding: 12px 20px 12px 45px; /* Espaço para o ícone */
+    color: #fff;
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.3s;
+}
+
+.input-estilizado:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.2); /* Azul neon suave */
+    background: rgba(0, 0, 0, 0.5);
+}
+
+/* Botão */
+.btn-entrar-login {
+    margin-top: 10px;
+    padding: 12px;
+    background: var(--accent-color);
+    color: #0f172a;
+    font-weight: bold;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-entrar-login:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
+}
+
+/* Mensagem de Erro */
+.msg-erro-login {
+    background: rgba(255, 99, 71, 0.2);
+    color: #ff6347;
+    border: 1px solid #ff6347;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.link-esqueci {
+    color: #94a3b8; 
+    font-size: 0.9rem; 
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.link-esqueci:hover {
+    color: #fff;
+}
+
+.btn-adicionar {
+    display: inline-block;
+    padding: 12px 32px;
+    margin-left: 15px; /* Espaço entre o botão voltar e este */
+    
+    /* Cores e Borda */
+    color: #4ade80; /* Verde Neon Claro */
+    border: 2px dashed #4ade80; /* Borda tracejada */
+    background: rgba(74, 222, 128, 0.05); /* Fundo muito leve */
+    
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    
+    transition: all 0.3s ease;
+}
+
+.btn-adicionar:hover {
+    background: #4ade80; /* Fundo preenche de verde */
+    color: #0F172A; /* Texto escuro */
+    border-style: solid; /* Borda fica sólida no hover */
+    
+    transform: translateY(-3px);
+    box-shadow: 0 0 15px rgba(74, 222, 128, 0.4); /* Brilho verde */
+}
+
+.landing-container {
+    height: 80vh; /* Ocupa quase a tela toda */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+}
+
+.landing-content {
+    max-width: 800px;
+    background: rgba(0, 0, 0, 0.4); /* Fundo escuro leve para leitura */
+    padding: 50px;
+    border-radius: 30px;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.landing-title {
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+    font-weight: 800;
+}
+
+.landing-text {
+    font-size: 1.2rem;
+    color: #ccc;
+    margin-bottom: 40px;
+    line-height: 1.6;
+}
+
+.landing-actions {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.btn-destaque-landing {
+    padding: 15px 40px;
+    background: var(--accent-color);
+    color: #0f172a;
+    font-weight: bold;
+    font-size: 1.1rem;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-destaque-landing:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
+}
+
+.btn-secundario-landing {
+    padding: 15px 40px;
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    font-weight: bold;
+    font-size: 1.1rem;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: background 0.2s;
+}
+.btn-secundario-landing:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: #fff;
+}
+
+/* Ajuste Mobile */
+@media (max-width: 600px) {
+    .landing-title { font-size: 2.5rem; }
+    .landing-actions { flex-direction: column; }
+}
+
+/* Estilo para a lista de séries no modal */
+.lista-series-checkbox {
+    list-style: none; /* Remove bolinhas */
+    padding: 0;
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Duas colunas */
+    gap: 10px;
+    max-height: 150px; /* Se tiver muitas, cria rolagem */
+    overflow-y: auto;
+}
+
+.lista-series-checkbox li {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 5px 10px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.lista-series-checkbox input {
+    margin-right: 10px;
+    transform: scale(1.2); /* Aumenta um pouco a caixa */
+    accent-color: var(--accent-color); /* Cor de destaque quando marcado */
+}
+
+.lista-series-checkbox label {
+    color: #fff;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+/* --- BOTÃO DE EDIÇÃO (Lápis) NO CARD --- */
+.card-opcao, .pdf-item {
+    position: relative; /* Necessário para posicionar o botão dentro */
+}
+
+.btn-editar-card {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10; /* Garante que fique acima do link */
+    
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-editar-card:hover {
+    background: var(--accent-color);
+    color: #000;
+    transform: scale(1.1);
+}
+
+.btn-editar-card .material-symbols-outlined {
+    font-size: 18px; /* Tamanho do ícone */
+}
+
+/* Botão de Excluir dentro do Modal */
+.btn-excluir {
+    background: transparent;
+    border: 1px solid #ff6b6b;
+    color: #ff6b6b;
+    padding: 10px 20px;
+    border-radius: 50px;
+    margin-top: 10px;
+    cursor: pointer;
+    width: 100%;
+    transition: 0.3s;
+}
+.btn-excluir:hover {
+    background: #ff6b6b;
+    color: #fff;
+}
+
+/* --- NOTIFICAÇÕES TOAST (Pop-ups de Aviso) --- */
+.toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.toast {
+    background: rgba(15, 23, 42, 0.95); /* Fundo escuro */
+    backdrop-filter: blur(10px);
+    color: #fff;
+    padding: 15px 25px;
+    border-radius: 12px;
+    min-width: 300px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    border-left: 5px solid; /* Linha colorida na esquerda */
+    
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+    animation: slideIn 0.5s ease forwards, fadeOut 0.5s ease 4s forwards;
+    opacity: 0; /* Começa invisível para a animação funcionar */
+}
+
+/* Tipos de mensagem */
+.toast.success {
+    border-color: #4ade80; /* Verde Neon */
+    box-shadow: 0 5px 15px rgba(74, 222, 128, 0.2);
+}
+
+.toast.error {
+    border-color: #f87171; /* Vermelho Neon */
+    box-shadow: 0 5px 15px rgba(248, 113, 113, 0.2);
+}
+
+.toast.warning {
+    border-color: #fbbf24; /* Amarelo */
+}
+
+/* Animações */
+@keyframes slideIn {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; visibility: hidden; }
+}
+
+/* Botãozinho de fechar (x) */
+.toast-close {
+    background: transparent;
+    border: none;
+    color: #aaa;
+    font-size: 1.2rem;
+    cursor: pointer;
+    margin-left: 15px;
+}
+.toast-close:hover { color: #fff; }
