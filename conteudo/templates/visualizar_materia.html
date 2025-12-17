@@ -10,12 +10,22 @@
     
     <a href="javascript:history.back()" class="btn-voltar" style="margin-bottom: 20px; display: inline-block;">← Voltar</a>
 
+    <a onclick="abrirModalGrau()" class="btn-adicionar" style="margin-bottom: 20px;">+ Adicionar</a>
+
     <div class="cards-container cards-verticais">
         {% for item in pdfs %}
             
             <div class="card-opcao" style="cursor: pointer;" 
                  onclick="abrirModalPreview('{{ item.arquivo_pdf.url }}', '{{ item.titulo }}')">
                 
+                <div>
+                    <button class="btn-editar-card" 
+                            onclick="event.stopPropagation(); abrirModalEdicaoPdf('{% url 'editar_pdf' item.id %}', '{{ item.titulo }}')">
+                        <span class="material-symbols-outlined">edit</span>
+                    </button>
+
+                </div>
+
                 <div style="padding: 20px; display: flex; flex-direction: column; justify-content: space-between; height: 100%; width: 100%;">
                     <div>
                         <h3 style="font-size: 1.2rem;">{{ item.titulo }}</h3>
@@ -41,4 +51,75 @@
     </div>
 
 </div>
+
+<div id="modal-criar-pdf" class="modal-overlay" style="display: none;">
+    <div class="modal-conteudo card-login" style="max-width: 600px; height: auto; max-height: 90vh; overflow-y: auto;">
+        <span class="fechar-modal" onclick="fecharModalPdf()">×</span>
+        <h2 style="text-align: center; color: #fff; margin-bottom: 20px;">Novo Arquivo PDF</h2>
+        
+        <form action="{% url 'criar_pdf' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div class="campo-input" style="margin-bottom: 15px;">
+                <label>Título do Arquivo:</label>
+                <input type="text" name="titulo" class="input-estilizado" required>
+            </div>
+            
+            <div class="campo-input" style="margin-bottom: 15px;">
+                <label>Arquivo PDF:</label>
+                <input type="file" name="arquivo_pdf" class="input-estilizado" accept="application/pdf" style="padding: 10px;" required>
+            </div>
+
+            <p style="color: yellow; font-size: 0.8rem;">*Para os campos abaixo aparecerem as opções, passe o form na view ou itere sobre os objetos.</p>
+
+            <div class="campo-input" style="margin-bottom: 10px;">
+                <label>Divergência:</label>
+                <select name="divergencia" class="input-estilizado">
+                     </select>
+            </div>
+            
+            <button type="submit" class="btn-entrar-login" style="width: 100%; margin-top: 20px;">Salvar PDF</button>
+        </form>
+    </div>
+</div>
+<script>
+    function abrirModalPdf() { document.getElementById('modal-criar-pdf').style.display = 'flex'; }
+    function fecharModalPdf() { document.getElementById('modal-criar-pdf').style.display = 'none'; }
+</script>
+
+<div id="modal-editar-pdf" class="modal-overlay" style="display: none;">
+    <div class="modal-conteudo card-login" style="max-width: 500px; height: auto;">
+        <span class="fechar-modal" onclick="fecharModalEdicaoPdf()">×</span>
+        <h2 style="text-align: center; color: #fff; margin-bottom: 20px;">Editar PDF</h2>
+        
+        <form id="form-edicao-pdf" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div class="campo-input" style="margin-bottom: 15px;">
+                <label>Título:</label>
+                <input type="text" name="titulo" id="edit_titulo_pdf" class="input-estilizado">
+            </div>
+
+            <div class="campo-input" style="margin-bottom: 15px;">
+                <label>Trocar Arquivo (Opcional):</label>
+                <input type="file" name="arquivo_pdf" class="input-estilizado" style="padding: 10px;">
+            </div>
+
+            <button type="submit" class="btn-entrar-login" style="width: 100%;">Salvar</button>
+            <button type="submit" name="deletar" value="true" class="btn-excluir" onclick="return confirm('Apagar este PDF?')">Excluir</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    function abrirModalEdicaoPdf(url, titulo) {
+        document.getElementById('form-edicao-pdf').action = url;
+        document.getElementById('edit_titulo_pdf').value = titulo;
+        document.getElementById('modal-editar-pdf').style.display = 'flex';
+    }
+    function fecharModalEdicaoPdf() {
+        document.getElementById('modal-editar-pdf').style.display = 'none';
+    }
+</script>
+
 {% endblock %}

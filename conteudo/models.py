@@ -36,6 +36,10 @@ class Materia(models.Model):
     nome = models.CharField(max_length=100)
     slug = models.SlugField(unique=True)
     imagem = models.ImageField(upload_to='materias/', blank=True, null=True)
+    
+    # O relacionamento fica AQUI agora.
+    # O related_name='materias' garante que suas views antigas (serie.materias.all) continuem funcionando!
+    series = models.ManyToManyField('Serie', related_name='materias', blank=True) 
 
     def __str__(self):
         return self.nome
@@ -44,8 +48,6 @@ class Serie(models.Model):
     nome = models.CharField(max_length=50)
     slug = models.SlugField(unique=True)
     
-    #aqui ta definido quais matérias essa série tem
-    materias = models.ManyToManyField(Materia, related_name='series')
 
     def __str__(self):
         return self.nome

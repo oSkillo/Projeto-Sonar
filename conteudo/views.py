@@ -7,13 +7,15 @@ from django.http import JsonResponse
 from django.urls import reverse
 from django.db.models import Q
 from unidecode import unidecode
-
+from .forms import DivergenciaForm, GrauForm, SerieForm, MateriaForm, MaterialPDFForm
+from django.contrib import messages
 
 # View da Home (Alterada)
 def home_view(request):
     # Pega só quem tem a caixinha marcada
     divergencias_capa = Divergencia.objects.filter(destaque_home=True)
     return render(request, 'divergencias.html', {'items': divergencias_capa})
+
 
 def grau_view(request):
     return render(request, 'graus.html')
@@ -110,12 +112,15 @@ def visualizar_materia(request, materia_slug):
 # 2. PÁGINA DA MATÉRIA (Lista os cards)
 def visualizar_materia(request, materia_slug):
     materia = get_object_or_404(Materia, slug=materia_slug)
-    # Pega todos os PDFs dessa matéria
     pdfs = MaterialPDF.objects.filter(materia=materia).order_by('serie__nome')
+    
+    # ADICIONE ISSO:
+    form_pdf = MaterialPDFForm() 
     
     return render(request, 'visualizar_materia.html', {
         'materia': materia,
-        'pdfs': pdfs
+        'pdfs': pdfs,
+        'form_pdf': form_pdf # Passando o form pro HTML
     })
 
 def login_user(request):
@@ -254,3 +259,129 @@ def pagina_contato(request):
         return render(request, 'contato.html', {'sucesso': True})
 
     return render(request, 'contato.html')
+
+def criar_divergencia(request):
+    if request.method == 'POST':
+        form = DivergenciaForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            # MENSAGEM DE SUCESSO (Verde)
+            messages.success(request, 'Divergência criada com sucesso!') 
+            return redirect(request.META.get('HTTP_REFERER', '/'))
+        else:
+            # MENSAGEM DE ERRO (Vermelho)
+            # Mostra o primeiro erro encontrado (ex: "Slug já existe")
+            errors = form.errors.as_text()
+            messages.error(request, f'Erro ao criar: {errors}')
+            
+    return redirect('/')
+
+def criar_grau(request):
+    if request.method == 'POST':
+        form = GrauForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect(request.META.get('HTTP_REFERER', '/'))
+    return redirect('/')
+
+def criar_serie(request):
+    if request.method == 'POST':
+        form = SerieForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect(request.META.get('HTTP_REFERER', '/'))
+    return redirect('/')
+
+def criar_materia(request):
+    if request.method == 'POST':
+        form = MateriaForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect(request.META.get('HTTP_REFERER', '/'))
+    return redirect('/')
+
+def criar_pdf(request):
+    if request.method == 'POST':
+        form = MaterialPDFForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect(request.META.get('HTTP_REFERER', '/'))
+    return redirect('/')
+
+def editar_divergencia(request, id):
+    item = get_object_or_404(Divergencia, id=id)
+    
+    if request.method == 'POST':
+        if 'deletar' in request.POST:
+            item.delete()
+            # MENSAGEM DE SUCESSO AO DELETAR
+            messages.success(request, 'Item removido com sucesso.')
+            return redirect('base')
+            
+        # Logica de salvar edição...
+        item.nome = request.POST.get('nome')
+        item.slug = request.POST.get('slug')
+        
+        # Validação simples manual (só pra garantir que não quebra)
+        try:
+            item.save()
+            messages.success(request, 'Alterações salvas com sucesso!')
+        except Exception as e:
+            messages.error(request, 'Erro ao salvar: Nome ou Slug já existem.')
+            return redirect(request.META.get('HTTP_REFERER', '/'))
+
+        return redirect(request.META.get('HTTP_REFERER', '/'))
+            
+    return redirect('/')
+
+def editar_grau(request, id):
+    item = get_object_or_404(Grau, id=id)
+    if request.method == 'POST':
+        if 'deletar' in request.POST:
+            item.delete()
+            return redirect(request.META.get('HTTP_REFERER', '/'))
+        
+        form = GrauForm(request.POST, instance=item)
+        if form.is_valid():
+            form.save()
+            return redirect(request.META.get('HTTP_REFERER', '/'))
+    return redirect('/')
+
+def editar_serie(request, id):
+    item = get_object_or_404(Serie, id=id)
+    if request.method == 'POST':
+        if 'deletar' in request.POST:
+            item.delete()
+            return redirect(request.META.get('HTTP_REFERER', '/'))
+        
+        form = SerieForm(request.POST, instance=item)
+        if form.is_valid():
+            form.save()
+            return redirect(request.META.get('HTTP_REFERER', '/'))
+    return redirect('/')
+
+def editar_materia(request, id):
+    item = get_object_or_404(Materia, id=id)
+    if request.method == 'POST':
+        if 'deletar' in request.POST:
+            item.delete()
+            return redirect(request.META.get('HTTP_REFERER', '/'))
+        
+        form = MateriaForm(request.POST, instance=item)
+        if form.is_valid():
+            form.save()
+            return redirect(request.META.get('HTTP_REFERER', '/'))
+    return redirect('/')
+
+def editar_pdf(request, id):
+    item = get_object_or_404(MaterialPDF, id=id)
+    if request.method == 'POST':
+        if 'deletar' in request.POST:
+            item.delete()
+            return redirect(request.META.get('HTTP_REFERER', '/'))
+        
+        form = MaterialPDFForm(request.POST, instance=item)
+        if form.is_valid():
+            form.save()
+            return redirect(request.META.get('HTTP_REFERER', '/'))
+    return redirect('/')

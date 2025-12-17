@@ -24,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-)*o#)(^90&cczphky39&e(t1a0-bdu3+#cvj=z&@3ws-wz!ch5'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['projetoSonar.pythonanywhere.com']
+ALLOWED_HOSTS = ['projetoSonar.pythonanywhere.com', '127.0.0.1', 'localhost']
 
 
 # Application definition

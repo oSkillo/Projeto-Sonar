@@ -19,18 +19,21 @@
     box-sizing: border-box;
 }
 
+html, body {
+    overflow-x: hidden; /* Bloqueia a rolagem horizontal em ambos */
+    max-width: 100%;    /* Garante que não ultrapasse a largura da tela */
+    margin: 0;          /* Remove margens padrões */
+    padding: 0;
+}
+
 body {
-    background-color: #1a0b2e; /* Cor escura do fundo */
+    background-color: #1a0b2e;
     color: var(--text-main);
     font-family: 'Segoe UI';
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    margin: 0;
-
-    /* ADICIONE ISSO AQUI: */
-    overflow-x: hidden; /* Bloqueia qualquer rolagem para os lados */
-    width: 100%;        /* Garante que o corpo não exceda a largura da janela */
+    width: 100%;
 }
 
 
@@ -1979,3 +1982,256 @@ body.no-scroll {
 .link-esqueci:hover {
     color: #fff;
 }
+
+.btn-adicionar {
+    display: inline-block;
+    padding: 12px 32px;
+    margin-left: 15px; /* Espaço entre o botão voltar e este */
+    
+    /* Cores e Borda */
+    color: #4ade80; /* Verde Neon Claro */
+    border: 2px dashed #4ade80; /* Borda tracejada */
+    background: rgba(74, 222, 128, 0.05); /* Fundo muito leve */
+    
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    
+    transition: all 0.3s ease;
+}
+
+.btn-adicionar:hover {
+    background: #4ade80; /* Fundo preenche de verde */
+    color: #0F172A; /* Texto escuro */
+    border-style: solid; /* Borda fica sólida no hover */
+    
+    transform: translateY(-3px);
+    box-shadow: 0 0 15px rgba(74, 222, 128, 0.4); /* Brilho verde */
+}
+
+.landing-container {
+    height: 80vh; /* Ocupa quase a tela toda */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+}
+
+.landing-content {
+    max-width: 800px;
+    background: rgba(0, 0, 0, 0.4); /* Fundo escuro leve para leitura */
+    padding: 50px;
+    border-radius: 30px;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.landing-title {
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+    font-weight: 800;
+}
+
+.landing-text {
+    font-size: 1.2rem;
+    color: #ccc;
+    margin-bottom: 40px;
+    line-height: 1.6;
+}
+
+.landing-actions {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.btn-destaque-landing {
+    padding: 15px 40px;
+    background: var(--accent-color);
+    color: #0f172a;
+    font-weight: bold;
+    font-size: 1.1rem;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-destaque-landing:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
+}
+
+.btn-secundario-landing {
+    padding: 15px 40px;
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    font-weight: bold;
+    font-size: 1.1rem;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: background 0.2s;
+}
+.btn-secundario-landing:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: #fff;
+}
+
+/* Ajuste Mobile */
+@media (max-width: 600px) {
+    .landing-title { font-size: 2.5rem; }
+    .landing-actions { flex-direction: column; }
+}
+
+/* Estilo para a lista de séries no modal */
+.lista-series-checkbox {
+    list-style: none; /* Remove bolinhas */
+    padding: 0;
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Duas colunas */
+    gap: 10px;
+    max-height: 150px; /* Se tiver muitas, cria rolagem */
+    overflow-y: auto;
+}
+
+.lista-series-checkbox li {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 5px 10px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.lista-series-checkbox input {
+    margin-right: 10px;
+    transform: scale(1.2); /* Aumenta um pouco a caixa */
+    accent-color: var(--accent-color); /* Cor de destaque quando marcado */
+}
+
+.lista-series-checkbox label {
+    color: #fff;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+/* --- BOTÃO DE EDIÇÃO (Lápis) NO CARD --- */
+.card-opcao, .pdf-item {
+    position: relative; /* Necessário para posicionar o botão dentro */
+}
+
+.btn-editar-card {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10; /* Garante que fique acima do link */
+    
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-editar-card:hover {
+    background: var(--accent-color);
+    color: #000;
+    transform: scale(1.1);
+}
+
+.btn-editar-card .material-symbols-outlined {
+    font-size: 18px; /* Tamanho do ícone */
+}
+
+/* Botão de Excluir dentro do Modal */
+.btn-excluir {
+    background: transparent;
+    border: 1px solid #ff6b6b;
+    color: #ff6b6b;
+    padding: 10px 20px;
+    border-radius: 50px;
+    margin-top: 10px;
+    cursor: pointer;
+    width: 100%;
+    transition: 0.3s;
+}
+.btn-excluir:hover {
+    background: #ff6b6b;
+    color: #fff;
+}
+
+/* --- NOTIFICAÇÕES TOAST (Pop-ups de Aviso) --- */
+.toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.toast {
+    background: rgba(15, 23, 42, 0.95); /* Fundo escuro */
+    backdrop-filter: blur(10px);
+    color: #fff;
+    padding: 15px 25px;
+    border-radius: 12px;
+    min-width: 300px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    border-left: 5px solid; /* Linha colorida na esquerda */
+    
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+    animation: slideIn 0.5s ease forwards, fadeOut 0.5s ease 4s forwards;
+    opacity: 0; /* Começa invisível para a animação funcionar */
+}
+
+/* Tipos de mensagem */
+.toast.success {
+    border-color: #4ade80; /* Verde Neon */
+    box-shadow: 0 5px 15px rgba(74, 222, 128, 0.2);
+}
+
+.toast.error {
+    border-color: #f87171; /* Vermelho Neon */
+    box-shadow: 0 5px 15px rgba(248, 113, 113, 0.2);
+}
+
+.toast.warning {
+    border-color: #fbbf24; /* Amarelo */
+}
+
+/* Animações */
+@keyframes slideIn {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; visibility: hidden; }
+}
+
+/* Botãozinho de fechar (x) */
+.toast-close {
+    background: transparent;
+    border: none;
+    color: #aaa;
+    font-size: 1.2rem;
+    cursor: pointer;
+    margin-left: 15px;
+}
+.toast-close:hover { color: #fff; }
