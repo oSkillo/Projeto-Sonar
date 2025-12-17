@@ -32,25 +32,26 @@ class Grau(models.Model):
     def __str__(self):
         return f"{self.divergencia.nome} - {self.nome}"
 
-class Materia(models.Model):
-    nome = models.CharField(max_length=100)
-    slug = models.SlugField(unique=True)
-    imagem = models.ImageField(upload_to='materias/', blank=True, null=True)
-    
-    # O relacionamento fica AQUI agora.
-    # O related_name='materias' garante que suas views antigas (serie.materias.all) continuem funcionando!
-    series = models.ManyToManyField('Serie', related_name='materias', blank=True) 
-
-    def __str__(self):
-        return self.nome
 
 class Serie(models.Model):
     nome = models.CharField(max_length=50)
-    slug = models.SlugField(unique=True)
-    
+    slug = models.SlugField(max_length=200)
+    divergencia = models.ForeignKey(Divergencia, on_delete=models.CASCADE, null=True, blank=True)
+    grau = models.ForeignKey(Grau, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return self.nome
+
+class Materia(models.Model):
+    nome = models.CharField(max_length=100)
+    slug = models.SlugField()
+    serie = models.ForeignKey(Serie, on_delete=models.CASCADE, related_name='materias', null=True, blank=True)
+    # Se quiser ser ainda mais específico, pode adicionar divergencia/grau aqui também, 
+    # mas ligando à Série já costuma resolver.
+
+    def __str__(self):
+        return self.nome
+
 
 class MaterialPDF(models.Model):
     titulo = models.CharField(max_length=200)

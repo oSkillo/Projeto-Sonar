@@ -1,8 +1,8 @@
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 from django.contrib.auth import get_user_model
 from django import forms
-# Importamos o modelo Perfil que está lá no outro app (conteudo)
 from conteudo.models import Perfil
+from django.contrib.auth.models import User
 
 # Obtém o modelo de usuário ativo, seja o padrão ou o customizado.
 User = get_user_model() 
@@ -31,10 +31,9 @@ class PerfilForm(forms.ModelForm):
 # Obtém o modelo de usuário ativo (padrão ou customizado)
 User = get_user_model()
 
-class CustomUserCreationForm(UserCreationForm):
-    # Aqui você pode adicionar campos extras se precisar, 
-    # ou apenas definir o Model/Fields
+class RegisterForm(UserCreationForm):
+    email = forms.EmailField()
     class Meta:
         model = User
-        fields = ('username', 'email') # Exemplo: pedindo username e email
-        # O UserCreationForm já trata as senhas por padrão
+        fields = ['username', 'email', 'password1', 'password2']
+

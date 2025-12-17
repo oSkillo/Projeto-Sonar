@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load custom_tags %}
 {% load static %}
 
 {% block conteudo %}
@@ -9,9 +10,9 @@
 <div style="padding: 20px; max-width: 1400px; margin: 0 auto;">
     
     <a href="javascript:history.back()" class="btn-voltar" style="margin-bottom: 20px; display: inline-block;">← Voltar</a>
-
-    <a onclick="abrirModalGrau()" class="btn-adicionar" style="margin-bottom: 20px;">+ Adicionar</a>
-
+    {% if user|eh_admin %}
+        <a onclick="abrirModalGrau()" class="btn-adicionar" style="margin-bottom: 20px;">+ Adicionar</a>
+    {% endif %}
     <div class="cards-container cards-verticais">
         {% for item in pdfs %}
             
@@ -19,11 +20,12 @@
                  onclick="abrirModalPreview('{{ item.arquivo_pdf.url }}', '{{ item.titulo }}')">
                 
                 <div>
-                    <button class="btn-editar-card" 
-                            onclick="event.stopPropagation(); abrirModalEdicaoPdf('{% url 'editar_pdf' item.id %}', '{{ item.titulo }}')">
-                        <span class="material-symbols-outlined">edit</span>
-                    </button>
-
+                    {% if user|eh_admin %}
+                        <button class="btn-editar-card" 
+                                onclick="event.stopPropagation(); abrirModalEdicaoPdf('{% url 'editar_pdf' item.id %}', '{{ item.titulo }}')">
+                            <span class="material-symbols-outlined">edit</span>
+                        </button>
+                    {% endif %}
                 </div>
 
                 <div style="padding: 20px; display: flex; flex-direction: column; justify-content: space-between; height: 100%; width: 100%;">

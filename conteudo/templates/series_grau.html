@@ -1,26 +1,31 @@
 {% extends 'base.html' %}
+{% load custom_tags %}
 
 {% block conteudo %}
-<h1 style="text-align: center; margin-top: 30px;">Qual a série do aluno?</h1>
+<h1 style="text-align: center; margin-top: 30px; margin-bottom: 30px;">Qual a série do aluno?</h1>
 
 <div class="cards-container modo-series">
     {% for item in items %}
         <a href="{% url 'listar_materias_com_grau' divergencia_slug grau_slug item.slug %}" class="card-opcao">
-            
-            <button class="btn-editar-card" 
-                    onclick="event.preventDefault(); event.stopPropagation(); abrirModalEdicao('{% url 'editar_serie' item.id %}', '{{ item.nome }}', '{{ item.slug }}')">
-                <span class="material-symbols-outlined">edit</span>
-            </button>
-
+            {% if user|eh_admin %}
+                <button class="btn-editar-card" 
+                        onclick="event.preventDefault(); event.stopPropagation(); abrirModalEdicao('{% url 'editar_serie' item.id %}', '{{ item.nome }}', '{{ item.slug }}')">
+                    <span class="material-symbols-outlined">edit</span>
+                </button>
+            {% endif %}
             <h3>{{ item.nome }}</h3>
         </a>
     {% endfor %}
     </div>
 
-<div style="text-align: center; margin-top: 40px; margin-bottom: 40px;">
-    <a href="javascript:history.back()" style="color: whitesmoke;" class="btn-voltar">← Voltar</a>
-    <a href="javascript:void(0)" onclick="abrirModalSerie()" class="btn-adicionar">+ Adicionar</a>
+<div class="barra-botoes-fixa">
+    <a href="javascript:history.back()" class="btn-voltar">← Voltar</a>
+    {% if user|eh_admin %}
+        <a onclick="abrirModalSerie()" class="btn-adicionar">+ Adicionar</a>
+    {% endif %}
 </div>
+
+<div style="height: 100px;"></div>
 
 <div id="modal-criar-serie" class="modal-overlay" style="display: none;">
     <div class="modal-conteudo card-login" style="max-width: 500px; height: auto;">
@@ -28,14 +33,37 @@
         <h2 style="text-align: center; color: #fff; margin-bottom: 20px;">Nova Série</h2>
         <form action="{% url 'criar_serie' %}" method="POST">
             {% csrf_token %}
-             <div class="campo-input" style="margin-bottom: 15px;">
-                <label>Nome da Série:</label>
-                <input type="text" name="nome" id="id_nome_serie" class="input-estilizado" onkeyup="gerarSlug('id_nome_serie', 'id_slug_serie')">
-            </div>
+            
             <div class="campo-input" style="margin-bottom: 15px;">
-                <label>Slug:</label>
-                <input type="text" name="slug" id="id_slug_serie" class="input-estilizado">
+                <label>Nome da Série:</label>
+                <input type="text" 
+                    name="nome" 
+                    id="id_nome_serie" 
+                    class="input-estilizado" 
+                    placeholder="Ex: 6º Ano Fundamental" 
+                    required 
+                    onkeyup="gerarSlug('id_nome_serie', 'id_slug_serie')">
             </div>
+
+            <div class="campo-input" style="margin-bottom: 15px;">
+                <label style="font-size: 0.8rem; color: #aaa;">Link (Slug):</label>
+                <input type="text" 
+                    name="slug" 
+                    id="id_slug_serie" 
+                    class="input-estilizado" 
+                    placeholder="Ex: 6-ano-fundamental" 
+                    readonly 
+                    style="background: rgba(255,255,255,0.05); color: #888; cursor: default;">
+            </div>
+
+            {% if divergencia %}
+                <input type="hidden" name="divergencia_id" value="{{ divergencia.id }}">
+            {% endif %}
+
+            {% if grau %}
+                <input type="hidden" name="grau_id" value="{{ grau.id }}">
+            {% endif %}
+
             <button type="submit" class="btn-entrar-login" style="width: 100%;">Salvar</button>
         </form>
     </div>

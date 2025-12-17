@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .forms import CustomUserChangeForm, PerfilForm, CustomUserCreationForm
+from .forms import CustomUserChangeForm, PerfilForm
 from conteudo.models import Perfil
-from django.contrib.auth import login
+from .forms import RegisterForm
+from django.contrib.auth import authenticate, login, logout
+
 
 
 @login_required
@@ -38,22 +40,34 @@ def perfil_usuario(request):
     # Vamos usar o template que está na pasta CONTA
     return render(request, 'perfil_usuario.html', context)
 
-def register(request):
-    if request.method == 'POST':
-        # Instancia o formulário com os dados submetidos
-        form = CustomUserCreationForm(request.POST)
-        
+
+def cadastro(request):
+    if request.method=="POST":
+        form = RegisterForm(request.POST)
         if form.is_valid():
-            # Salva o novo usuário no banco de dados
-            user = form.save()
-            
-            # (Opcional) Loga o usuário automaticamente após o registro
+            form.save()
+            username = form.cleaned_data.get('username')
+            messages.success(request, f'Bem vindo {username}, sua conta foi criada com sucesso!')
+            return redirect('login')
+
+    form = RegisterForm()
+    return render(request, "cadastro.html", {'form':form})
+
+    
+def login_user(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username = username, password = password )
+        if user is not None:
             login(request, user)
-            
-            # Redireciona para a página inicial ou outra página de sucesso
-            return redirect('home') # 'home' é um nome de URL que você deve definir
+            return redirect('base')
+        else:
+            messages.error(request, ('Usuário ou Senha incorretos. Tente novamente!'))
+            return redirect('entrar')
     else:
-        # Se for um GET, cria um formulário vazio para exibição
-        form = CustomUserCreationForm()
-        
-    return render(request, 'conta/templates/registration.html', {'form': form})
+        return render(request, 'login.html')
+    
+def logout_user(request):
+    logout(request)
+    return redirect('login')
