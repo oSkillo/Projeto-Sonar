@@ -26,6 +26,15 @@
         <a onclick="abrirModalMateria()" class="btn-adicionar">+ Adicionar</a>
     {% endif %}
 </div>
+<script>
+    function abrirModalEdicao(url, nome, slug) {
+        document.getElementById('form-edicao').action = url;
+        document.getElementById('edit_nome').value = nome;
+        document.getElementById('edit_slug').value = slug;
+        document.getElementById('modal-editar-generico').style.display = 'flex';
+    }
+    function fecharModalEdicao() { document.getElementById('modal-editar-generico').style.display = 'none'; }
+</script>
 
 <div style="height: 100px;"></div>
 
