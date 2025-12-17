@@ -37,7 +37,7 @@ header {
     background-color: rgba(15, 23, 42, 0.50); 
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
-    z-index: 100;
+    z-index: 2500;
     top: 0;
     position: fixed; /* Antes era sticky */
     top: 0;
@@ -222,7 +222,7 @@ header {
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 1001;
+    z-index: 2000;
     width: 320px;
     height: 100dvh; 
     background: rgba(0, 0, 0, 0.75);
@@ -705,7 +705,7 @@ div:hover {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.8); /* Preto transparente */
-    z-index: 1000; /* Garante que fica por cima de tudo */
+    z-index: 3000; /* Garante que fica por cima de tudo */
     justify-content: center;
     align-items: center;
 }
@@ -715,12 +715,12 @@ div:hover {
     position: relative;
     background-color: #fff;
     width: 90%;
-    height: 90%; /* Ocupa quase a tela toda */
+    height: 90%; 
     max-width: 1200px;
     border-radius: 8px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     padding: 10px;
-    padding-top: 40px; /* Espaço para o botão X não ficar em cima do PDF */
+    padding-top: 90px !important; 
 }
 
 /* O Botão X */
@@ -1055,7 +1055,7 @@ footer {
 }
 
 /* 4. CELULAR (< 710px) - AQUI VIRA LUPA */
-@media (max-width: 550px) {
+@media (max-width: 580px) {
 
     /* --- GATILHO DA LUPA APARECE --- */
     .mobile-search-trigger {

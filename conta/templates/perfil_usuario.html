@@ -24,7 +24,12 @@
             <div class="perfil-header">
                 
                 <div class="avatar-wrapper">
-                    <img src="{{ user.perfil.foto.url }}" alt="Foto Atual" id="avatar-img">
+                    {% if user.perfil.foto and user.perfil.foto.url != "/media/" %}
+                        <img src="{{ user.perfil.foto.url }}" alt="Foto de Perfil" id="avatar-img" 
+                            onerror="this.src='{% static 'img/default.png' %}'">
+                    {% else %}
+                        <img src="{% static 'img/default.png' %}" alt="Foto Padrão" id="avatar-img">
+                    {% endif %}
                 </div>
 
                 <div class="header-actions">
