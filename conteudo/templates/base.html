@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -9,17 +10,6 @@
 </head>
 <body>
 
-<<<<<<< HEAD
-    <header>
-<<<<<<< HEAD
-        <nav>
-            <a href="/"><h2>Sonar🐟</h2></a>
-            <div>
-                <a href="{% url 'contato' %}">Suporte</a>
-                <a href="{% url 'sobre' %}">Sobre</a>
-=======
-
-=======
 {% block mensagens_globais %}
     {% if messages %}
         <div class="toast-container">
@@ -34,7 +24,6 @@
 {% endblock %}
 {% if user.is_authenticated %}
     <header id="site-header">
->>>>>>> 8c89f78859168caad7195464ef4596d5eaed9ce4
         <div class="header-navbar__content">
 
             <div class="header-navbar__content-logo">
@@ -55,7 +44,6 @@
                         <img src="{% static 'img/icone-Sonar.png' %}" class="logo-icon-mini-img" alt="Sonar">
                     </a>
                 </div>
->>>>>>> 5f35121a7f3d31841038ac0efe97551b0182abb9
             </div>
 
             <form action="{% url 'busca' %}" method="GET" class="search-container" id="search-form-container">
@@ -104,7 +92,7 @@
                 <div class="mobile-emoji-decorative mobile-profile-container">
                     {% if user.is_authenticated %}
                         <a href="{% url 'perfil_usuario' %}">
-                            <img src="{{ user.perfil.foto.url }}" alt="Perfil" class="nav-profile-img" style="width: 50px; height: 50px;">
+                            <img src="{% static 'img/default.png' %}" alt="Perfil" class="nav-profile-img" style="width: 50px; height: 50px;">
                         </a>
                     {% else %}
                         <a href="{% url 'sair' %}" style="text-decoration: none; font-size: 24px;">🟠</a>

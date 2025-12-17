@@ -36,17 +36,6 @@ def perfil_usuario(request):
         'user_form': user_form,
         'perfil_form': perfil_form
     }
-<<<<<<< HEAD
-    return render(request, 'conta/perfil_usuario.html', context)
-
-from django.shortcuts import render
-
-# ... suas outras views ...
-
-def edit_profile(request):
-    # Lógica temporária apenas para o servidor rodar
-    return render(request, 'conta/edit_profile.html')
-=======
     
     # Vamos usar o template que está na pasta CONTA
     return render(request, 'perfil_usuario.html', context)
@@ -82,4 +71,3 @@ def login_user(request):
 def logout_user(request):
     logout(request)
     return redirect('login')
->>>>>>> 8c89f78859168caad7195464ef4596d5eaed9ce4

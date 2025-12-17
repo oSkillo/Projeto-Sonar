@@ -68,7 +68,7 @@ header {
     gap: 15px; 
     height: 100%;
     position: relative; 
-    z-index: 2000; 
+    z-index: 2600; 
 }
 
 .navbar-logo {
@@ -203,17 +203,6 @@ header {
     width: auto;
 }
 
-.sidebar-overlay {
-    display: none; /* Escondido por padrão */
-    position: fixed; /* Fica fixo na tela mesmo se rolar */
-    width: 100%;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.5); /* Preto com transparência */
-    z-index: 1000;
-    top: 0;
-    left: 0;
-
-}
 .sidebar-menu {
     display: flex;             /* Transforma em container flexível */
     flex-direction: column;    /* Organiza itens em coluna (um embaixo do outro) */
@@ -222,7 +211,7 @@ header {
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 2000;
+    z-index: 9999;
     width: 320px;
     height: 100dvh; 
     background: rgba(0, 0, 0, 0.75);
@@ -233,6 +222,18 @@ header {
     transform: translateX(-100%);
     transition: transform 0.3s ease-in-out, visibility 0.3s ease-in-out;
     visibility: hidden;
+}
+
+.sidebar-overlay {
+    display: none; /* Escondido por padrão */
+    position: fixed; /* Fica fixo na tela mesmo se rolar */
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5); /* Preto com transparência */
+    z-index: 9998;
+    top: 0;
+    left: 0;
+
 }
 
 .sidebar-overlay.is-open {
