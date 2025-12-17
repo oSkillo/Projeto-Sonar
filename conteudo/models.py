@@ -65,3 +65,4 @@ class MaterialPDF(models.Model):
 def criar_perfil_automatico(sender, instance, created, **kwargs):
     if created:
         Perfil.objects.create(usuario=instance)
+

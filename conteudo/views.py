@@ -1,8 +1,6 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404
 from .models import Divergencia, Grau, Serie, Materia, MaterialPDF, Perfil
-from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.contrib import messages
 from django.http import JsonResponse
 from django.urls import reverse
 from django.db.models import Q
@@ -118,25 +116,7 @@ def visualizar_materia(request, materia_slug):
         'pdfs': pdfs
     })
 
-def login_user(request):
-    if request.method == "POST":
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username = username, password = password )
-        if user is not None:
-            login(request, user)
-            return redirect('base')
-        else:
-            messages.success(request, ('Usuário ou Senha incorretos. Tente novamente!'))
-            return redirect('entrar')
-    else:
-        return render(request, 'registration/login.html')
     
-#View de Logout do usuario    
-def logout_user(request):
-    logout(request)
-    messages.success(request, (''))
-    return redirect('base')
 
 @login_required(login_url='entrar') # Se não tiver logado, manda pro login
 def perfil_view(request):
@@ -167,6 +147,9 @@ def sobre_view(request):
 
 def metodologia_view(request):
     return render(request, 'metodologia.html')
+
+def perfil(request):
+    return render(request, 'perfil.html')
 
 
 #aqui é a função q decide o caminho (com grau ou sem grau)

@@ -24,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-)*o#)(^90&cczphky39&e(t1a0-bdu3+#cvj=z&@3ws-wz!ch5'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['projetoSonar.pythonanywhere.com']
+ALLOWED_HOSTS = [ ]
 
 
 # Application definition
@@ -137,7 +137,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = '/'
 
 # Redireciona para esta URL caso o acesso seja negado por falta de autenticação
-LOGIN_URL = '/login/'  # Onde sua página de login estará]]
+LOGIN_URL = 'login'  # Onde sua página de login estará]]
 
 # Permite que o site seja aberto em iframes do mesmo domínio (necessário para o modal de PDF)
 X_FRAME_OPTIONS = 'SAMEORIGIN'
