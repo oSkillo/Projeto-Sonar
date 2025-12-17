@@ -28,3 +28,11 @@ def perfil_usuario(request):
         'form': form
     }
     return render(request, 'conta/perfil_usuario.html', context)
+
+from django.shortcuts import render
+
+# ... suas outras views ...
+
+def edit_profile(request):
+    # Lógica temporária apenas para o servidor rodar
+    return render(request, 'conta/edit_profile.html')

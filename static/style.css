@@ -1,3 +1,440 @@
+/* --- PALETA DE CORES --- */
+:root {
+    /* --- CORES NEUTRAS (Dark) --- */
+    --background-color: #0F172A;       /* Slate (Azul acinzentado muito escuro) */
+    --primary-surface: #1E293B;        /* Um tom acima para destacar cards */
+    
+    /* --- ACENTO --- */
+    --accent-color: #38BDF8;           /* Azul Celeste brilhante (bom contraste no escuro) */
+    
+    /* --- TEXTO --- */
+    --text-main: #F9FAFB;              /* Branco "sujo" (evita ofuscamento) */
+    --text-secondary: #9CA3AF;         /* Cinza claro para leitura secundária */
+}
+
+/* --- RESET BÁSICO --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-main);
+    font-family: 'Segoe UI'; /* - Mudei a fonte - */
+    height: 100vh; 
+    /* overflow: hidden; - nâo sei o q faz */
+    display: flex;
+    flex-direction: column;/* - deixa as coisas empilhadas - */
+}
+
+
+
+
+
+header {
+    height: 100px;
+}
+
+
+
+
+
+/* --- NAVBAR --- */
+.header-navbar__content {
+    /* background-color: var(--primary-surface); */
+    /* padding: 1rem 2rem; */
+    /* display: flex; */
+    /* justify-content: space-between; */
+    /* align-items: center; */
+    /* height: 100%;  */
+    
+    /* Aqui eu não entendi nada */
+    border-bottom: 1px solid var(--accent-color);
+    /* box-shadow: 0 4px 15px rgba(0,0,0,0.3); */
+    /*flex-shrink: 0;  Impede a navbar de ser esmagada */
+
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    padding: 0;
+}
+
+.header-navbar__content-logo {
+    z-index: 4;
+    display: flex;
+    align-items: center;
+    width: 320px;
+    min-width: 320px;
+    height: 100%;
+    padding: 30px 0 30px 32px;
+    background: transparent;
+    align-content: center;
+    gap: 12px;
+}
+
+.sidebar-toggle {
+    text-align: center;
+}
+.sidebar-toggle button {
+    padding: 8px;
+    background: transparent;
+}
+
+.navbar-logo {
+    flex: 1 1;
+    width: auto;
+    max-width: 158px;
+    text-decoration: none;
+}
+.navbar-logo > a {
+    text-decoration: none;
+    transition: color 0.3s; /* detalhe fdp em */
+    font-family: sans-serif;
+    font-size: 50px;
+}
+.navbar-logo > a:hover {
+    color: var(--accent-color);
+}
+
+.header-navbar__content-barra {
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    padding: 22px 32px 22px 0;
+    gap: 20px;
+}
+
+.header-navbar__btn {
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  /* border: 10px; */
+  height: 100%;
+  width: 100%;
+  /* border-color: var(--accent-color); */
+  background-color: var(--primary-surface); /* Cor do print */
+  color: var(--text-main);
+  text-decoration: none;
+  border-radius: 8px;
+  font-family: sans-serif;
+  transition: color 0.3s; /* detalhe fdp em */
+}
+.header-navbar__btn:hover {
+    color: var(--accent-color);
+    background-color: var(--background-color);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* --- SIDEBAR --- */
+
+.sidebar-overlay {
+    display: none; /* Escondido por padrão */
+    position: fixed; /* Fica fixo na tela mesmo se rolar */
+    /* z-index: 10; Fica acima de tudo */
+    /* left: 0; */
+    /* top: 0; */
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5); /* Preto com transparência */
+    z-index: 2;
+    top: 0;
+    left: 0;
+    /* Centralizar o modal na tela */
+    /* justify-content: center; */
+    /* align-items: center; */
+}
+.sidebar-menu {
+    width: 280px; /* Largura igual a do YouTube */
+    background-color: var(--primary-surface); /* Cor de fundo bem escura (estilo YouTube) */
+    /* Se quiser usar a sua cor roxa, troque por: var(--primary-surface); */
+    
+    /* height: 100vh; */
+    /*color: var(--text-main);*/
+    /*overflow-y: auto;  Cria barra de rolagem só na sidebar se precisar */
+    /* padding: 12px; */
+    /*border-right: 0.8px solid var(--accent-color);  Linha divisória sutil */
+    
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 3;
+    /* display: none; */
+    width: 320px;
+    height: 100%;
+    height: 100dvh;
+    /* border-right: 1px solid var(--accent-color); */
+
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out, visibility 0.3s ease-in-out;
+    visibility: hidden;
+}
+
+.sidebar-overlay.is-open {
+    display: block;
+}
+
+.sidebar-menu.is-open {
+    /* display: block; */
+    transform: translateX(0);
+    visibility: visible;
+}
+
+
+
+.sidebar-menu__wrapper {
+    overflow-y: auto;
+    height: calc(100% - 100px);
+    margin-top: 100px;
+    padding: 0 14px 0 24px;
+    scrollbar-width: thin;
+    /* scrollbar-color: transparent transparent; */
+}
+
+.sidebar-menu__container {
+    padding-bottom: 40px;
+}
+
+.main-menu {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    font-family: Poppins, sans-serif;
+    font-size: 16px;
+    gap: 12px;
+}
+
+li {
+    unicode-bidi: isolate;
+}
+.separador {
+    display: block;
+    height: 1px;
+    margin: 8px 0;
+    border-top: 0;
+    border-right: 0;
+    border-bottom: 1px solid var(--accent-color);
+    border-left: 0;
+}
+
+/* O Item do Menu (Link) */
+.main-menu__item {
+    /* 1. Comportamento de bloco para o corte funcionar bem */
+    /* display: block;  */
+    
+    /* 2. Altura e Alinhamento Vertical */
+    /* height: 40px;  */
+    line-height: 40px; /* Truque: line-height igual ao height centraliza o texto */
+    
+    /* 3. Estética */
+    /* padding: 0 12px; */
+    border-radius: 12px;
+    /* color: var(--text-main); */
+    /* text-decoration: none; */
+    /* transition: background-color 0.2s; */
+    /* cursor: pointer; */
+
+    display: flex;
+    align-items: center;
+    height: 56px;
+    margin-top: 0;
+
+
+    /* 4. A TRINDADE DOS TRÊS PONTINHOS (...) */
+    /* Agora aplicamos direto no item, já que não tem ícone */
+    white-space: nowrap;      /* Texto numa linha só */
+    overflow: hidden;         /* Corta o excesso */
+    text-overflow: ellipsis;  /* Adiciona o "..." */
+}
+
+/* Efeito Hover (Igual ao do YouTube) */
+.main-menu__item:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Fundo cinza claro ao passar o mouse */
+}
+
+/* Espaço entre ícone e texto */
+.main-menu__item span.material-symbols-outlined {
+    margin-right: 20px;
+    font-size: 24px;
+    flex-shrink: 0; /* Impede o ícone de ser "esmagado" (quebrar linha) */
+
+}
+
+.main-menu__item span:last-child {
+    /* A MÁGICA DOS TRÊS PONTINHOS: */
+    white-space: nowrap; /* Não deixa o texto ir para a linha de baixo */
+    overflow: hidden; /* Corta o que passar do limite */
+    text-overflow: ellipsis; /* Adiciona o "..." no final */
+}
+main {
+    transition: padding-left 0.3s ease-in-out;
+}
+
+@media (min-width: 1600px) {
+    
+    main {
+        /* padding-left: 280px;  Mesma largura da sidebar */
+        transition: padding-left 0.3s ease-in-out; /* Animação suave se redimensionar */
+    }
+    main.is-open {
+        transform: translateX(0);
+        transition: padding-left 0.3s ease-in-out;
+        padding-left: 320px;
+    }
+
+    .sidebar-menu {
+        width: 320px;
+        z-index: 0;
+        /*transform: translateX(0) !important;  Garante que não está escondida */
+        box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out, visibility 0.3s ease-in-out;
+        visibility: hidden;
+    }
+    .sidebar-menu.is-open { 
+        /* display: block; */
+        width: 320px;
+        z-index: 0;
+        transform: translateX(0);
+        visibility: visible;
+    }
+    
+    .sidebar-overlay {
+        display: none;
+        pointer-events: none;
+    }
+    .sidebar-overlay.is-open {
+        display: none;
+        pointer-events: none;
+    }
+    .header-navbar__content {
+        width: 100%; /* Garante que ocupe o espaço restante */
+    }
+}
+
+
+
+
+
+/* --- o footer --- */
+footer {
+    background-color: var(--primary-surface);
+    color: var(--text-secondary);
+    text-align: center;
+    padding: 1rem;
+    margin-top: auto;
+    /* - border-top: 1px solid rgba(255,255,255,0.05); - */
+    height: 60px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* === BARRA DE ROLAGEM CUSTOMIZADA (Scrollbar) === */
+
+/* 1. Funciona no Chrome, Edge, Safari e Opera */
+::-webkit-scrollbar {
+    width: 8px; /* Espessura da barra vertical */
+    height: 8px; /* Espessura da barra horizontal */ 
+}
+
+/* 2. O "trilho" por onde a barra corre */
+::-webkit-scrollbar-track {
+    background: transparent; /* Fundo transparente para ficar clean */
+    /* Se quiser uma cor de fundo no trilho, use: background: #0f172a; */
+}
+
+/* 3. A "pega" da barra (o que você arrasta) */
+::-webkit-scrollbar-thumb {
+    /*background-color: #475569;  Um cinza azulado que combina com seu tema */
+    border-radius: 20px;       /* Deixa bem redondinho (Pill shape) */
+    border: 2px solid transparent; /* Truque para dar um "respiro" nas bordas */
+    background-clip: content-box;  /* Faz a borda transparente funcionar */
+
+    background-color: transparent; /* Invisível */
+    transition: background-color 0.3s; /* Tenta suavizar (alguns browsers ignoram isso em scrollbar) */
+}
+
+body:hover::-webkit-scrollbar-thumb {
+    background-color: #475569; /* Sua cor cinza azulado original */
+}
+
+/* 4. Quando passa o mouse em cima da barra */
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--accent-color); /* Fica azul neon ao passar o mouse */
+}
+
+/* 5. Suporte para Firefox (O Firefox usa uma regra diferente) */
+* {
+    scrollbar-width: thin;          /* Deixa a barra fina */
+    scrollbar-color: transparent transparent /* #475569 transparent;  Cor da barra e cor do trilho */
+}
+
+body:hover,
+.sidebar-menu__wrapper:hover,
+div:hover {
+    scrollbar-color: #475569 transparent;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* A partir daqui o que o rafael fez */
+
+
+
+
+
+
+
+
+
+
+
+/* <<<<<<< HEAD */
 /* Container da Grade */
 .cards-container {
     display: flex;
