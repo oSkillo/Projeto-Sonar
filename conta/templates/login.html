@@ -1,0 +1,163 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block mensagens_globais %}
+    {% endblock %}
+{% block conteudo %}
+<div class="login-container">
+    
+    <div class="card-login">
+        
+        <h2 style="text-align: center; margin-bottom: 30px; color: #fff; font-size: 2rem;">Acessar Conta</h2>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="msg-erro-login">
+                    <span class="material-symbols-outlined" style="font-size: 18px; vertical-align: middle; margin-right: 5px;">error</span>
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <form action="" method="POST" style="display: flex; flex-direction: column; gap: 20px;">
+            {% csrf_token %}
+
+            <div class="campo-input">
+                <label for="username">Usuário</label>
+                <div class="input-wrapper">
+                    <span class="material-symbols-outlined input-icon">person</span>
+                    <input type="text" name="username" placeholder="Digite seu usuário" required class="input-estilizado">
+                </div>
+            </div>
+
+            <div class="campo-input">
+                <label for="password">Senha</label>
+                <div class="input-wrapper">
+                    <span class="material-symbols-outlined input-icon">lock</span>
+                    <input type="password" name="password" placeholder="Digite sua senha" required class="input-estilizado">
+                </div>
+            </div>
+
+            <button type="submit" class="btn-entrar-login">
+                Entrar na Plataforma
+            </button>
+
+        </form>
+
+        <div style="text-align: center; margin-top: 20px;">
+            <a href="#" style="color: #94a3b8; font-size: 0.9rem; text-decoration: none;">Esqueceu a senha?</a>
+        </div>
+
+    </div>
+
+</div>
+
+<style>
+    /* Centraliza na tela */
+    .login-container {
+        min-height: 80vh; /* Ocupa a altura da tela */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+    }
+
+    /* Cartão de Vidro */
+    .card-login {
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+        padding: 40px;
+        width: 100%;
+        max-width: 450px; /* Largura máxima ideal */
+        box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    }
+
+    /* Labels */
+    .campo-input label {
+        display: block;
+        color: var(--accent-color);
+        font-size: 0.9rem;
+        font-weight: bold;
+        margin-bottom: 8px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    /* Wrapper para ícone + input */
+    .input-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+
+    .input-icon {
+        position: absolute;
+        left: 15px;
+        color: #aaa;
+        pointer-events: none; /* Deixa clicar através do ícone */
+    }
+
+    /* Input Estilizado */
+    .input-estilizado {
+        width: 100%;
+        background: rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 50px; /* Bem redondo */
+        padding: 12px 20px 12px 45px; /* Padding extra na esquerda pro ícone */
+        color: #fff;
+        font-size: 1rem;
+        outline: none;
+        transition: all 0.3s;
+    }
+
+    .input-estilizado:focus {
+        border-color: var(--accent-color);
+        box-shadow: 0 0 15px rgba(56, 189, 248, 0.2);
+        background: rgba(0, 0, 0, 0.5);
+    }
+
+    /* Botão */
+    .btn-entrar-login {
+        margin-top: 10px;
+        padding: 12px;
+        background: var(--accent-color);
+        color: #0f172a;
+        font-weight: bold;
+        font-size: 1.1rem;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn-entrar-login:hover {
+        transform: scale(1.02);
+        box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
+    }
+
+    /* Mensagem de Erro */
+    .msg-erro-login {
+        background: rgba(255, 99, 71, 0.2);
+        color: #ff6347;
+        border: 1px solid #ff6347;
+        padding: 10px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover, 
+    input:-webkit-autofill:focus, 
+    input:-webkit-autofill:active {
+        -webkit-box-shadow: 0 0 0 30px #0f172a inset !important;
+        
+        -webkit-text-fill-color: white !important;
+        
+        transition: background-color 5000s ease-in-out 0s;
+    }
+</style>
+{% endblock %}

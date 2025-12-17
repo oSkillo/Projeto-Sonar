@@ -135,9 +135,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Redireciona para esta URL após o login bem-sucedido
 # (Você deve criar uma view para esta URL, como a página inicial)
 LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = 'login'
 
 # Redireciona para esta URL caso o acesso seja negado por falta de autenticação
-LOGIN_URL = '/login/'  # Onde sua página de login estará]]
+LOGIN_URL = 'login'  # Onde sua página de login estará]]
 
 # Permite que o site seja aberto em iframes do mesmo domínio (necessário para o modal de PDF)
 X_FRAME_OPTIONS = 'SAMEORIGIN'

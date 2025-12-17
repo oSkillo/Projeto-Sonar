@@ -57,16 +57,12 @@ class SerieForm(forms.ModelForm):
 class MateriaForm(forms.ModelForm):
     class Meta:
         model = Materia
-        # Agora podemos incluir 'series'
-        fields = ['nome', 'slug', 'imagem', 'series']
+        fields = ['nome', 'slug', 'serie'] 
         
         widgets = {
-            'nome': forms.TextInput(attrs={'class': 'input-estilizado', 'id': 'id_nome_materia'}),
-            'slug': forms.TextInput(attrs={'class': 'input-estilizado', 'id': 'id_slug_materia'}),
-            'imagem': forms.FileInput(attrs={'class': 'input-estilizado'}),
-            
-            # --- WIDGET DAS SÉRIES (Caixinhas de seleção) ---
-            'series': forms.CheckboxSelectMultiple(attrs={'class': 'lista-series-checkbox'}),
+            'nome': forms.TextInput(attrs={'class': 'form-control'}),
+            'slug': forms.TextInput(attrs={'class': 'form-control'}),
+            'serie': forms.Select(attrs={'class': 'form-control'}),
         }
 
 class MaterialPDFForm(forms.ModelForm):

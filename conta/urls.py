@@ -3,12 +3,11 @@ from . import views
 
 
 urlpatterns = [
-    # Mapeia o URL para a view 'perfil_usuario' e nomeia o caminho como 'perfil'
-    path('perfil_usuario/', views.perfil_usuario, name='perfil'),
-    path('register/', views.register, name='register'),
     
-    # Se você quiser adicionar funcionalidade para mudar a senha (opcional)
-    # path('mudar_senha/', views.mudar_senha, name='mudar_senha'), 
+    path('perfil_usuario/', views.perfil_usuario, name='perfil_usuario'),
+    path('cadastro/', views.cadastro, name='cadastro'),
+    path('login/', views.login_user, name="entrar" ),
+    path('logout_user', views.logout_user, name='sair'),
     
-    # Você pode ter outras URLs aqui (login, logout, etc.)
+
 ]

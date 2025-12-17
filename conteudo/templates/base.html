@@ -9,17 +9,19 @@
 </head>
 <body>
 
-{% if messages %}
-    <div class="toast-container">
-        {% for message in messages %}
-            <div class="toast {{ message.tags }}">
-                <span>{{ message }}</span>
-                <button onclick="this.parentElement.remove()" class="toast-close">×</button>
-            </div>
-        {% endfor %}
-    </div>
-{% endif %}
-
+{% block mensagens_globais %}
+    {% if messages %}
+        <div class="toast-container">
+            {% for message in messages %}
+                <div class="toast {{ message.tags }}">
+                    <span>{{ message }}</span>
+                    <button onclick="this.parentElement.remove()" class="toast-close">×</button>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}
+{% if user.is_authenticated %}
     <header id="site-header">
         <div class="header-navbar__content">
 
@@ -31,14 +33,14 @@
 
                 <div class="sidebar-toggle display-desktop">
                     <button abrir-menu=""> 
-                        <i>🐟</i>
+                        <img src="{% static 'img/icone-Sonar.png' %}" class="icon-img-custom" alt="Menu">
                     </button>
                 </div>
                 
                 <div class="navbar-logo">
                     <a href="/">
                         <strong class="logo-text">Sonar</strong>
-                        <span class="logo-icon-mini">🐟</span>
+                        <img src="{% static 'img/icone-Sonar.png' %}" class="logo-icon-mini-img" alt="Sonar">
                     </a>
                 </div>
             </div>
@@ -68,7 +70,7 @@
 
                     {% if user.is_authenticated %}
                         <div>
-                            <a href="{% url 'perfil' %}" class="nav-user-card" title="Ir para meu perfil">
+                            <a href="{% url 'perfil_usuario' %}" class="nav-user-card" title="Ir para meu perfil">
                                 <span class="nav-user-name">
                                     Olá, {{ user.first_name|default:user.username }}
                                 </span>
@@ -86,16 +88,19 @@
 
                 <div class="mobile-emoji-decorative mobile-profile-container">
                     {% if user.is_authenticated %}
-                        <a href="{% url 'perfil' %}">
+                        <a href="{% url 'perfil_usuario' %}">
                             <img src="{{ user.perfil.foto.url }}" alt="Perfil" class="nav-profile-img" style="width: 50px; height: 50px;">
                         </a>
                     {% else %}
-                        <a href="{% url 'login' %}" style="text-decoration: none; font-size: 24px;">🟠</a>
+                        <a href="{% url 'sair' %}" style="text-decoration: none; font-size: 24px;">🟠</a>
                     {% endif %}
                 </div>
             </div>
+ 
+        <div id="sidebar-overlay" class="sidebar-overlay"></div>
+    </header>
 
-            <div id="sidebar-menu" class="sidebar-menu"> 
+    <div id="sidebar-menu" class="sidebar-menu"> 
                 <aside class="sidebar-menu__wrapper"> 
                     <div class="sidebar-menu__container">
                         <div class="main-menu">
@@ -113,12 +118,18 @@
                             <div class="separador"></div>
                             <div style="padding-left: 16px; margin-bottom: 8px; font-size: 12px; color: #888; text-transform: uppercase; font-weight: bold;">Navegação Rápida</div>
                             {% for div in sidebar_divergencias %}
-                                <a href="{% url 'divergencias' div.slug %}" class="main-menu__item" style="text-decoration: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">{{ div.nome }}</a>
+                                <a href="{% url 'divergencias' div.slug %}" class="main-menu__item" style="text-decoration: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+                                    {{ div.nome }}
+                                </a>
                             {% empty %}{% endfor %}
+
+                            <a href="{% url 'outras' %}" class="main-menu__item" style="text-decoration: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+                                <span class="material-symbols-outlined" style="font-size: 20px; margin-right: 10px; vertical-align: middle;" title="Outras Divergências">🧬</span>
+                                Outras Divergências
+                            </a>
                             <div class="separador"></div>
-                            <a href="#" class="main-menu__item" style="text-decoration: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Perfil</a>
+                            <a href="{% url 'perfil_usuario' %}" class="main-menu__item" style="text-decoration: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Perfil</a>
                             <a href="{% url 'contato' %}" class="main-menu__item" style="text-decoration: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Contato</a>
-                            <a href="#" class="main-menu__item" style="text-decoration: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Tema da Página</a>
                         </div>
                     </div>
                 </aside>
@@ -139,41 +150,29 @@
                     </div>
                     <div class="footer-copyright">© 2025 Projeto Sonar</div>
                 </div>
-            </div> 
-        <div id="sidebar-overlay" class="sidebar-overlay"></div>
-    </header>
-
+            </div>
+{% endif %}
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 
     <main id="main">
         {% block conteudo %}
         {% endblock %}
     </main>
-
+{% if user.is_authenticated %}
     <script>
-    // --- BLOQUEIO DO BOTÃO VOLTAR NA HOME ---
-        // Se a url for apenas "/" (Home), impede de voltar
         if (window.location.pathname === '/') {
-            // Cria um estado no histórico para "prender" o usuário
             history.pushState(null, null, window.location.href);
-            
-            // Sempre que ele tentar voltar (clicar no botão do mouse ou do navegador)
             window.addEventListener('popstate', function () {
-                // Empurra ele de volta para a página atual
                 history.pushState(null, null, window.location.href);
             });
         }
 
         document.addEventListener("DOMContentLoaded", function() {
-            // 1. Seleciona os elementos
             const botoes = document.querySelectorAll('[abrir-menu]');
             const menu = document.getElementById("sidebar-menu");
             const overlay = document.getElementById("sidebar-overlay");
             const main = document.getElementById("main");
 
-            // --- LÓGICA DE PERSISTÊNCIA (Local Storage) ---
-
-            // Função para aplicar o estado (Abrir ou Fechar)
             function setMenuState(isOpen, animate = true) {
                 if (!animate) {
                     menu.style.transition = 'none';
@@ -185,15 +184,13 @@
                     menu.classList.add('is-open');
                     overlay.classList.add('is-open');
                     main.classList.add('is-open');
-                    
-                    // --- ADICIONE ESTA LINHA: TRAVA O SCROLL ---
-                    document.body.classList.add('no-scroll'); 
+                    if (window.innerWidth < 1600) {
+                        document.body.classList.add('no-scroll'); 
+                    }
                 } else {
                     menu.classList.remove('is-open');
                     overlay.classList.remove('is-open');
                     main.classList.remove('is-open');
-                    
-                    // --- ADICIONE ESTA LINHA: DESTRAVA O SCROLL ---
                     document.body.classList.remove('no-scroll');
                 }
 
@@ -209,16 +206,24 @@
                 }
             }
 
-            // 2. Verifica se já estava aberto antes
+            window.addEventListener('resize', function() {
+                const menuEstaAberto = document.getElementById("sidebar-menu").classList.contains('is-open');
+                
+                if (menuEstaAberto) {
+                    if (window.innerWidth >= 1600) {
+                        document.body.classList.remove('no-scroll');
+                    } else {
+                        document.body.classList.add('no-scroll');
+                    }
+                }
+            });
+
             const estadoSalvo = localStorage.getItem('sidebarAberta') === 'true';
             
             if (estadoSalvo) {
                 setMenuState(true, false); 
             }
 
-            // --- EVENTOS DE CLIQUE ---
-
-            // 3. Clique nos botões de abrir/fechar
             botoes.forEach(botao => {
                 botao.addEventListener('click', () => {
                     const isCurrentlyOpen = menu.classList.contains('is-open');
@@ -226,7 +231,6 @@
                 });
             });
 
-            // 4. Clique no Overlay para fechar
             if (overlay) {
                 overlay.addEventListener('click', () => {
                     setMenuState(false, true);
@@ -236,7 +240,7 @@
 
         });
     </script>
-
+{% endif %}
 <script>
     // --- FUNÇÕES GLOBAIS DO MODAL ---
     function abrirModalPreview(urlArquivo, tituloArquivo) {
@@ -410,6 +414,43 @@
             if (!isClickInside && window.innerWidth < 470 && searchForm.classList.contains('mobile-active')) {
                 fecharBusca();
             }
+        });
+    });
+</script>
+
+<script>
+    // --- BLOQUEIO DE DUPLO CLIQUE (Dedo Nervoso) ---
+    document.addEventListener("DOMContentLoaded", function() {
+        // Pega todos os formulários do site
+        const forms = document.querySelectorAll('form');
+        
+        forms.forEach(form => {
+            form.addEventListener('submit', function(e) {
+                // Checa se o formulário está válido (campos obrigatórios preenchidos)
+                if (!this.checkValidity()) {
+                    return; // Se estiver inválido, não bloqueia o botão e deixa o navegador avisar
+                }
+
+                const btn = this.querySelector('button[type="submit"]');
+                
+                if (btn) {
+                    // 1. Muda o visual para parecer travado
+                    btn.style.opacity = '0.7';
+                    btn.style.cursor = 'not-allowed';
+                    
+                    // 2. Muda o texto para dar feedback (opcional, se quiser manter só o ícone tire essa parte)
+                    // Verifica se o botão tem texto antes de mudar
+                    if (btn.innerText.trim().length > 0) {
+                        btn.innerText = 'Salvando...';
+                    }
+
+                    // 3. Trava o clique (O Pulo do Gato)
+                    // Pequeno delay para garantir que o formulário seja enviado antes de travar
+                    setTimeout(() => {
+                        btn.disabled = true;
+                    }, 10);
+                }
+            });
         });
     });
 </script>

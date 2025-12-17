@@ -39,7 +39,7 @@
                         <input type="file" name="foto" accept="image/*" id="id_foto" onchange="previewImagem(event)">
                     </div>
 
-                    <a href="{% url 'logout' %}" class="btn-sair-perfil" id="btn-sair">
+                    <a href="{% url 'sair' %}" class="btn-sair-perfil" id="btn-sair">
                         <span class="material-symbols-outlined" style="font-size: 18px;">logout</span> Sair da conta
                     </a>
 
@@ -85,6 +85,7 @@
             <button onclick="fecharModalLogout()" class="btn-cancelar-modal">Cancelar</button>
                 
             <a href="{% url 'sair' %}" class="btn-sair-confirmar">Sim, Sair</a>
+            </form>
         </div>
     </div>
 </div>
