@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-)*o#)(^90&cczphky39&e(t1a0-bdu3+#cvj=z&@3ws-wz!ch5
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['projetoSonar.pythonanywhere.com', '127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -64,6 +64,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'conteudo.context_processors.divergencias_sidebar',
             ],
         },
     },
@@ -117,11 +118,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
-
-STATICFILES_DIRS = [
-    BASE_DIR / 'static',
-]
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
@@ -134,9 +132,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Redireciona para esta URL após o login bem-sucedido
 # (Você deve criar uma view para esta URL, como a página inicial)
 LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = 'login'
 
 # Redireciona para esta URL caso o acesso seja negado por falta de autenticação
-LOGIN_URL = '/login/'  # Onde sua página de login estará]]
+LOGIN_URL = 'login'  # Onde sua página de login estará]]
 
 # Permite que o site seja aberto em iframes do mesmo domínio (necessário para o modal de PDF)
 X_FRAME_OPTIONS = 'SAMEORIGIN'

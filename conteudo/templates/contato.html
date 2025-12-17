@@ -1,35 +1,41 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block titulo %}Fale Conosco - Sonar{% endblock %}
 
 {% block conteudo %}
+
+<link rel="stylesheet" href="{% static 'css/contato.css' %}">
+
+<div class="contato-container">
     
     <div class="form-wrapper">
         
-        <h1 class="text-center mb-30">Fale Conosco</h1>
+        <h1>Fale Conosco</h1>
         
-        <form>
-            
-            <div class="form-group">
+        <form method="POST">
+            {% csrf_token %} <div class="form-group">
                 <label for="id_nome">Nome:</label>
-                <input type="text" id="id_nome" class="form-control" placeholder="Digite seu nome">
+                <input type="text" name="nome" id="id_nome" class="form-control" placeholder="Digite seu nome" required>
             </div>
 
             <div class="form-group">
                 <label for="id_email">E-mail:</label>
-                <input type="email" id="id_email" class="form-control" placeholder="seu@email.com">
+                <input type="email" name="email" id="id_email" class="form-control" placeholder="seu@email.com" required>
             </div>
 
             <div class="form-group">
                 <label for="id_mensagem">Mensagem:</label>
-                <textarea id="id_mensagem" class="form-control" placeholder="Como podemos te ajudar?"></textarea>
+                <textarea name="mensagem" id="id_mensagem" class="form-control" placeholder="Como podemos te ajudar?"></textarea>
             </div>
             
-            <button type="button" class="btn btn-primary" onclick="alert('Formulário Simulado! Nada foi enviado.')">
+            <button type="submit" class="btn-enviar">
                 Enviar Mensagem
             </button>
 
         </form>
     </div>
+
+</div>
 
 {% endblock %}

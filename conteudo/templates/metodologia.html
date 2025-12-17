@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}Metodologia - Sonar{% endblock %}
+
+{% block conteudo %}
+
+<link rel="stylesheet" href="{% static 'css/metodologia.css' %}">
+
+<div class="metodologia-container">
+
+    <h1 class="main-title">Como o Projeto Sonar Funciona</h1>
+    
+    <h2 class="section-title">🔒 Sistema de Assinatura SONAR para Escolas</h2>
+    <p class="texto-padrao">
+        O Projeto SONAR oferece um sistema de assinatura premium (pago) exclusivo para escolas. 
+        Este sistema garante o acesso contínuo e ilimitado a todos os recursos de alta qualidade, 
+        garantindo que a inclusão seja uma prioridade consistente na instituição.
+    </p>
+
+    <h2 class="section-title">📚 O Que a Escola Adquire?</h2>
+    <p class="texto-padrao">Ao assinar o Projeto SONAR, a escola adquire uma licença de acesso total:</p>
+    
+    <div class="tabela-wrapper">
+        <table class="tabela-sonar">
+            <thead>
+                <tr>
+                    <th width="20%">Recurso</th>
+                    <th width="50%">Descrição</th>
+                    <th width="30%">Foco</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Biblioteca de PDFs</strong></td>
+                    <td>Acesso ilimitado ao vasto acervo de materiais educativos, adaptados para Autismo, TDAH e outras síndromes, prontos para download.</td>
+                    <td>Aprendizado Escolar e Apoio Comportamental.</td>
+                </tr>
+                <tr>
+                    <td><strong>Área do Professor</strong></td>
+                    <td>Módulos de treinamento e guias práticos atualizados mensalmente para capacitação contínua do corpo docente.</td>
+                    <td>Formação e Estratégias de Inclusão.</td>
+                </tr>
+                <tr>
+                    <td><strong>Novos Materiais</strong></td>
+                    <td>Todo mês, a escola recebe um pacote de novos PDFs, atividades e histórias sociais.</td>
+                    <td>Frescor e Relevância do Conteúdo.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h2 class="section-title">🌐 Acessibilidade e Tecnologia Integrada</h2>
+    
+    <div class="tech-grid">
+        <div class="tech-card">
+            <h3 class="tech-titulo">1. Integração com API (Panda)</h3>
+            <p class="texto-padrao" style="font-size: 0.95rem;">
+                <strong>O que é:</strong> O SONAR disponibiliza uma API para a escola.<br><br>
+                <strong>Vantagem:</strong> O sistema de gestão da escola conecta-se diretamente com a nossa biblioteca.<br><br>
+                <strong>Resultado:</strong> Professores buscam e anexam materiais do SONAR em suas próprias plataformas de planejamento.
+            </p>
+        </div>
+
+        <div class="tech-card">
+            <h3 class="tech-titulo">2. Áudio e Acessibilidade</h3>
+            <p class="texto-padrao" style="font-size: 0.95rem;">
+                <strong>Apoio Visual:</strong> Materiais compatíveis com leitores de tela para professores com deficiência visual.<br><br>
+                <strong>Leitura Fácil:</strong> Design inclusivo (cores, contraste e fontes) para facilitar a leitura por crianças com dislexia.
+            </p>
+        </div>
+    </div>
+
+    <h2 class="section-title">💸 Opções de Plano de Assinatura</h2>
+    <div class="tabela-wrapper">
+        <table class="tabela-sonar">
+            <thead>
+                <tr>
+                    <th>Plano</th>
+                    <th>Benefício Principal</th>
+                    <th>Vantagens para a Escola</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Plano Mensal</strong></td>
+                    <td>Pagamento a cada 30 dias.</td>
+                    <td>Flexibilidade e menor custo inicial. Ideal para testes.</td>
+                </tr>
+                <tr>
+                    <td><strong>Plano Anual</strong></td>
+                    <td>Pagamento único (12 meses).</td>
+                    <td>Maior Desconto (2 meses off) e acesso ininterrupto. Estabilidade no planejamento.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h2 class="section-title">🤝 Apoio e Suporte Contínuo</h2>
+    <p class="texto-padrao">
+        O suporte não se limita aos arquivos digitais. A assinatura inclui <strong>Atualizações Constantes</strong>, garantindo que a escola esteja sempre na vanguarda da educação inclusiva.
+    </p>
+
+</div>
+
+{% endblock %}

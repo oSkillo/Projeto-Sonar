@@ -1,22 +1,15 @@
 <!DOCTYPE html>
-<html lang="pt-BR" xmlns:mso="urn:schemas-microsoft-com:office:office" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sonar</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'style.css' %}">
-
-<!--[if gte mso 9]><xml>
-<mso:CustomDocumentProperties>
-<mso:_ApprovalStatus msdt:dt="string">0</mso:_ApprovalStatus>
-<mso:_ApprovalAssignedTo msdt:dt="string"></mso:_ApprovalAssignedTo>
-<mso:_ApprovalRespondedBy msdt:dt="string"></mso:_ApprovalRespondedBy>
-</mso:CustomDocumentProperties>
-</xml><![endif]-->
 </head>
 <body>
 
+<<<<<<< HEAD
     <header>
 <<<<<<< HEAD
         <nav>
@@ -26,164 +19,477 @@
                 <a href="{% url 'sobre' %}">Sobre</a>
 =======
 
+=======
+{% block mensagens_globais %}
+    {% if messages %}
+        <div class="toast-container">
+            {% for message in messages %}
+                <div class="toast {{ message.tags }}">
+                    <span>{{ message }}</span>
+                    <button onclick="this.parentElement.remove()" class="toast-close">×</button>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}
+{% if user.is_authenticated %}
+    <header id="site-header">
+>>>>>>> 8c89f78859168caad7195464ef4596d5eaed9ce4
         <div class="header-navbar__content">
 
             <div class="header-navbar__content-logo">
-                <div class="sidebar-toggle">
-                     <button abrir-menu=""> <!-- id="abrir-sidebar" -->
-                        <i>🐟</i>
+                
+                <button type="button" class="mobile-menu-toggle" id="mobile-menu-btn" abrir-menu="">
+                    <span class="material-symbols-outlined">menu</span>
+                </button>
+
+                <div class="sidebar-toggle display-desktop">
+                    <button abrir-menu=""> 
+                        <img src="{% static 'img/icone-Sonar.png' %}" class="icon-img-custom" alt="Menu">
                     </button>
                 </div>
+                
                 <div class="navbar-logo">
-                    <a href="/"><strong>Sonar</strong></a>
+                    <a href="/">
+                        <strong class="logo-text">Sonar</strong>
+                        <img src="{% static 'img/icone-Sonar.png' %}" class="logo-icon-mini-img" alt="Sonar">
+                    </a>
                 </div>
 >>>>>>> 5f35121a7f3d31841038ac0efe97551b0182abb9
             </div>
 
-            <div class="header-navbar__content-barra" data-component="user-auth">
+            <form action="{% url 'busca' %}" method="GET" class="search-container" id="search-form-container">
+                <button type="button" id="close-search-mobile" class="close-search-btn">✕</button>
+                <input type="text" name="q" id="search-input" placeholder="Pesquisar..." class="search-input" autocomplete="off">
+                <button type="submit" class="search-btn">
+                    <span class="material-symbols-outlined">search</span>
+                </button>
+                <div id="live-search-results" class="search-dropdown"></div>
+            </form>
+
+            <button type="button" id="mobile-search-trigger" class="mobile-search-trigger">
+                <span class="material-symbols-outlined">search</span>
+            </button>
+
+            <div class="header-navbar__content-barra">
                 
-                <div>
-                    <a href="{% url 'contato' %}" class="header-navbar__btn">
-                        <strong>Contato</strong>
-                    </a>
-                </div>
-                
-                <div>
-                    <a href="/" class="header-navbar__btn">
-                        <strong>Home</strong>
-                    </a>
-                </div>
-
-                <div data-target="loginButton">
-                    <a href="/" class="header-navbar__btn">
-                        <strong>Entrar</strong>
-                    </a>
-                </div>
-
-                <div data-target="userMenu" style="display: none;">
-                    <a href="#" class="header-navbar__btn">
-                        <strong>Minha Conta</strong>
-                    </a>
-            </div>
-
-</div>
-
-        </div>
-
-        <div id="sidebar-menu" class="sidebar-menu"> <!-- id="menu" -->
-            <aside class="sidebar-menu__wrapper"> <!-- Aqui fica a Sidebar(Oculta naturalmente) -->
-                <div class="sidebar-menu__container">
-                    <div class="main-menu">
-                        <li href="#" class="main-menu__item" title="Opção 1 muito longo para testar se o ... funciona">Opção 1 longo para testar se o ... funciona</li>
-                        <li href="#" class="main-menu__item" title="Opção 2">Opção 1</li>
-                        <li href="#" class="main-menu__item" title="Opção 3">Opção 2"</li>
-                        <li class="separador"></li>
-                        <li href="#" class="main-menu__item">Opção 1</li>
-                        <li href="#" class="main-menu__item">Opção 2</li>
-                        <li href="#" class="main-menu__item">Opção 1</li>
-                        <li href="#" class="main-menu__item">Opção 2</li>
-                        <li href="#" class="main-menu__item">Opção 1</li>
-                        <li href="#" class="main-menu__item">Opção 2</li>
-                        <li href="#" class="main-menu__item">Opção 1</li>
-                        <li href="#" class="main-menu__item">Opção 2</li>
-                        <li href="#" class="main-menu__item">Opção 1</li>
-                        <li href="#" class="main-menu__item">Opção 2</li>
-                        <li href="#" class="main-menu__item">Opção 1</li>
-                        <li href="#" class="main-menu__item">Opção 2</li>
-                        <li href="#" class="main-menu__item">Opção 1</li>
-                        <li href="#" class="main-menu__item">Opção 2</li>
-                        <li href="#" class="main-menu__item">Opção 1</li>
-                        <li href="#" class="main-menu__item">Opção 2</li>
+                <div class="botoes-desktop">
+                    <div class="esconder-cedo">
+                        <a href="{% url 'metodologia' %}" class="header-navbar__btn">Metodologia</a>
                     </div>
+                    <div class="esconder-cedo">
+                        <a href="{% url 'sobre' %}" class="header-navbar__btn">Sobre</a>
+                    </div>
+
+                    {% if user.is_authenticated %}
+                        <div>
+                            <a href="{% url 'perfil_usuario' %}" class="nav-user-card" title="Ir para meu perfil">
+                                <span class="nav-user-name">
+                                    Olá, {{ user.first_name|default:user.username }}
+                                </span>
+                                <img src="{% if user.perfil.foto and user.perfil.foto.name != 'perfis/default.png' %}{{ user.perfil.foto.url }}{% else %}{% static 'img/default.png' %}{% endif %}" 
+                                    alt="Perfil" class="nav-profile-img-large" 
+                                    onerror="this.src='{% static 'img/default.png' %}'">
+                            </a>
+                        </div>
+                    {% else %}
+                        <div>
+                            <a href="{% url 'login' %}" class="header-navbar__btn btn-destaque">
+                                Entrar
+                            </a>
+                        </div>
+                    {% endif %}
                 </div>
-            </aside>
-        </div>
+
+                <div class="mobile-emoji-decorative mobile-profile-container">
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'perfil_usuario' %}">
+                            <img src="{{ user.perfil.foto.url }}" alt="Perfil" class="nav-profile-img" style="width: 50px; height: 50px;">
+                        </a>
+                    {% else %}
+                        <a href="{% url 'sair' %}" style="text-decoration: none; font-size: 24px;">🟠</a>
+                    {% endif %}
+                </div>
+            </div>
+ 
         <div id="sidebar-overlay" class="sidebar-overlay"></div>
     </header>
 
+    <div id="sidebar-menu" class="sidebar-menu"> 
+                <aside class="sidebar-menu__wrapper"> 
+                    <div class="sidebar-menu__container">
+                        <div class="main-menu">
+                            <a href="/" class="main-menu__item" style="text-decoration: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Início</a>
+                            <div class="grupo-institucional sidebar-hidden-default">
+                                <div class="separador"></div>
+                                <div style="padding-left: 16px; font-size: 12px; color: #888; font-weight: bold;">INSTITUCIONAL</div>
+                                <br>
+                                <a href="{% url 'metodologia' %}" class="main-menu__item" style="text-decoration: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Metodologia</a>
+                                <a href="{% url 'sobre' %}" class="main-menu__item" style="text-decoration: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Sobre</a>
+                            </div>
+                            <div class="grupo-conta sidebar-hidden-default">
+                                <a href="#" class="main-menu__item" style="text-decoration: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Minha Conta</a>
+                            </div>
+                            <div class="separador"></div>
+                            <div style="padding-left: 16px; margin-bottom: 8px; font-size: 12px; color: #888; text-transform: uppercase; font-weight: bold;">Navegação Rápida</div>
+                            {% for div in sidebar_divergencias %}
+                                <a href="{% url 'divergencias' div.slug %}" class="main-menu__item" style="text-decoration: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+                                    {{ div.nome }}
+                                </a>
+                            {% empty %}{% endfor %}
 
-
-
+                            <a href="{% url 'outras' %}" class="main-menu__item" style="text-decoration: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+                                <span class="material-symbols-outlined" style="font-size: 20px; margin-right: 10px; vertical-align: middle;" title="Outras Divergências">🧬</span>
+                                Outras Divergências
+                            </a>
+                            <div class="separador"></div>
+                            <a href="{% url 'perfil_usuario' %}" class="main-menu__item" style="text-decoration: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Perfil</a>
+                            <a href="{% url 'contato' %}" class="main-menu__item" style="text-decoration: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Contato</a>
+                        </div>
+                    </div>
+                </aside>
+                <div class="sidebar-footer">
+                    <div class="footer-links">
+                        <a href="/sobre/">Sobre</a>   
+                        <a href="#">Imprensa</a>
+                        <a href="#">Direitos autorais</a>
+                        <a href="#">Entre em contato</a>
+                        <a href="#">Criadores</a>
+                        <a href="#">Desenvolvedores</a>
+                    </div>
+                    <div class="footer-links">
+                        <a href="#">Termos</a>
+                        <a href="#">Privacidade</a>
+                        <a href="#">Política e Segurança</a>
+                        <a href="/metodologia/">Como funciona o Sonar</a>
+                    </div>
+                    <div class="footer-copyright">© 2025 Projeto Sonar</div>
+                </div>
+            </div>
+{% endif %}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 
     <main id="main">
         {% block conteudo %}
         {% endblock %}
     </main>
-
-    <footer>© 2025 Sonar - Inclusão para Todos</footer>
-    
+{% if user.is_authenticated %}
     <script>
-        // const botao = document.querySelectorAll("[data-abrir-modal]")
-        // const botao = document.getElementById("abrir-sidebar");
-        // const menu = document.getElementById("menu");
-        // const overlay = document.getElementById("overlay");
+        if (window.location.pathname === '/') {
+            history.pushState(null, null, window.location.href);
+            window.addEventListener('popstate', function () {
+                history.pushState(null, null, window.location.href);
+            });
+        }
 
-        // botao.addEventListener('click', function() {
-        //     // Sua lógica aqui
-        //     // console.log("Cliquei!");
-        //     menu.style.display = "block";
-        //     overlay.style.display = "block";
-        // });
+        document.addEventListener("DOMContentLoaded", function() {
+            const botoes = document.querySelectorAll('[abrir-menu]');
+            const menu = document.getElementById("sidebar-menu");
+            const overlay = document.getElementById("sidebar-overlay");
+            const main = document.getElementById("main");
 
-        // Primeiro, selecionamos todos os botões que têm esse atributo
-        const botoes = document.querySelectorAll('[abrir-menu]');
+            function setMenuState(isOpen, animate = true) {
+                if (!animate) {
+                    menu.style.transition = 'none';
+                    main.style.transition = 'none';
+                    overlay.style.transition = 'none';
+                }
 
-        botoes.forEach(botao => {
-            botao.addEventListener('click', () => {
-                // Pega o ID do alvo (ex: "menu-principal")
-                const alvoId = botao.getAttribute('abrir-menu');
+                if (isOpen) {
+                    menu.classList.add('is-open');
+                    overlay.classList.add('is-open');
+                    main.classList.add('is-open');
+                    if (window.innerWidth < 1600) {
+                        document.body.classList.add('no-scroll'); 
+                    }
+                } else {
+                    menu.classList.remove('is-open');
+                    overlay.classList.remove('is-open');
+                    main.classList.remove('is-open');
+                    document.body.classList.remove('no-scroll');
+                }
+
+                localStorage.setItem('sidebarAberta', isOpen);
+
+                if (!animate) {
+                    void menu.offsetWidth; 
+                    setTimeout(() => {
+                        menu.style.transition = '';
+                        main.style.transition = '';
+                        overlay.style.transition = '';
+                    }, 50);
+                }
+            }
+
+            window.addEventListener('resize', function() {
+                const menuEstaAberto = document.getElementById("sidebar-menu").classList.contains('is-open');
                 
-                // Seleciona o elemento que tem esse ID
-                const menu = document.getElementById("sidebar-menu");
-
-                const overlay = document.getElementById("sidebar-overlay");
-
-                const main = document.getElementById("main");
-                
-                // O toggle faz a mágica: adiciona ou remove a classe
-                if (menu) {
-                    menu.classList.toggle('is-open');
-                    overlay.classList.toggle('is-open');
-                    main.classList.toggle('is-open');
+                if (menuEstaAberto) {
+                    if (window.innerWidth >= 1600) {
+                        document.body.classList.remove('no-scroll');
+                    } else {
+                        document.body.classList.add('no-scroll');
+                    }
                 }
             });
+
+            const estadoSalvo = localStorage.getItem('sidebarAberta') === 'true';
+            
+            if (estadoSalvo) {
+                setMenuState(true, false); 
+            }
+
+            botoes.forEach(botao => {
+                botao.addEventListener('click', () => {
+                    const isCurrentlyOpen = menu.classList.contains('is-open');
+                    setMenuState(!isCurrentlyOpen, true); 
+                });
+            });
+
+            if (overlay) {
+                overlay.addEventListener('click', () => {
+                    setMenuState(false, true);
+                });
+            }
+
+
         });
+    </script>
+{% endif %}
+<script>
+    // --- FUNÇÕES GLOBAIS DO MODAL ---
+    function abrirModalPreview(urlArquivo, tituloArquivo) {
+        const modal = document.getElementById('modal-preview-global');
+        if(modal) {
+            document.getElementById('modal-iframe').src = urlArquivo;
+            document.getElementById('modal-titulo-texto').innerText = tituloArquivo;
+            document.getElementById('modal-btn-baixar').href = urlArquivo;
+            modal.style.display = 'flex';
+        }
+    }
 
+    function fecharModalPreview() {
+        const modal = document.getElementById('modal-preview-global');
+        if(modal) {
+            modal.style.display = 'none';
+            document.getElementById('modal-iframe').src = '';
+        }
+    }
 
+    // Fechar ao clicar fora
+    const modalEl = document.getElementById('modal-preview-global');
+    if(modalEl){
+        modalEl.addEventListener('click', function(e) {
+            if (e.target === this) fecharModalPreview();
+        });
+    }
 
-        window.onclick = function(event) {
-            if (event.target == overlay) {
-                menu.style.display = "none";
-                overlay.style.display = "none";
+    // --- LÓGICA DA BARRA DE PESQUISA ---
+    document.addEventListener('DOMContentLoaded', function() {
+        const input = document.getElementById('search-input');
+        const resultsBox = document.getElementById('live-search-results');
+        const searchContainer = document.querySelector('.search-container');
+        let timeout = null;
+
+        if (input) {
+            input.addEventListener('input', function() {
+                const query = this.value.trim();
+                clearTimeout(timeout); 
+
+                if (query.length === 0) {
+                    fecharDropdown();
+                    return;
+                }
+
+                timeout = setTimeout(() => {
+                    fetch(`/busca-live/?q=${encodeURIComponent(query)}`)
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error("Erro no servidor (verifique urls.py)");
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            let html = '';
+                            
+                            // Verifica se veio alguma coisa
+                            const temDivergencia = data.divergencias && data.divergencias.length > 0;
+                            const temMateria = data.materias && data.materias.length > 0;
+                            const temPdf = data.pdfs && data.pdfs.length > 0;
+
+                            if (!temDivergencia && !temMateria && !temPdf) {
+                                resultsBox.innerHTML = '<div class="search-result-item" style="color: #aaa; text-align: center; padding: 15px;">Nenhum resultado encontrado.</div>';
+                                abrirDropdown();
+                                return;
+                            }
+
+                            // 1. SEÇÃO DIVERGÊNCIAS
+                            if (temDivergencia) {
+                                html += '<div class="search-category-title">Divergências</div>';
+                                data.divergencias.forEach(item => {
+                                    html += `<a href="${item.url}" class="search-result-item"><strong>${item.nome}</strong></a>`;
+                                });
+                            }
+
+                            // 2. SEÇÃO MATÉRIAS
+                            if (temMateria) {
+                                html += '<div class="search-category-title">Matérias</div>';
+                                data.materias.forEach(item => {
+                                    html += `
+                                        <a href="${item.url}" class="search-result-item" style="display: flex; justify-content: space-between; align-items: center;">
+                                            <div>
+                                                <span style="font-weight: bold; color: #fff;">📚 ${item.nome}</span>
+                                                <small style="display: block; color: var(--accent-color);">${item.info}</small>
+                                            </div>
+                                            <span class="material-symbols-outlined" style="font-size: 16px; color: #aaa;">arrow_forward</span>
+                                        </a>`;
+                                });
+                            }
+
+                            // 3. SEÇÃO PDFs
+                            if (temPdf) {
+                                html += '<div class="search-category-title">Arquivos PDF</div>';
+                                data.pdfs.forEach(item => {
+                                    // Atenção: Usamos aspas simples escapadas nos argumentos da função
+                                    html += `
+                                        <div class="search-result-item" style="cursor: pointer;" 
+                                             onclick="abrirModalPreview('${item.url_arquivo}', '${item.titulo}')">
+                                            📄 ${item.titulo}
+                                            <small style="display:block; color: #94a3b8;">${item.info}</small>
+                                        </div>`;
+                                });
+                            }
+
+                            resultsBox.innerHTML = html;
+                            abrirDropdown();
+                        })
+                        .catch(error => {
+                            console.error("Erro na busca:", error);
+                            resultsBox.innerHTML = '<div class="search-result-item" style="color: #ff6b6b; text-align: center;">Erro ao buscar. Verifique o console.</div>';
+                            abrirDropdown();
+                        });
+                }, 300);
+            });
+        }
+
+        function abrirDropdown() {
+            resultsBox.classList.add('active');
+            if(searchContainer) {
+                searchContainer.style.borderRadius = '20px 20px 0 0';
+                searchContainer.style.backgroundColor = 'rgba(15, 23, 42, 0.95)';
             }
         }
 
-
-        // 1. Seleciona o componente principal
-        const component = document.querySelector('[data-component="user-auth"]');
-
-        // 2. Encontra os "alvos" (targets) lá dentro usando os atributos data
-        const loginTarget = component.querySelector('[data-target="loginButton"]');
-        const menuTarget = component.querySelector('[data-target="userMenu"]');
-
-        // 3. Simulação de verificação de login
-        const usuarioEstaLogado = true; // Mude para true para testar
-
-        if (usuarioEstaLogado) {
-            // Esconde a div do botão
-            loginTarget.style.display = 'none';
-            // Mostra a div do menu
-            menuTarget.style.display = 'block';
-        } else {
-            // Garante que o botão aparece
-            loginTarget.style.display = 'block';
-            menuTarget.style.display = 'none';
+        function fecharDropdown() {
+            resultsBox.classList.remove('active');
+            if(searchContainer) {
+                searchContainer.style.borderRadius = '50px';
+                searchContainer.style.backgroundColor = '';
+            }
         }
-    </script>
 
-</body>
+        // Fechar ao clicar fora
+        document.addEventListener('click', function(e) {
+            if (searchContainer && !searchContainer.contains(e.target)) {
+                fecharDropdown();
+            }
+        });
+    });
+
+    document.addEventListener("DOMContentLoaded", function() {
+        const mobileTrigger = document.getElementById('mobile-search-trigger');
+        const searchForm = document.getElementById('search-form-container');
+        const closeBtn = document.getElementById('close-search-mobile');
+        const input = document.getElementById('search-input');
+        
+        // Selecionamos o container principal da navbar para controlar os outros elementos
+        const navbarContent = document.querySelector('.header-navbar__content');
+
+        // FUNÇÃO ABRIR
+        mobileTrigger.addEventListener('click', function() {
+            // Adiciona classe na busca
+            searchForm.classList.add('mobile-active');
+            // Adiciona classe no pai para esconder o resto
+            navbarContent.classList.add('busca-aberta');
+            
+            input.focus(); 
+        });
+
+        // FUNÇÃO FECHAR
+        function fecharBusca() {
+            searchForm.classList.remove('mobile-active');
+            navbarContent.classList.remove('busca-aberta');
+        }
+
+        closeBtn.addEventListener('click', fecharBusca);
+
+        // Fechar clicando fora (opcional)
+        document.addEventListener('click', function(event) {
+            const isClickInside = searchForm.contains(event.target) || mobileTrigger.contains(event.target);
+            if (!isClickInside && window.innerWidth < 470 && searchForm.classList.contains('mobile-active')) {
+                fecharBusca();
+            }
+        });
+    });
+</script>
+
+<script>
+    // --- BLOQUEIO DE DUPLO CLIQUE (Dedo Nervoso) ---
+    document.addEventListener("DOMContentLoaded", function() {
+        // Pega todos os formulários do site
+        const forms = document.querySelectorAll('form');
+        
+        forms.forEach(form => {
+            form.addEventListener('submit', function(e) {
+                // Checa se o formulário está válido (campos obrigatórios preenchidos)
+                if (!this.checkValidity()) {
+                    return; // Se estiver inválido, não bloqueia o botão e deixa o navegador avisar
+                }
+
+                const btn = this.querySelector('button[type="submit"]');
+                
+                if (btn) {
+                    // 1. Muda o visual para parecer travado
+                    btn.style.opacity = '0.7';
+                    btn.style.cursor = 'not-allowed';
+                    
+                    // 2. Muda o texto para dar feedback (opcional, se quiser manter só o ícone tire essa parte)
+                    // Verifica se o botão tem texto antes de mudar
+                    if (btn.innerText.trim().length > 0) {
+                        btn.innerText = 'Salvando...';
+                    }
+
+                    // 3. Trava o clique (O Pulo do Gato)
+                    // Pequeno delay para garantir que o formulário seja enviado antes de travar
+                    setTimeout(() => {
+                        btn.disabled = true;
+                    }, 10);
+                }
+            });
+        });
+    });
+</script>
+
+
+        <div id="modal-preview-global" class="modal-overlay" style="display: none;">
+            <div class="modal-conteudo">
+                <span class="fechar-modal" onclick="fecharModalPreview()">×</span>
+                
+                <div style="margin-bottom: 15px; padding-right: 30px;">
+                    <h3 id="modal-titulo-texto" style="margin: 0; color: #333; font-size: 1.2rem;">Visualização</h3>
+                </div>
+                
+                <iframe id="modal-iframe" src="" 
+                        style="width: 100%; height: calc(100% - 120px); border: none; border-radius: 4px; background: #f1f1f1; margin-top: 20px;">
+                </iframe>
+                
+                <div style="position: absolute; bottom: 20px; right: 20px;">
+                    <a id="modal-btn-baixar" href="" download class="btn-baixar">
+                        Baixar PDF
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    </body>
 </html>
-
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
-integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
