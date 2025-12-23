@@ -24,7 +24,7 @@ def perfil_usuario(request):
             user_form.save()
             perfil_form.save()
             messages.success(request, 'Seu perfil e foto foram atualizados!')
-            return redirect('perfil')
+            return redirect('perfil_usuario')
         else:
             messages.error(request, 'Por favor, corrija os erros abaixo.')
     else:
