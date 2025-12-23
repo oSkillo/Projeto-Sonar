@@ -1,9 +1,9 @@
 :root {
-    --background-color: #0F172A;    
-    --primary-surface: #1E293B;       
-    --accent-color: #38BDF8;         
-    --text-main: #F9FAFB;             
-    --text-secondary: #9CA3AF;         
+    --background-color: #0F172A;
+    --primary-surface: #1E293B;
+    --accent-color: #38BDF8;
+    --text-main: #F9FAFB;
+    --text-secondary: #9CA3AF;
 }
 
 * {
@@ -13,9 +13,9 @@
 }
 
 html, body {
-    overflow-x: hidden; 
-    max-width: 100%;   
-    margin: 0;       
+    overflow-x: hidden;
+    max-width: 100%;
+    margin: 0;
     padding: 0;
 }
 
@@ -27,6 +27,7 @@ body {
     display: flex;
     flex-direction: column;
     width: 100%;
+    overflow-x: hidden;
 }
 
 
@@ -34,12 +35,12 @@ body {
 
 header {
     height: 80px;
-    background-color: rgba(15, 23, 42, 0.50); 
+    background-color: rgba(15, 23, 42, 0.50);
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
-    z-index: 2500;
+    z-index: 3000;
     top: 0;
-    position: fixed; /* Antes era sticky */
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -63,18 +64,54 @@ header {
 }
 
 .header-navbar__content-logo {
-    display: flex; 
-    align-items: center; 
-    gap: 15px; 
+    display: flex;
+    align-items: center;
+    gap: 15px;
     height: 100%;
-    position: relative; 
-    z-index: 2600; 
+    position: relative;
+    z-index: 4000;
 }
 
 .navbar-logo {
     display: flex;
     align-items: center;
 }
+
+.icon-menu-hamburguer {
+    font-size: 32px;            
+    color: #fff;               
+    transition: transform 0.3s ease, color 0.3s ease;
+    vertical-align: middle;
+}
+
+.icon-menu-hamburguer {
+    font-size: 28px !important;            /* Tamanho ajustado para igualar ao mobile (era 32px) */
+    color: #fff;  
+    transition: transform 0.3s ease, color 0.3s ease;
+    vertical-align: middle;
+}
+
+/* Efeito ao passar o mouse: Fica azul (Acento) para indicar clique */
+.sidebar-toggle button:hover .icon-menu-hamburguer {
+    transform: scale(1.1);
+    color: var(--accent-color); /* Fica azulzinho ao passar o mouse */
+    cursor: pointer;
+}
+
+.navbar-logo > a {
+    display: flex;              /* Alinha o texto e a imagem na mesma linha */
+    align-items: center;        /* Centraliza verticalmente */
+    gap: 12px;                  /* Espaço entre a palavra SONAR e o Submarino */
+    text-decoration: none;      /* Remove sublinhado */
+}
+
+.logo-icon-right {
+    height: 35px;               /* Altura do submarino */
+    width: auto;
+    object-fit: contain;
+    display: block;             /* Garante que apareça */
+}
+
 
 .sidebar-toggle.display-desktop button {
     cursor: pointer;
@@ -86,7 +123,7 @@ header {
 }
 
 .logo-icon-mini {
-    display: none; 
+    display: none;
 }
 
 .logo-text {
@@ -158,13 +195,13 @@ header {
     background: rgba(255, 255, 255, 0.15);     /* Fica mais claro */
     border-color: rgba(255, 255, 255, 0.3);    /* Borda brilha */
     color: var(--accent-color);                /* Texto fica azul neon */
-    
+
     transform: translateY(-2px);               /* Sobe levemente */
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Sombra suave */
 }
 
 .header-navbar__btn.btn-destaque {
-    padding: 10px 40px; 
+    padding: 10px 40px;
     font-size: 1.1rem;
     border-color: rgba(255, 255, 255, 0.3);
     background: rgba(255, 255, 255, 0.1); /* Fundo um pouco mais claro que os outros */
@@ -188,7 +225,7 @@ header {
 }
 
 .header-navbar__btn {
-    width: auto; 
+    width: auto;
     white-space: nowrap; /* Impede que o texto quebre linha */
 }
 
@@ -207,13 +244,13 @@ header {
     display: flex;             /* Transforma em container flexível */
     flex-direction: column;    /* Organiza itens em coluna (um embaixo do outro) */
     justify-content: space-between; /* Empurra o footer para o final */
-    
+
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 9999;
+    z-index: 2000;
     width: 320px;
-    height: 100dvh; 
+    height: 100dvh;
     background: rgba(0, 0, 0, 0.75);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -230,7 +267,7 @@ header {
     width: 100%;
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.5); /* Preto com transparência */
-    z-index: 9998;
+    z-index: 1500;
     top: 0;
     left: 0;
 
@@ -246,12 +283,10 @@ header {
 }
 
 .sidebar-menu__wrapper {
-    flex: 1; 
-    overflow-y: auto; 
-    
+    flex: 1;
+    overflow-y: auto;
     margin-top: 100px;
-    height: auto;   
-    
+    height: auto;
     padding: 0 14px 0 24px;
     scrollbar-width: thin;
 }
@@ -280,31 +315,30 @@ li {
 .main-menu__item {
     display: flex;
     align-items: center;
-    height: 56px; 
+    height: 56px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     line-height: 40px;
-    margin-bottom: 8px; 
+    margin-bottom: 8px;
     padding: 0 16px;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: rgba(56, 189, 248, 0.30);
+    border: 1px solid rgba(56, 189, 248, 0.3);
     border-radius: 12px;
     color: var(--text-main);
     font-weight: 500;
     transition: all 0.3s ease;
-    cursor: pointer; /* Garante que pareça clicável */
+    cursor: pointer;
 }
 
 .main-menu__item:hover {
-    background: rgba(56, 189, 248, 0.15); 
+    background: rgba(56, 189, 248, 0.15);
     color: var(--accent-color);
     border-color: rgba(56, 189, 248, 0.3);
     transform: translateX(5px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
-/* Espaço entre ícone e texto */
 .main-menu__item span.material-symbols-outlined {
     margin-right: 20px;
     font-size: 24px;
@@ -323,9 +357,9 @@ main {
 }
 
 @media (min-width: 1600px) {
-    
+
     main {
-        transition: padding-left 0.3s ease-in-out; /* Animação suave se redimensionar */
+        transition: padding-left 0.3s ease-in-out;
     }
     main.is-open {
         transition: padding-left 0.3s ease-in-out;
@@ -333,12 +367,12 @@ main {
     }
 
     .sidebar-menu {
-    position: fixed !important; 
+    position: fixed !important;
     top: 0;
     left: 0;
     height: 100vh;
     width: 320px;
-    z-index: 90;
+    z-index: 2000;
     box-shadow: 2px 0 5px rgba(0,0,0,0.1);
     transform: translateX(-100%);
     transition: transform 0.3s ease-in-out, visibility 0.3s ease-in-out;
@@ -347,16 +381,16 @@ main {
     flex-direction: column;
 }
 
-    .sidebar-menu.is-open { 
-    position: fixed !important; 
+    .sidebar-menu.is-open {
+    position: fixed !important;
     top: 0;
     left: 0;
     height: 100vh;
     transform: translateX(0);
     visibility: visible;
-    overflow-y: auto; 
+    overflow-y: auto;
 }
-    
+
     .sidebar-overlay {
         display: none;
         pointer-events: none;
@@ -366,27 +400,27 @@ main {
         pointer-events: none;
     }
     .header-navbar__content {
-        width: 100%; /* Garante que ocupe o espaço restante */
+        width: 100%;
     }
 }
 
 .sidebar-footer {
     padding: 20px 24px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1); 
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
     background: rgba(0, 0, 0, 0.2);
-    flex-shrink: 0; 
+    flex-shrink: 0;
 }
 
 .footer-links {
     margin-bottom: 12px;
     display: flex;
-    flex-wrap: wrap; 
+    flex-wrap: wrap;
     gap: 8px;
 }
 
 .footer-links a {
     font-size: 12px;
-    color: #aaa; 
+    color: #aaa;
     text-decoration: none;
     font-weight: 600;
     line-height: 1.2;
@@ -406,7 +440,7 @@ main {
 
 ::-webkit-scrollbar {
     width: 8px;
-    height: 8px; 
+    height: 8px;
 }
 
 ::-webkit-scrollbar-track {
@@ -416,11 +450,11 @@ main {
 
 ::-webkit-scrollbar-thumb {
     border-radius: 20px;
-    border: 2px solid transparent; 
-    background-clip: content-box; 
+    border: 2px solid transparent;
+    background-clip: content-box;
 
-    background-color: transparent; 
-    transition: background-color 0.3s; 
+    background-color: transparent;
+    transition: background-color 0.3s;
 }
 
 body:hover::-webkit-scrollbar-thumb {
@@ -434,7 +468,7 @@ body:hover::-webkit-scrollbar-thumb {
 
 * {
     scrollbar-width: thin;
-    scrollbar-color: transparent transparent 
+    scrollbar-color: transparent transparent
 }
 
 body:hover,
@@ -448,16 +482,16 @@ div:hover {
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    gap: 2%; 
+    gap: 2%;
     width: 95%;
     max-width: 95%;
-    margin: 0 auto; 
-    padding: 1% 0 20vh 0; 
+    margin: 0 auto;
+    padding: 1% 0 20vh 0;
 }
 
 .card-opcao {
-    flex: 0 0 23%; 
-    aspect-ratio: 1 / 1; 
+    flex: 0 0 23%;
+    aspect-ratio: 1 / 1;
     background: rgba(0, 0, 0, 0.75);
     backdrop-filter: blur(6px);
     border-radius: 12%;
@@ -467,12 +501,12 @@ div:hover {
     text-align: center;
     color: #fff;
     text-decoration: none;
-    font-size: clamp(16px, 1.8vw, 24px); 
+    font-size: clamp(16px, 1.8vw, 24px);
     font-weight: 600;
     line-height: 1.2;
     box-shadow: 0 10px 20px rgba(0,0,0,0.6);
     transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s;
-    margin: 2% auto 0 auto; 
+    margin: 2% auto 0 auto;
     padding: 0% 0;
 }
 
@@ -493,7 +527,7 @@ div:hover {
     background: rgba(56, 189, 248, 0.1);
 }
 
-/* Removemos a regra antiga do span que estava com font-size: 10%, 
+/* Removemos a regra antiga do span que estava com font-size: 10%,
    pois ela pode deixar o texto minúsculo ou ilegível no novo formato */
 .card-opcao span {
     display: block;
@@ -506,8 +540,8 @@ div:hover {
 }
 
 .cards-container.modo-series .card-opcao {
-    flex: 0 0 14% !important; 
-    max-width: 240px !important; 
+    flex: 0 0 14% !important;
+    max-width: 240px !important;
     min-width: 180px !important;
     font-size: 1.1rem !important;
 }
@@ -520,13 +554,13 @@ div:hover {
 }
 
 .cards-container.modo-materias {
-    max-width: 1460px; 
+    max-width: 1460px;
     gap: 0%;
 }
 
 .cards-container.modo-materias .card-opcao {
-    flex: 0 0 18%; 
-    font-size: clamp(16px, 1.8vw, 24px); 
+    flex: 0 0 18%;
+    font-size: clamp(16px, 1.8vw, 24px);
 }
 
 @media (max-width: 1366px) {
@@ -540,26 +574,26 @@ div:hover {
     flex-wrap: wrap; /* Permite quebrar linha se a tela for muito pequena (celular) */
     justify-content: center; /* Centraliza os cards na tela */
     align-items: center;
-    
+
     /* Remove a barra de rolagem lateral */
-    overflow-x: visible; 
-    
+    overflow-x: visible;
+
     /* Aumenta o espaçamento entre os cards grandes */
-    gap: 40px; 
-    
+    gap: 40px;
+
     /* Ocupa quase toda a largura para dar sensação de preenchimento */
     width: 95%;
-    max-width: 1600px; 
-    
-    margin: 0% auto 0 auto; 
-    
+    max-width: 1600px;
+
+    margin: 0% auto 0 auto;
+
     padding: 2% 0;
 }
 
 .cards-verticais .card-opcao {
     /* Mantém o formato retangular (Vertical) */
-    aspect-ratio: 2 / 3 !important; 
-    
+    aspect-ratio: 2 / 3 !important;
+
     /* MÁGICA DO TAMANHO:
        flex: 1 1 300px;
        - O primeiro 1: Pode crescer para ocupar espaço vazio.
@@ -567,19 +601,20 @@ div:hover {
        - 300px: É o tamanho ideal base (bem maior que antes).
     */
     flex: 1 1 300px !important;
-    
+
     /* Limite máximo para não ficarem gigantes em monitores ultrawide */
-    max-width: 20%; 
-    
+    max-width: 20%;
+
     /* Garante que não fiquem muito pequenos */
-    min-width: 250px; 
+    min-width: 250px;
 
     border-radius: 30px; /* Bordas mais arredondadas para combinar com o tamanho */
     margin: 0; /* Remove margens manuais */
 }
 
 /* Ajuste para telas menores (Notebooks pequenos e Tablets) */
-@media (max-width: 1024px) {
+@media (max-width: 1100px) {
+    
     .cards-verticais .card-opcao {
         max-width: 300px; /* Um pouco menor para caberem 3 lado a lado se possível */
     }
@@ -598,8 +633,8 @@ div:hover {
 @media (max-width: 768px) {
     .cards-verticais .card-opcao {
         /* No celular, eles vão ficar um embaixo do outro para ficarem grandes e legíveis */
-        flex: 1 1 100% !important; 
-        max-width: 350px; 
+        flex: 1 1 100% !important;
+        max-width: 350px;
     }
 }
 
@@ -619,7 +654,7 @@ div:hover {
     max-width: 90vw !important;    /* Segurança para mobile */
     min-height: 350px !important;  /* Altura mínima para caber tudo */
     margin: 15px !important;       /* Espaço em volta */
-    
+
     /* VISUAL "DARK GLASS" */
     background: rgba(0, 0, 0, 0.6) !important;
     backdrop-filter: blur(12px) !important;
@@ -635,7 +670,7 @@ div:hover {
     justify-content: space-between !important; /* Espalha conteúdo (Topo, Meio, Baixo) */
     padding: 20px !important;
     text-align: center !important;
-    
+
     /* TRANSIÇÃO SUAVE */
     transition: transform 0.3s ease, box-shadow 0.3s ease !important;
     box-shadow: 0 10px 20px rgba(0,0,0,0.3) !important;
@@ -651,7 +686,7 @@ div:hover {
 
 /* 3. TEXTOS DENTRO DO CARD */
 /* Título */
-.pdf-item strong, 
+.pdf-item strong,
 .pdf-item h3 {
     color: #fff !important;
     font-size: 1.1rem !important;
@@ -660,7 +695,7 @@ div:hover {
 }
 
 /* Descrição (Série/Matéria) */
-.pdf-item small, 
+.pdf-item small,
 .pdf-item span,
 .pdf-item p {
     color: #ccc !important;
@@ -698,33 +733,30 @@ div:hover {
 }
 .btn-baixar:hover { background-color: #0056b3; }
 
-/* Fundo escuro atrás do modal */
 .modal-overlay {
-    position: fixed; /* Fica fixo na tela mesmo se rolar */
+    position: fixed; 
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.8); /* Preto transparente */
-    z-index: 3000; /* Garante que fica por cima de tudo */
+    background-color: rgba(0, 0, 0, 0.8); 
+    z-index: 1000;
     justify-content: center;
     align-items: center;
 }
 
-/* A caixa branca onde fica o PDF */
 .modal-conteudo {
     position: relative;
     background-color: #fff;
     width: 90%;
-    height: 90%; 
+    height: 90%;
     max-width: 1200px;
     border-radius: 8px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     padding: 10px;
-    padding-top: 90px !important; 
+    padding-top: 90px !important;
 }
 
-/* O Botão X */
 .fechar-modal {
     position: absolute;
     top: 5px;
@@ -743,7 +775,7 @@ div:hover {
 
 main {
     position: relative;
-    flex: 1; 
+    flex: 1;
 }
 
 main > * {
@@ -753,26 +785,28 @@ main > * {
 
 main::before {
     content: "";
-    position: fixed; 
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: 
-        url('/static/img/Sonar-Wallpapers-ultima-camada-sem-submarino.jpg'); 
-        
+    position: fixed;
+    top: -4%;
+    left: -10%;
+    width: 120%;
+    height: 120%;
+    background:
+        url('/static/img/Sonar-Wallpaper-ultima-camada-sem-submarino.jpg');
+
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    
-    z-index: 0; 
-    transform: scale(1.2); 
-    
+
+    z-index: 0;
+    transform: scale(1.1);
+    pointer-events: none;
+    will-change: transform;
     transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 main.is-open::before {
-    transform: scale(1.0) translateX(30px);
+    transform: scale(0.9) translateX(50px) translateY(-30px); 
+    box-shadow: -10px 0 30px rgba(0,0,0,0.5);
 }
 
 @keyframes zoomLento {
@@ -823,9 +857,9 @@ footer {
 .btn-voltar {
     display: inline-block;
     padding: 12px 32px;
-    margin-bottom: 0px;    
-    margin-top: 0px;    
-    background-color: var(--primary-surface); 
+    margin-bottom: 0px;
+    margin-top: 0px;
+    background-color: var(--primary-surface);
     color: var(--text-main);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 50px;
@@ -840,7 +874,6 @@ footer {
     /* Efeito de destaque azul ciano */
     background-color: var(--accent-color);
     color: #0F172A; /* Texto escuro para contraste no azul */
-    transform: translateY(-3px); /* Leve subida */
     box-shadow: 0 0 15px rgba(56, 189, 248, 0.4); /* Brilho neon */
 }
 
@@ -853,7 +886,7 @@ footer {
     display: flex;
     align-items: center;
     width: 25%;
-    height: 48px; 
+    height: 48px;
     padding: 0 20px;
     background-color: rgba(255, 255, 255, 0.08);
     border: 1px solid rgba(255, 255, 255, 0.15);
@@ -879,7 +912,7 @@ footer {
     background: transparent;
     border: none;
     outline: none;
-    
+
     /* Texto */
     color: var(--text-main);
     font-family: 'Segoe UI', sans-serif;
@@ -919,15 +952,15 @@ footer {
     top: 100%; /* Cola logo abaixo da barra */
     left: 0;
     width: 100%; /* Mesma largura da barra */
-    
+
     background: rgba(15, 23, 42, 0.95); /* Fundo escuro quase sólido */
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 0 0 20px 20px; /* Arredonda só embaixo */
-    
+
     max-height: 400px;
     overflow-y: auto; /* Barra de rolagem se tiver muita coisa */
-    
+
     display: none; /* Escondido por padrão */
     flex-direction: column;
     z-index: 1000;
@@ -975,43 +1008,30 @@ footer {
     letter-spacing: 1px;
 }
 
-/* =========================================
-   ESTILOS MOBILE (Sobrescrevem o Desktop)
-   ========================================= */
-
-/* 1. Classes Utilitárias (Para esconder/mostrar coisas) */
-/* =================================================================
-   RESPONSIVIDADE E LÓGICA MOBILE (SIDEBAR ESQUERDA + SANDUÍCHE)
-   ================================================================= */
-
-/* =================================================================
-   LAYOUT DO HEADER E RESPONSIVIDADE (CÓDIGO FINAL CORRIGIDO)
-   ================================================================= */
-
-/* --- 1. CONFIGURAÇÕES GERAIS DO HEADER (Para todas as telas) --- */
-
-/* =================================================================
-   RESPONSIVIDADE E LÓGICA MOBILE / TABLET (FINAL)
-   ================================================================= */
 
 /* 1. PADRÃO (Desktop > 1200px) */
-.mobile-only, .mobile-menu-toggle, .mobile-emoji-decorative, .mobile-search-trigger, .close-search-btn { 
-    display: none !important; 
+.mobile-only, .mobile-menu-toggle, .mobile-emoji-decorative, .mobile-search-trigger, .close-search-btn {
+    display: none !important;
 }
 .botoes-desktop, .desktop-only, .desktop-only-flex {
     display: flex !important;
 }
 
-/* 2. NOTEBOOKS (1024px - 1200px) */
+/* 2. NOTEBOOKS (1100px - 1200px) */
 @media (max-width: 1590px) {
     .esconder-cedo { display: none !important; }
     .grupo-institucional { display: block !important; }
 }
 
-/* 3. TABLET (710px - 1024px) */
-@media (max-width: 1024px) {
+/* 3. TABLET (710px - 1100px) */
+@media (max-width: 1100px) {
     .botoes-desktop, .desktop-only, .desktop-only-flex { display: none !important; }
-
+    
+    .sidebar-overlay {
+        z-index: 1500; /* Fica acima do site (1) mas abaixo da sidebar (2000) */
+        background-color: rgba(0, 0, 0, 0.6); /* Escurece o fundo */
+        backdrop-filter: blur(3px); /* Desfoque chique */
+    }
     /* HEADER: Distribui: Logo (Esq) -- Busca (Meio) -- Emoji (Dir) */
     .header-navbar__content {
         justify-content: space-between;
@@ -1021,7 +1041,7 @@ footer {
     /* ESQUERDA */
     .header-navbar__content-logo {
         width: auto !important; min-width: 0 !important; padding: 0 !important;
-        display: flex !important; align-items: center !important; flex-shrink: 0; 
+        display: flex !important; align-items: center !important; flex-shrink: 0;
     }
     .mobile-menu-toggle {
         display: flex !important; align-items: center; justify-content: center;
@@ -1041,11 +1061,13 @@ footer {
 
     /* SIDEBAR */
     .sidebar-menu {
-        left: 0 !important; right: auto !important; transform: translateX(-100%) !important;
-        border-right: 1px solid rgba(255, 255, 255, 0.1); border-left: none; width: 280px; 
+        z-index: 2000 !important;
+        position: fixed !important; 
+        /* Mantém a transição de deslizar */
+        transform: translateX(-100%); 
     }
     .sidebar-menu.is-open { transform: translateX(0) !important; }
-    .sidebar-menu__wrapper { margin-top: 80px; }
+    .sidebar-menu__wrapper { margin-top: 100px; }
     .grupo-conta { display: block !important; }
 
     /* SEARCHBOX (TABLET: Visível no Meio) */
@@ -1053,10 +1075,36 @@ footer {
         position: relative !important; left: auto !important; transform: none !important;
         width: 100% !important; max-width: 400px; margin: 0 10px;
     }
+    
+    #main.is-open,
+    #main.is-open::before {
+        transform: none !important;     /* Site fica parado */
+        box-shadow: none !important;    /* Sem sombra 3D */
+        border-radius: 0 !important;    /* Sem bordas arredondadas */
+        padding-left: 0 !important;     /* Não empurra o conteúdo */
+    }
+
+
+    .sidebar-overlay {
+        z-index: 1500; /* Fica acima do site (1) mas abaixo da sidebar (2000) */
+        background-color: rgba(0, 0, 0, 0.6); /* Escurece o fundo */
+        backdrop-filter: blur(3px); /* Desfoque chique */
+    }
+    
+    /* 3. SIDEBAR FLUTUANTE: Garante que ela passe por cima de tudo */
+    .sidebar-menu {
+        z-index: 2000 !important;
+        position: fixed !important; 
+        transform: translateX(-100%); 
+    }
+    
+    .sidebar-menu.is-open {
+        transform: translateX(0) !important;
+    }
 }
 
 /* 4. CELULAR (< 710px) - AQUI VIRA LUPA */
-@media (max-width: 580px) {
+@media (max-width: 650px) {
 
     /* --- GATILHO DA LUPA APARECE --- */
     .mobile-search-trigger {
@@ -1068,7 +1116,8 @@ footer {
         z-index: 50;
         position: static !important;
         color: var(--accent-color);
-        margin-right: 15px; 
+        margin-right: 15px;
+        margin-top: 10px;
     }
 
     .header-navbar__content-barra {
@@ -1082,7 +1131,7 @@ footer {
     }
 
     /* --- COMPORTAMENTO DA SEARCHBOX NO CELULAR --- */
-    
+
     /* Estado Padrão (FECHADO/ESCONDIDO) */
     .search-container {
         position: absolute !important; /* Volta a ser absoluto para não ocupar espaço */
@@ -1102,8 +1151,8 @@ footer {
         position: relative !important;
         right: auto;
         left: auto;
-        width: 100% !important; 
-        height: 100%;
+        width: 100% !important;
+        height: 75%;
         opacity: 1;
         visibility: visible;
         display: flex;
@@ -1115,11 +1164,11 @@ footer {
         border-radius: 0;
         max-width: none; /* Remove o limite do tablet */
     }
-    
+
     /* Estilo visual da barra cinza */
     .search-container form {
         width: 100%;
-        height: 40px; 
+        height: 40px;
         display: flex;
         align-items: center;
         flex-direction: row-reverse;
@@ -1165,12 +1214,21 @@ footer {
     }
 }
 
+@media (max-width: 500px) {
+    .logo-icon-right {
+        display: none !important;
+    }
+}
 
 /* 5. LOGO RESPONSIVO (< 380px) */
 @media (max-width: 380px) {
-    .logo-text { display: none !important; }
-    .logo-icon-mini { display: inline-block !important; font-size: 30px; line-height: 1; font-style: normal; margin-left: 5px; }
-    .header-navbar__content-logo { gap: 5px; }
+    .logo-text {
+        display: none !important;
+    }
+    .logo-icon-right {
+        display: block !important;
+        height: 30px;
+    }
 }
 
 body.no-scroll {
@@ -1206,18 +1264,16 @@ body.no-scroll {
 
 .nav-user-card {
     display: flex;
-    align-items: center;       /* Alinha texto e foto no centro vertical */
-    gap: 15px;                 /* Espaço entre o nome e a foto */
-    
-    /* Visual de Vidro (Glass) */
+    align-items: center;      
+    gap: 15px;
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 50px;       /* Borda totalmente redonda (Pill) */
-    
-    /* Padding estratégico: Mais espaço na esquerda pro texto respirar */
-    padding: 5px 5px 5px 20px; 
-    
-    text-decoration: none;     /* Remove sublinhado do link */
+    backdrop-filter: blur(5px);
+    color: var(--text-main);
+    text-decoration: none;
+    border-radius: 50px;
+    padding: 5px 5px 5px 20px;
+    text-decoration: none; 
     transition: all 0.3s ease;
 }
 
@@ -1243,7 +1299,7 @@ body.no-scroll {
     height: 50px;
     border-radius: 50%;
     object-fit: cover;
-    
+
     /* Borda Colorida (Acento) */
     border: 2px solid var(--accent-color);
     box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
@@ -1278,7 +1334,7 @@ body.no-scroll {
 /* --- ESTILO DO CARD (PDF ITEM) --- */
 
 .pdf-item {
-    /* Adicione aqui estilos específicos do card se necessário, 
+    /* Adicione aqui estilos específicos do card se necessário,
        como background ou borda, caso ainda não existam no css global */
     display: flex;
     flex-direction: column;
@@ -1580,9 +1636,9 @@ body.no-scroll {
 
 /* Título */
 .titulo-login {
-    text-align: center; 
-    margin-bottom: 30px; 
-    color: #fff; 
+    text-align: center;
+    margin-bottom: 30px;
+    color: #fff;
     font-size: 2rem;
 }
 
@@ -1666,8 +1722,8 @@ body.no-scroll {
 }
 
 .link-esqueci {
-    color: #94a3b8; 
-    font-size: 0.9rem; 
+    color: #94a3b8;
+    font-size: 0.9rem;
     text-decoration: none;
     transition: 0.3s;
 }
@@ -1702,9 +1758,9 @@ body.no-scroll {
 
 /* Título */
 .titulo-login {
-    text-align: center; 
-    margin-bottom: 30px; 
-    color: #fff; 
+    text-align: center;
+    margin-bottom: 30px;
+    color: #fff;
     font-size: 2rem;
 }
 
@@ -1788,8 +1844,8 @@ body.no-scroll {
 }
 
 .link-esqueci {
-    color: #94a3b8; 
-    font-size: 0.9rem; 
+    color: #94a3b8;
+    font-size: 0.9rem;
     text-decoration: none;
     transition: 0.3s;
 }
@@ -1802,15 +1858,15 @@ body.no-scroll {
     display: inline-block;
     padding: 12px 32px;
     margin-left: 15px;
-    color: #4ade80; 
-    border: 2px dashed #4ade80; 
+    color: #4ade80;
+    border: 2px dashed #4ade80;
     background: rgba(74, 222, 128, 0.05);
     border-radius: 50px;
     text-decoration: none;
     font-weight: 600;
     font-size: 1rem;
     cursor: pointer;
-    
+
     transition: all 0.3s ease;
 }
 
@@ -1818,8 +1874,6 @@ body.no-scroll {
     background: #4ade80; /* Fundo preenche de verde */
     color: #0F172A; /* Texto escuro */
     border-style: solid; /* Borda fica sólida no hover */
-    
-    transform: translateY(-3px);
     box-shadow: 0 0 15px rgba(74, 222, 128, 0.4); /* Brilho verde */
 }
 
@@ -1940,14 +1994,14 @@ body.no-scroll {
     top: 10px;
     right: 10px;
     z-index: 10; /* Garante que fique acima do link */
-    
+
     background: rgba(0, 0, 0, 0.6);
     border: 1px solid rgba(255, 255, 255, 0.2);
     color: #fff;
     border-radius: 50%;
     width: 32px;
     height: 32px;
-    
+
     display: flex;
     align-items: center;
     justify-content: center;
@@ -2002,11 +2056,11 @@ body.no-scroll {
     min-width: 300px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     border-left: 5px solid; /* Linha colorida na esquerda */
-    
+
     display: flex;
     align-items: center;
     justify-content: space-between;
-    
+
     animation: slideIn 0.5s ease forwards, fadeOut 0.5s ease 4s forwards;
     opacity: 0; /* Começa invisível para a animação funcionar */
 }
@@ -2054,7 +2108,7 @@ body.no-scroll {
     left: 50%;       /* Começa no meio da tela */
     transform: translateX(-50%); /* Centraliza exato no eixo X */
     z-index: 990;    /* Fica acima dos cards, mas abaixo de modais (1000+) */
-    
+
     display: flex;
     align-items: center;
     justify-content: center;
@@ -2144,7 +2198,7 @@ body.no-scroll {
     transform: translateY(-2px);
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1100px) {
     .cards-container.modo-series .card-opcao,
     .cards-container.modo-materias .card-opcao {
         flex: 0 0 30% !important; /* 30% * 3 = 90% */
@@ -2155,24 +2209,24 @@ body.no-scroll {
 }
 
 @media (max-width: 1023px) {
-    .cards-container.modo-series, 
+    .cards-container.modo-series,
     .cards-container.modo-materias {
-        flex-direction: row !important; 
-        justify-content: center;     
+        flex-direction: row !important;
+        justify-content: center;
         align-items: flex-start;
-        gap: 15px;                  
-        padding-bottom: 150px;      
+        gap: 15px;
+        padding-bottom: 150px;
     }
     .cards-container.modo-series .card-opcao,
     .cards-container.modo-materias .card-opcao {
-        flex: 0 0 44% !important; 
+        flex: 0 0 44% !important;
         width: 44% !important;
-        aspect-ratio: 1 / 1 !important; 
-        height: auto !important;     
-        min-height: 0 !important;      
-        max-width: 180px !important;   
-        margin: 0 !important;          
-        font-size: 0.9rem !important;  
+        aspect-ratio: 1 / 1 !important;
+        height: auto !important;
+        min-height: 0 !important;
+        max-width: 180px !important;
+        margin: 0 !important;
+        font-size: 0.9rem !important;
         padding: 10px !important;
     }
     .card-opcao h3 {
