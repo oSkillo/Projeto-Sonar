@@ -10,25 +10,34 @@ from django.contrib.auth import authenticate, login, logout
 
 @login_required
 def perfil_usuario(request):
-    # Garante que o perfil existe (caso tenha sido criado antes do nosso código automático)
+    # Garante que o perfil existe
     perfil, created = Perfil.objects.get_or_create(usuario=request.user)
 
     if request.method == 'POST':
-        # Carrega os dois formulários com os dados enviados
-        # user_form: cuida do Nome/Email
-        # perfil_form: cuida da Foto (note o request.FILES obrigatório para imagem)
+        # Carrega os formulários com os dados enviados
         user_form = CustomUserChangeForm(request.POST, instance=request.user)
         perfil_form = PerfilForm(request.POST, request.FILES, instance=perfil)
         
         if user_form.is_valid() and perfil_form.is_valid():
+            # 1. Salva os dados do usuário (Nome, Email, etc)
             user_form.save()
-            perfil_form.save()
+
+            # 2. LÓGICA DE REMOVER FOTO
+            # Verificamos o campo hidden que criamos no HTML
+            if request.POST.get('remover_foto') == 'true':
+                print("--- REMOVENDO FOTO (App Conta) ---") # Debug no terminal
+                perfil.foto = 'perfis/default.png' # Define a imagem padrão
+                perfil.save() # Salva diretamente no banco
+            else:
+                # Se NÃO clicou em remover, deixa o form salvar (caso tenha upload novo)
+                perfil_form.save()
+            
             messages.success(request, 'Seu perfil e foto foram atualizados!')
             return redirect('perfil_usuario')
         else:
             messages.error(request, 'Por favor, corrija os erros abaixo.')
     else:
-        # Se for apenas abrir a página (GET), carrega os dados atuais
+        # GET: Carrega os dados atuais
         user_form = CustomUserChangeForm(instance=request.user)
         perfil_form = PerfilForm(instance=perfil)
 
@@ -37,7 +46,6 @@ def perfil_usuario(request):
         'perfil_form': perfil_form
     }
     
-    # Vamos usar o template que está na pasta CONTA
     return render(request, 'perfil_usuario.html', context)
 
 
@@ -61,7 +69,7 @@ def login_user(request):
         user = authenticate(request, username = username, password = password )
         if user is not None:
             login(request, user)
-            return redirect('base')
+            return redirect('home')
         else:
             messages.error(request, ('Usuário ou Senha incorretos. Tente novamente!'))
             return redirect('entrar')
