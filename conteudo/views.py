@@ -9,8 +9,13 @@ from django.db.models import Q
 from unidecode import unidecode
 from django.contrib.auth.decorators import user_passes_test
 
+
 @login_required
-def home_view(request):
+def home_view(request):    
+    return render(request, 'home.html')
+
+@login_required
+def base_view(request):
     # Pega só quem tem a caixinha marcadasS
     divergencias_capa = Divergencia.objects.filter(destaque_home=True)
     return render(request, 'divergencias.html', {'items': divergencias_capa})
@@ -18,6 +23,7 @@ def home_view(request):
 def check_admin(user):
     # Permite se for Superuser OU se for do grupo 'Administrador'
     return user.is_superuser or user.groups.filter(name='Administrador').exists()
+
 
 @login_required
 def grau_view(request):
@@ -133,25 +139,30 @@ def visualizar_materia(request, materia_slug):
 
 @login_required(login_url='entrar')
 def perfil_usuario(request):
-    # 1. Busca o perfil antes de tudo para garantir que a variável existe
     perfil = request.user.perfil 
 
     if request.method == 'POST':
-        # Atualiza campos de texto (se houver)
+        # DEBUG: Isso vai mostrar no seu terminal preto o que o formulário enviou
+        print("DADOS RECEBIDOS:", request.POST) 
+
+        # Atualiza dados (com os inputs manuais que colocamos no HTML, isso agora vai funcionar)
         request.user.first_name = request.POST.get('first_name', request.user.first_name)
+        request.user.last_name = request.POST.get('last_name', request.user.last_name)
         request.user.email = request.POST.get('email', request.user.email)
         request.user.save()
 
-        # 2. A TRAVA DO ERRO: Só entra aqui se existir um arquivo chamado 'foto'
-        if 'foto' in request.FILES:
+        # Lógica da Foto
+        if request.POST.get('remover_foto') == 'true':
+            print("--- REMOVENDO FOTO... ---")
+            perfil.foto = None 
+            perfil.save()
+            messages.success(request, "Foto de perfil removida com sucesso!")
+            return redirect('perfil_usuario')
+
+        elif 'foto' in request.FILES:
             perfil.foto = request.FILES['foto']
         
-        # 3. Salva o perfil (seja com foto nova ou não)
         perfil.save()
-        
-        messages.success(request, "Perfil atualizado com sucesso!")
-        
-        # 4. Use o nome exato que está no seu urls.py para evitar o erro de 'Reverse'
         return redirect('perfil_usuario')
 
     return render(request, 'perfil_usuario.html', {'perfil': perfil})

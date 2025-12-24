@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block conteudo %}
+
+<style>
+    main::before {
+        background-image: url('{% static "img/Sonar-Wallpapers-superficie.png" %}') !important;
+        background-position: center bottom !important;
+    }
+
+
+    /* 2. O Container que segura tudo e centraliza na tela */
+    .landing-container {
+        height: 85vh; /* Ocupa quase a altura toda da tela */
+        width: 100%;
+        display: flex;
+        align-items: center; /* Centraliza verticalmente */
+        justify-content: center; /* Centraliza horizontalmente */
+        padding: 20px;
+    }
+
+    .card-vidro {
+        /* Estilos Visuais (Vidro, Borda, Cor) */
+        background: rgba(30, 41, 59, 0.7); 
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 30px;
+        padding: 50px;
+        text-align: center;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        animation: surgir 0.8s ease-out;
+        margin: 0 auto;
+        width: 100%;       
+        max-width: 50%;
+    }
+
+    @media (max-width: 1100px) {
+        .card-vidro {
+            max-width: 100%; 
+            width: 100%;
+        }
+    }
+
+    /* Título "Projeto Sonar" */
+    .card-vidro h1 {
+        font-size: 2.5rem;
+        color: #fff;
+        margin-bottom: 25px;
+        font-weight: 700;
+        letter-spacing: 1px;
+    }
+
+    /* Texto descritivo */
+    .card-vidro p {
+        font-size: 1.1rem;
+        color: #cbd5e1; /* Um cinza claro legível */
+        line-height: 1.6;
+        margin-bottom: 40px; /* Espaço até os botões */
+    }
+
+    /* Área dos Botões (lado a lado) */
+    .botoes-wrapper {
+        display: flex;
+        justify-content: center;
+        gap: 20px; /* Espaço entre os dois botões */
+        flex-wrap: wrap; /* Se a tela for muito pequena, um cai pra baixo do outro */
+    }
+
+    /* Estilo Geral dos Botões */
+    .btn-landing {
+        padding: 12px 0;
+        width: 160px; /* Largura fixa para ficarem iguais */
+        border-radius: 8px; /* Borda levemente arredondada (ou 50px se quiser pílula) */
+        font-weight: bold;
+        font-size: 1.1rem;
+        text-decoration: none;
+        text-align: center;
+        transition: transform 0.2s, opacity 0.2s;
+        border: none;
+        cursor: pointer;
+    }
+
+    .btn-landing:hover {
+        transform: translateY(-3px); /* Sobe um pouquinho ao passar o mouse */
+        opacity: 0.9;
+    }
+
+    /* Botão COMEÇAR (Azul/Ciano) */
+    .btn-comecar {
+        background-color: var(--accent-color); /* Usa seu azul neon (cyan) */
+        color: #ffffff; /* Texto escuro para contraste */
+        box-shadow: 0 4px 15px rgba(56, 189, 248, 0.3);
+    }
+
+    /* Botão SOBRE (Cinza) */
+    .btn-sobre {
+        background-color: #64748b; /* Cinza médio */
+        color: #fff; /* Texto branco */
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    @keyframes surgir {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Ajuste para celular */
+    @media (max-width: 500px) {
+        .card-vidro { padding: 30px 20px; }
+        .btn-landing { width: 100%; } /* Botões ocupam largura total no celular */
+    }
+</style>
+
+<div class="landing-container">
+    <div class="card-vidro">
+        
+        <h1>Projeto Sonar</h1>
+        
+        <p>
+            Uma plataforma dedicada a conectar conhecimentos e facilitar o aprendizado para crianças neurodivergentes. 
+            Aqui centralizamos materiais didáticos adaptados, guias essenciais e atividades focadas em Autismo, TDAH e Síndrome de Down.
+        </p>
+
+        <div class="botoes-wrapper">
+            <a href="{% url 'base' %}" class="btn-landing btn-comecar">
+                Começar
+            </a>
+
+            <a href="{% url 'sobre' %}" class="btn-landing btn-sobre">
+                Sobre
+            </a>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

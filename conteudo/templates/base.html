@@ -6,6 +6,7 @@
     <title>Sonar</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="icon" href="{% static 'img/icone-Sonar.png' %}" type="image/png">
 </head>
 <body>
 
@@ -38,8 +39,7 @@
                 </div>
                 
                 <div class="navbar-logo">
-                    <a href="/">
-                        <strong class="logo-text">Sonar</strong>
+                    <a href="{% url 'home' %}"> <strong class="logo-text">Sonar</strong>
                         <img src="{% static 'img/icone-Sonar.png' %}" class="logo-icon-right" alt="Sonar">
                     </a>
                 </div>
@@ -91,7 +91,11 @@
                 <div class="mobile-emoji-decorative mobile-profile-container">
                     {% if user.is_authenticated %}
                         <a href="{% url 'perfil_usuario' %}">
-                            <img src="{{ user.perfil.foto.url }}" alt="Perfil" class="nav-profile-img" style="width: 50px; height: 50px;">
+                            <img src="{% if user.perfil.foto and user.perfil.foto.name != 'perfis/default.png' %}{{ user.perfil.foto.url }}{% else %}{% static 'img/default.png' %}{% endif %}" 
+                                alt="Perfil" 
+                                class="nav-profile-img" 
+                                style="width: 50px; height: 50px;"
+                                onerror="this.src='{% static 'img/default.png' %}'">
                         </a>
                     {% else %}
                         <a href="{% url 'sair' %}" style="text-decoration: none; font-size: 24px;">🟠</a>
@@ -445,7 +449,7 @@
                     // 2. Muda o texto para dar feedback (opcional, se quiser manter só o ícone tire essa parte)
                     // Verifica se o botão tem texto antes de mudar
                     if (btn.innerText.trim().length > 0) {
-                        btn.innerText = 'Salvando...';
+                        btn.innerText = 'Carregando...';
                     }
 
                     // 3. Trava o clique (O Pulo do Gato)

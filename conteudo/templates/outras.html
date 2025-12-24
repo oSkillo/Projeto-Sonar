@@ -1,6 +1,14 @@
 {% extends 'base.html' %}
 {% load custom_tags %}
+{% load static %}
 {% block conteudo %}
+
+<style>
+    main::before {
+        background-image: url('{% static "img/Sonar-Wallpaper-ultima-camada-sem-submarino.jpg" %}') !important;
+        background-position: center bottom !important;
+    }
+</style>
 
 <h2 style="text-align: center; margin-top: 30px;">{{ titulo }}</h2>
 
@@ -21,8 +29,11 @@
     {% endfor %}
 </div>
 
-<div style="text-align: center; margin-top: 40px; margin-bottom: 40px;">
-    <a href="javascript:history.back()" style="color: whitesmoke;" class="btn-voltar">← Voltar</a>
+</div> <div style="height: 120px;"></div>
+
+<div class="barra-botoes-fixa">
+    <a href="javascript:history.back()" class="btn-voltar">← Voltar</a>
+
     {% if user|eh_admin %}
         <a href="javascript:void(0)" onclick="abrirModalDivergencia()" class="btn-adicionar">+ Adicionar</a>
     {% endif %}

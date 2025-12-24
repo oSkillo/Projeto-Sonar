@@ -1,7 +1,17 @@
 {% extends 'base.html' %}
+{% load static %}
 {% load custom_tags %}
 
 {% block conteudo %}
+
+<style>
+    main::before {
+        background-image: url('{% static "img/Sonar-Wallpapers-terceira-camada.jpg" %}') !important;
+        background-position: center center !important;
+        background-size: cover !important;
+    }
+</style>
+
 <h1 style="text-align: center; margin-top: 30px; -webkit-text-stroke: 1px rgb(2, 72, 97)">Escolha a Matéria</h1>
 
 <div class="cards-container modo-materias">

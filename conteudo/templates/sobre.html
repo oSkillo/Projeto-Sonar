@@ -5,13 +5,20 @@
 
 {% block conteudo %}
 
+<style>
+    main::before {
+        background-image: url('{% static "img/Sonar-Wallpaper-superficie.jpg" %}') !important;
+        background-position: center bottom !important;
+    }
+</style>
+
 <link rel="stylesheet" href="{% static 'css/sobre.css' %}">
 
 <div class="sobre-container">
-
-    <h1 class="main-title">Como o Projeto <span class="destaque">Sonar Funciona</span></h1>
     
-    <div class="content-card">
+    <div class="content-card card-conteudo-vidro">
+
+        <h1 class="main-title">Como o Projeto <span class="destaque">Sonar Funciona</span></h1>
         
         <h2 class="section-title">🔒 Sistema de Assinatura para Escolas</h2>
         <p class="texto-sobre">

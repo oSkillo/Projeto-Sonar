@@ -5,9 +5,14 @@
 
 {% block conteudo %}
 
-<link rel="stylesheet" href="{% static 'css/metodologia.css' %}">
+<style>
+    main::before {
+        background-image: url('{% static "img/Sonar-Wallpaper-superficie.jpg" %}') !important;
+        background-position: center bottom !important;
+    }
+</style>
 
-<div class="metodologia-container">
+<div class="metodologia-container card-conteudo-vidro">
 
     <h1 class="main-title">Como o Projeto Sonar Funciona</h1>
     
