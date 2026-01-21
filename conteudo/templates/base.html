@@ -11,6 +11,21 @@
 </head>
 <body>
 
+<div class="mobile-floating-controls">
+    
+    <button type="button" class="mobile-menu-toggle" id="btn-menu-flutuante" abrir-menu="">
+        <span class="material-symbols-outlined">menu</span>
+    </button>
+
+    <div class="navbar-logo">
+        <a href="{% url 'home' %}"> 
+            <strong class="logo-text">Sonar</strong>
+            <img src="{% static 'img/icone-Sonar.png' %}" class="logo-icon-right" alt="Sonar">
+        </a>
+    </div>
+
+</div>
+
 {% block mensagens_globais %}
     {% if messages %}
         <div class="toast-container">
@@ -169,95 +184,157 @@
     </main>
 {% if user.is_authenticated %}
     <script>
-        if (window.location.pathname === '/') {
-            history.pushState(null, null, window.location.href);
-            window.addEventListener('popstate', function () {
-                history.pushState(null, null, window.location.href);
-            });
-        }
+        // --- LÓGICA DA BARRA DE PESQUISA (ATUALIZADO) ---
+        document.addEventListener('DOMContentLoaded', function() {
+            const input = document.getElementById('search-input');
+            const resultsBox = document.getElementById('live-search-results');
+            const searchContainer = document.querySelector('.search-container');
+            let timeout = null;
 
+            // --- PARTE DA LIVE SEARCH (DIGITAÇÃO) ---
+            if (input) {
+                input.addEventListener('input', function() {
+                    const query = this.value.trim();
+                    clearTimeout(timeout); 
+
+                    if (query.length === 0) {
+                        fecharDropdown();
+                        return;
+                    }
+
+                    timeout = setTimeout(() => {
+                        fetch(`/busca-live/?q=${encodeURIComponent(query)}`)
+                            .then(response => {
+                                if (!response.ok) throw new Error("Erro no servidor");
+                                return response.json();
+                            })
+                            .then(data => {
+                                let html = '';
+                                const temDivergencia = data.divergencias && data.divergencias.length > 0;
+                                const temMateria = data.materias && data.materias.length > 0;
+                                const temPdf = data.pdfs && data.pdfs.length > 0;
+
+                                if (!temDivergencia && !temMateria && !temPdf) {
+                                    resultsBox.innerHTML = '<div class="search-result-item" style="color: #aaa; text-align: center; padding: 15px;">Nenhum resultado encontrado.</div>';
+                                    abrirDropdown();
+                                    return;
+                                }
+
+                                if (temDivergencia) {
+                                    html += '<div class="search-category-title">Divergências</div>';
+                                    data.divergencias.forEach(item => {
+                                        html += `<a href="${item.url}" class="search-result-item"><strong>${item.nome}</strong></a>`;
+                                    });
+                                }
+
+                                if (temMateria) {
+                                    html += '<div class="search-category-title">Matérias</div>';
+                                    data.materias.forEach(item => {
+                                        html += `
+                                            <a href="${item.url}" class="search-result-item" style="display: flex; justify-content: space-between; align-items: center;">
+                                                <div>
+                                                    <span style="font-weight: bold; color: #fff;">📚 ${item.nome}</span>
+                                                    <small style="display: block; color: var(--accent-color);">${item.info}</small>
+                                                </div>
+                                                <span class="material-symbols-outlined" style="font-size: 16px; color: #aaa;">arrow_forward</span>
+                                            </a>`;
+                                    });
+                                }
+
+                                if (temPdf) {
+                                    html += '<div class="search-category-title">Arquivos PDF</div>';
+                                    data.pdfs.forEach(item => {
+                                        html += `
+                                            <div class="search-result-item" style="cursor: pointer;" 
+                                                onclick="abrirModalPreview('${item.url_arquivo}', '${item.titulo}')">
+                                                📄 ${item.titulo}
+                                                <small style="display:block; color: #94a3b8;">${item.info}</small>
+                                            </div>`;
+                                    });
+                                }
+
+                                resultsBox.innerHTML = html;
+                                abrirDropdown();
+                            })
+                            .catch(error => {
+                                console.error("Erro na busca:", error);
+                            });
+                    }, 300);
+                });
+            }
+
+            function abrirDropdown() {
+                resultsBox.classList.add('active');
+                if(searchContainer) {
+                    searchContainer.style.borderRadius = '20px 20px 0 0';
+                    searchContainer.style.backgroundColor = 'rgba(15, 23, 42, 0.95)';
+                }
+            }
+
+            function fecharDropdown() {
+                resultsBox.classList.remove('active');
+                if(searchContainer) {
+                    searchContainer.style.borderRadius = '50px';
+                    searchContainer.style.backgroundColor = '';
+                }
+            }
+
+            document.addEventListener('click', function(e) {
+                if (searchContainer && !searchContainer.contains(e.target)) {
+                    fecharDropdown();
+                }
+            });
+        });
+
+        // --- LÓGICA DE ABRIR/FECHAR A BARRA NO MOBILE ---
         document.addEventListener("DOMContentLoaded", function() {
-            const botoes = document.querySelectorAll('[abrir-menu]');
-            const menu = document.getElementById("sidebar-menu");
-            const overlay = document.getElementById("sidebar-overlay");
-            const main = document.getElementById("main");
+            const mobileTrigger = document.getElementById('mobile-search-trigger');
+            const searchForm = document.getElementById('search-form-container');
+            const closeBtn = document.getElementById('close-search-mobile');
+            const input = document.getElementById('search-input');
+            const navbarContent = document.querySelector('.header-navbar__content');
 
-            function setMenuState(isOpen, animate = true) {
-                if (!animate) {
-                    menu.style.transition = 'none';
-                    main.style.transition = 'none';
-                    overlay.style.transition = 'none';
-                }
-
-                if (isOpen) {
-                    menu.classList.add('is-open');
-                    overlay.classList.add('is-open');
-                    main.classList.add('is-open');
-                    if (window.innerWidth < 1600) {
-                        document.body.classList.add('no-scroll'); 
-                    }
-                } else {
-                    menu.classList.remove('is-open');
-                    overlay.classList.remove('is-open');
-                    main.classList.remove('is-open');
-                    document.body.classList.remove('no-scroll');
-                }
-
-                localStorage.setItem('sidebarAberta', isOpen);
-
-                if (!animate) {
-                    void menu.offsetWidth; 
-                    setTimeout(() => {
-                        menu.style.transition = '';
-                        main.style.transition = '';
-                        overlay.style.transition = '';
-                    }, 50);
-                }
-            }
-
-            window.addEventListener('resize', function() {
-                const menuEstaAberto = document.getElementById("sidebar-menu").classList.contains('is-open');
+            // FUNÇÃO ABRIR
+            mobileTrigger.addEventListener('click', function() {
+                searchForm.classList.add('mobile-active');
+                navbarContent.classList.add('busca-aberta');
                 
-                if (menuEstaAberto) {
-                    if (window.innerWidth >= 1600) {
-                        document.body.classList.remove('no-scroll');
-                    } else {
-                        document.body.classList.add('no-scroll');
-                    }
+                // A MÁGICA: Adiciona classe no BODY para o CSS esconder a logo flutuante
+                document.body.classList.add('busca-ativa-global'); 
+                
+                input.focus(); 
+            });
+
+            // FUNÇÃO FECHAR
+            function fecharBusca() {
+                searchForm.classList.remove('mobile-active');
+                navbarContent.classList.remove('busca-aberta');
+                
+                // A MÁGICA: Remove classe do BODY e a logo volta
+                document.body.classList.remove('busca-ativa-global'); 
+            }
+
+            closeBtn.addEventListener('click', fecharBusca);
+
+            // Fechar clicando fora
+            document.addEventListener('click', function(event) {
+                const isClickInside = searchForm.contains(event.target) || mobileTrigger.contains(event.target);
+                // Só fecha se estiver ativo E a tela for pequena
+                if (!isClickInside && window.innerWidth < 700 && searchForm.classList.contains('mobile-active')) {
+                    fecharBusca();
                 }
             });
-
-            const estadoSalvo = localStorage.getItem('sidebarAberta') === 'true';
-            
-            if (estadoSalvo) {
-                setMenuState(true, false); 
-            }
-
-            botoes.forEach(botao => {
-                botao.addEventListener('click', () => {
-                    const isCurrentlyOpen = menu.classList.contains('is-open');
-                    setMenuState(!isCurrentlyOpen, true); 
-                });
-            });
-
-            if (overlay) {
-                overlay.addEventListener('click', () => {
-                    setMenuState(false, true);
-                });
-            }
-
-
         });
     </script>
+
 {% endif %}
 <script>
     // --- FUNÇÕES GLOBAIS DO MODAL ---
     function abrirModalPreview(urlArquivo, tituloArquivo) {
         const modal = document.getElementById('modal-preview-global');
         if(modal) {
-            document.getElementById('modal-iframe').src = urlArquivo;
+            document.getElementById('modal-iframe').src = urlArquivo + "#toolbar=0&navpanes=1"; // <-- para esconder a barra cinza superior na visualização de pdf, troque o numero 1 para 0 aqui
             document.getElementById('modal-titulo-texto').innerText = tituloArquivo;
-            document.getElementById('modal-btn-baixar').href = urlArquivo;
             modal.style.display = 'flex';
         }
     }
@@ -462,6 +539,68 @@
             });
         });
     });
+
+    document.addEventListener("DOMContentLoaded", function() {
+        // 1. SELECIONA TODOS OS BOTÕES DE MENU (Desktop e Mobile)
+        // O seletor pega qualquer coisa que tenha o atributo 'abrir-menu' OU o ID específico
+        const todosBotoesMenu = document.querySelectorAll('[abrir-menu], #btn-menu-flutuante');
+        
+        const menu = document.getElementById("sidebar-menu");
+        const overlay = document.getElementById("sidebar-overlay");
+        const main = document.getElementById("main");
+
+        // Função Única para Abrir/Fechar
+        function toggleMenu(forceClose = false) {
+            if (!menu) return;
+
+            const estaAberto = menu.classList.contains('is-open');
+
+            if (estaAberto || forceClose) {
+                // FECHAR
+                menu.classList.remove('is-open');
+                if (overlay) overlay.classList.remove('is-open');
+                if (main) main.classList.remove('is-open');
+                document.body.classList.remove('no-scroll');
+                localStorage.setItem('sidebarAberta', 'false');
+            } else {
+                // ABRIR
+                menu.classList.add('is-open');
+                if (overlay) overlay.classList.add('is-open');
+                if (main) main.classList.add('is-open');
+                
+                // Só trava o scroll se a tela for menor que 1600px (comportamento padrão sidebar sobreposta)
+                if (window.innerWidth < 1600) {
+                    document.body.classList.add('no-scroll');
+                }
+                localStorage.setItem('sidebarAberta', 'true');
+            }
+        }
+
+        // 2. ADICIONA O EVENTO EM TODOS OS BOTÕES ENCONTRADOS
+        todosBotoesMenu.forEach(botao => {
+            botao.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation(); // Garante que o clique seja detectado
+                toggleMenu();
+            });
+        });
+
+        // 3. FECHAR AO CLICAR NO FUNDO ESCURO (OVERLAY)
+        if (overlay) {
+            overlay.addEventListener('click', function() {
+                toggleMenu(true); // Força fechar
+            });
+        }
+
+        // 4. RECUPERAR ESTADO SALVO (Opcional - Mantém aberto ao navegar no Desktop)
+        // Se quiser que o menu lembre se estava aberto, descomente as linhas abaixo:
+        /*
+        const estadoSalvo = localStorage.getItem('sidebarAberta') === 'true';
+        if (estadoSalvo && window.innerWidth >= 1600) {
+            toggleMenu(); 
+        }
+        */
+    });
 </script>
 
 
@@ -477,11 +616,6 @@
                         style="width: 100%; height: calc(100% - 120px); border: none; border-radius: 4px; background: #f1f1f1; margin-top: 20px;">
                 </iframe>
                 
-                <div style="position: absolute; bottom: 20px; right: 20px;">
-                    <a id="modal-btn-baixar" href="" download class="btn-baixar">
-                        Baixar PDF
-                    </a>
-                </div>
             </div>
         </div>
     </div>
