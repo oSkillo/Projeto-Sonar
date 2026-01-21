@@ -1185,6 +1185,33 @@ footer {
         color: #fff !important; /* Ícone da lupa branco */
         opacity: 0.9;
     }
+    
+    #main.is-open,
+    #main.is-open::before {
+        transform: none !important;     /* Site fica parado */
+        box-shadow: none !important;    /* Sem sombra 3D */
+        border-radius: 0 !important;    /* Sem bordas arredondadas */
+        padding-left: 0 !important;     /* Não empurra o conteúdo */
+    }
+
+
+    .sidebar-overlay {
+        z-index: 1500; /* Fica acima do site (1) mas abaixo da sidebar (2000) */
+        background-color: rgba(0, 0, 0, 0.6); /* Escurece o fundo */
+        /* backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px); */
+    }
+    
+    /* 3. SIDEBAR FLUTUANTE: Garante que ela passe por cima de tudo */
+    .sidebar-menu {
+        z-index: 2000 !important;
+        position: fixed !important; 
+        transform: translateX(-100%); 
+    }
+    
+    .sidebar-menu.is-open {
+        transform: translateX(0) !important;
+    }
 }
 
 /* 4. CELULAR (< 710px) - AQUI VIRA LUPA */
