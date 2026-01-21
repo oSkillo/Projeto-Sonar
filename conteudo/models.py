@@ -55,7 +55,7 @@ class Divergencia(models.Model):
     destaque_home = models.BooleanField(default=False, verbose_name="Aparecer na Home?")
 
     def __str__(self):
-        return self.nome
+        return self.nome    
 
 class Grau(models.Model):
     divergencia = models.ForeignKey(Divergencia, on_delete=models.CASCADE, related_name='graus')
