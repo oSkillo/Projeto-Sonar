@@ -10,20 +10,27 @@
 </head>
 <body>
 
+{% block wallpaper_css %}
+<style>
+    main::before {
+            background-image: url('{% static "img/Sonar-Wallpaper-superficie.jpg"%}');
+    }
+</style>
+{% endblock %}
+
+{% if user.is_authenticated %}
 <div class="mobile-floating-controls">
-    
     <button type="button" class="mobile-menu-toggle" id="btn-menu-flutuante" abrir-menu="">
         <span class="material-symbols-outlined">menu</span>
     </button>
-
     <div class="navbar-logo">
         <a href="{% url 'home' %}"> 
             <strong class="logo-text">Sonar</strong>
             <img src="{% static 'img/icone-Sonar.png' %}" class="logo-icon-right" alt="Sonar">
         </a>
     </div>
-
 </div>
+{% endif %}
 
 {% block mensagens_globais %}
     {% if messages %}
@@ -37,12 +44,13 @@
         </div>
     {% endif %}
 {% endblock %}
-{% if user.is_authenticated %}
-    <header id="site-header">
-        <div class="header-navbar__content">
 
-            <div class="header-navbar__content-logo">
-    
+<header id="site-header">
+    <div class="header-navbar__content">
+
+        <div class="header-navbar__content-logo">
+            
+            {% if user.is_authenticated %}
                 <button type="button" class="mobile-menu-toggle" id="mobile-menu-btn" abrir-menu="">
                     <span class="material-symbols-outlined">menu</span>
                 </button>
@@ -52,14 +60,16 @@
                         <span class="material-symbols-outlined icon-menu-hamburguer">menu</span>
                     </button>
                 </div>
-                
-                <div class="navbar-logo">
-                    <a href="{% url 'home' %}"> <strong class="logo-text">Sonar</strong>
-                        <img src="{% static 'img/icone-Sonar.png' %}" class="logo-icon-right" alt="Sonar">
-                    </a>
-                </div>
+            {% endif %}
+            
+            <div class="navbar-logo">
+                <a href="{% url 'home' %}"> <strong class="logo-text">Sonar</strong>
+                    <img src="{% static 'img/icone-Sonar.png' %}" class="logo-icon-right" alt="Sonar">
+                </a>
             </div>
+        </div>
 
+        {% if user.is_authenticated %}
             <form action="{% url 'busca' %}" method="GET" class="search-container" id="search-form-container">
                 <button type="button" id="close-search-mobile" class="close-search-btn">✕</button>
                 <input type="text" name="q" id="search-input" placeholder="Pesquisar..." class="search-input" autocomplete="off">
@@ -72,115 +82,113 @@
             <button type="button" id="mobile-search-trigger" class="mobile-search-trigger">
                 <span class="material-symbols-outlined">search</span>
             </button>
+        {% endif %}
 
-            <div class="header-navbar__content-barra">
-                
-                <div class="botoes-desktop">
-                    <div class="esconder-cedo">
-                        <a href="{% url 'metodologia' %}" class="header-navbar__btn">Metodologia</a>
-                    </div>
-                    <div class="esconder-cedo">
-                        <a href="{% url 'sobre' %}" class="header-navbar__btn">Sobre</a>
-                    </div>
-
-                    {% if user.is_authenticated %}
-                        <div>
-                            <a href="{% url 'perfil_usuario' %}" class="nav-user-card" title="Ir para meu perfil">
-                                <span class="nav-user-name">
-                                    Olá, {{ user.first_name|default:user.username }}
-                                </span>
-                                <img src="{% if user.perfil.foto and user.perfil.foto.name != 'perfis/default.png' %}{{ user.perfil.foto.url }}{% else %}{% static 'img/default.png' %}{% endif %}" 
-                                    alt="Perfil" class="nav-profile-img-large" 
-                                    onerror="this.src='{% static 'img/default.png' %}'">
-                            </a>
-                        </div>
-                    {% else %}
-                        <div>
-                            <a href="{% url 'login' %}" class="header-navbar__btn btn-destaque">
-                                Entrar
-                            </a>
-                        </div>
-                    {% endif %}
+        <div class="header-navbar__content-barra">
+            
+            <div class="botoes-desktop">
+                <div class="esconder-cedo">
+                    <a href="{% url 'metodologia' %}" class="header-navbar__btn">Metodologia</a>
+                </div>
+                <div class="esconder-cedo">
+                    <a href="{% url 'sobre' %}" class="header-navbar__btn">Sobre</a>
                 </div>
 
-                <div class="mobile-emoji-decorative mobile-profile-container">
-                    {% if user.is_authenticated %}
-                        <a href="{% url 'perfil_usuario' %}">
+                {% if user.is_authenticated %}
+                    <div>
+                        <a href="{% url 'perfil_usuario' %}" class="nav-user-card" title="Ir para meu perfil">
+                            <span class="nav-user-name">
+                                Olá, {{ user.first_name|default:user.username }}
+                            </span>
                             <img src="{% if user.perfil.foto and user.perfil.foto.name != 'perfis/default.png' %}{{ user.perfil.foto.url }}{% else %}{% static 'img/default.png' %}{% endif %}" 
-                                alt="Perfil" 
-                                class="nav-profile-img" 
-                                style="width: 50px; height: 50px;"
+                                alt="Perfil" class="nav-profile-img-large" 
                                 onerror="this.src='{% static 'img/default.png' %}'">
                         </a>
-                    {% else %}
-                        <a href="{% url 'sair' %}" style="text-decoration: none; font-size: 24px;">🟠</a>
-                    {% endif %}
-                </div>
+                    </div>
+                {% else %}
+                    <div>
+                        <a href="{% url 'entrar' %}" class="header-navbar__btn btn-destaque" 
+                           style="background-color: var(--accent-color); color: #0F172A; border: none; box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);">
+                            Entrar
+                        </a>
+                    </div>
+                {% endif %}
             </div>
- 
+
+            <div class="mobile-emoji-decorative mobile-profile-container">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'perfil_usuario' %}">
+                        <img src="{% if user.perfil.foto and user.perfil.foto.name != 'perfis/default.png' %}{{ user.perfil.foto.url }}{% else %}{% static 'img/default.png' %}{% endif %}" 
+                            alt="Perfil" 
+                            class="nav-profile-img" 
+                            style="width: 50px; height: 50px;"
+                            onerror="this.src='{% static 'img/default.png' %}'">
+                    </a>
+                {% else %}
+                    <a href="{% url 'entrar' %}" style="text-decoration: none; color: var(--accent-color); font-weight: bold;">
+                        Entrar
+                    </a>
+                {% endif %}
+            </div>
         </div>
-    </header>
 
-    <div id="sidebar-overlay" class="sidebar-overlay"></div>
+    </div>
+</header>
 
-    <div id="sidebar-menu" class="sidebar-menu"> 
-                <aside class="sidebar-menu__wrapper"> 
-                    <div class="sidebar-menu__container">
-                        <div class="main-menu">
-                            <a href="/" class="main-menu__item" style="text-decoration: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Início</a>
-                            <div class="grupo-institucional sidebar-hidden-default">
-                                <div class="separador"></div>
-                                <div style="padding-left: 16px; font-size: 12px; color: #888; font-weight: bold;">INSTITUCIONAL</div>
-                                <br>
-                                <a href="{% url 'metodologia' %}" class="main-menu__item" style="text-decoration: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Metodologia</a>
-                                <a href="{% url 'sobre' %}" class="main-menu__item" style="text-decoration: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Sobre</a>
-                            </div>
-                            <div class="grupo-conta sidebar-hidden-default">
-                                <a href="#" class="main-menu__item" style="text-decoration: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Minha Conta</a>
-                            </div>
-                            <div class="separador"></div>
-                            <div style="padding-left: 16px; margin-bottom: 8px; font-size: 12px; color: #888; text-transform: uppercase; font-weight: bold;">Navegação Rápida</div>
-                            {% for div in sidebar_divergencias %}
-                                <a href="{% url 'divergencias' div.slug %}" class="main-menu__item" style="text-decoration: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
-                                    {{ div.nome }}
-                                </a>
-                            {% empty %}{% endfor %}
+<div id="sidebar-overlay" class="sidebar-overlay"></div>
 
-                            <a href="{% url 'outras' %}" class="main-menu__item" style="text-decoration: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
-                                <span class="material-symbols-outlined" style="font-size: 20px; margin-right: 10px; vertical-align: middle;" title="Outras Divergências">🧬</span>
-                                Outras Divergências
-                            </a>
-                            <div class="separador"></div>
-                            <a href="{% url 'perfil_usuario' %}" class="main-menu__item" style="text-decoration: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Perfil</a>
-                            <a href="{% url 'contato' %}" class="main-menu__item" style="text-decoration: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Contato</a>
-                        </div>
-                    </div>
-                </aside>
-                <div class="sidebar-footer">
-                    <div class="footer-links">
-                        <a href="/sobre/">Sobre</a>   
-                        <a href="#">Imprensa</a>
-                        <a href="#">Direitos autorais</a>
-                        <a href="#">Entre em contato</a>
-                        <a href="#">Criadores</a>
-                        <a href="#">Desenvolvedores</a>
-                    </div>
-                    <div class="footer-links">
-                        <a href="#">Termos</a>
-                        <a href="#">Privacidade</a>
-                        <a href="#">Política e Segurança</a>
-                        <a href="/metodologia/">Como funciona o Sonar</a>
-                    </div>
-                    <div class="footer-copyright">© 2025 Projeto Sonar</div>
+{% if user.is_authenticated %}
+<div id="sidebar-menu" class="sidebar-menu"> 
+    <aside class="sidebar-menu__wrapper"> 
+        <div class="sidebar-menu__container">
+            <div class="main-menu">
+                <a href="/" class="main-menu__item" style="text-decoration: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Início</a>
+                <div class="grupo-institucional sidebar-hidden-default">
+                    <div class="separador"></div>
+                    <div style="padding-left: 16px; font-size: 12px; color: #888; font-weight: bold;">INSTITUCIONAL</div>
+                    <br>
+                    <a href="{% url 'metodologia' %}" class="main-menu__item" style="text-decoration: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Metodologia</a>
+                    <a href="{% url 'sobre' %}" class="main-menu__item" style="text-decoration: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Sobre</a>
                 </div>
-            </div>
-{% endif %}
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+                <div class="separador"></div>
+                <div style="padding-left: 16px; margin-bottom: 8px; font-size: 12px; color: #888; text-transform: uppercase; font-weight: bold;">Navegação Rápida</div>
+                {% for div in sidebar_divergencias %}
+                    <a href="{% url 'divergencias' div.slug %}" class="main-menu__item" style="text-decoration: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+                        {{ div.nome }}
+                    </a>
+                {% empty %}{% endfor %}
 
-    <main id="main">
-        {% block conteudo %}
-        {% endblock %}
-    </main>
+                <a href="{% url 'outras' %}" class="main-menu__item" style="text-decoration: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+                    <span class="material-symbols-outlined" style="font-size: 20px; margin-right: 10px; vertical-align: middle;" title="Outras Divergências">🧬</span>
+                    Outras Divergências
+                </a>
+                <div class="separador"></div>
+                <a href="{% url 'perfil_usuario' %}" class="main-menu__item" style="text-decoration: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Perfil</a>
+                <a href="{% url 'contato' %}" class="main-menu__item" style="text-decoration: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Contato</a>
+            </div>
+        </div>
+    </aside>
+    <div class="sidebar-footer">
+        <div class="footer-links">
+            <a href="/sobre/">Sobre</a>   
+            <a href="#">Imprensa</a>
+            <a href="#">Direitos autorais</a>
+            <a href="#">Entre em contato</a>
+            <a href="#">Criadores</a>
+            <a href="#">Desenvolvedores</a>
+        </div>
+        <div class="footer-copyright">© 2025 Projeto Sonar</div>
+    </div>
+</div>
+{% endif %}
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+
+<main id="main">
+    {% block conteudo %}
+    {% endblock %}
+</main>
+
 {% if user.is_authenticated %}
     <script>
         // --- LÓGICA DA BARRA DE PESQUISA (ATUALIZADO) ---
@@ -540,48 +548,34 @@
     });
 
     document.addEventListener("DOMContentLoaded", function() {
-        // 1. SELECIONA TODOS OS BOTÕES DE MENU (Desktop e Mobile)
-        // O seletor pega qualquer coisa que tenha o atributo 'abrir-menu' OU o ID específico
-        const todosBotoesMenu = document.querySelectorAll('[abrir-menu], #btn-menu-flutuante');
-        
-        const menu = document.getElementById("sidebar-menu");
-        const overlay = document.getElementById("sidebar-overlay");
-        const main = document.getElementById("main");
+            const todosBotoesMenu = document.querySelectorAll('[abrir-menu], #btn-menu-flutuante');
+            const menu = document.getElementById("sidebar-menu");
+            const overlay = document.getElementById("sidebar-overlay");
+            const main = document.getElementById("main");
 
-        // Função Única para Abrir/Fechar
-        function toggleMenu(forceClose = false) {
-            if (!menu) return;
-
-            const estaAberto = menu.classList.contains('is-open');
-
-            if (estaAberto || forceClose) {
-                // FECHAR
-                menu.classList.remove('is-open');
-                if (overlay) overlay.classList.remove('is-open');
-                if (main) main.classList.remove('is-open');
-                document.body.classList.remove('no-scroll');
-                localStorage.setItem('sidebarAberta', 'false');
-            } else {
-                // ABRIR
-                menu.classList.add('is-open');
-                if (overlay) overlay.classList.add('is-open');
-                if (main) main.classList.add('is-open');
-                
-                // Só trava o scroll se a tela for menor que 1600px (comportamento padrão sidebar sobreposta)
-                if (window.innerWidth < 1600) {
-                    document.body.classList.add('no-scroll');
+            function toggleMenu(forceClose = false) {
+                if (!menu) return;
+                const estaAberto = menu.classList.contains('is-open');
+                if (estaAberto || forceClose) {
+                    menu.classList.remove('is-open');
+                    if (overlay) overlay.classList.remove('is-open');
+                    if (main) main.classList.remove('is-open');
+                    document.body.classList.remove('no-scroll');
+                } else {
+                    menu.classList.add('is-open');
+                    if (overlay) overlay.classList.add('is-open');
+                    if (main) main.classList.add('is-open');
+                    if (window.innerWidth < 1600) document.body.classList.add('no-scroll');
                 }
-                localStorage.setItem('sidebarAberta', 'true');
             }
-        }
-
-        // 2. ADICIONA O EVENTO EM TODOS OS BOTÕES ENCONTRADOS
-        todosBotoesMenu.forEach(botao => {
-            botao.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation(); // Garante que o clique seja detectado
-                toggleMenu();
+            todosBotoesMenu.forEach(botao => {
+                botao.addEventListener('click', function(e) {
+                    e.preventDefault(); e.stopPropagation(); toggleMenu();
+                });
             });
+            if (overlay) {
+                overlay.addEventListener('click', function() { toggleMenu(true); });
+            }
         });
 
         // 3. FECHAR AO CLICAR NO FUNDO ESCURO (OVERLAY)
@@ -599,22 +593,17 @@
             toggleMenu(); 
         }
         */
-    });
+
 </script>
 
 
         <div id="modal-preview-global" class="modal-overlay" style="display: none;">
             <div class="modal-conteudo">
                 <span class="fechar-modal" onclick="fecharModalPreview()">×</span>
-                
                 <div style="margin-bottom: 15px; padding-right: 30px;">
                     <h3 id="modal-titulo-texto" style="margin: 0; color: #333; font-size: 1.2rem;">Visualização</h3>
                 </div>
-                
-                <iframe id="modal-iframe" src="" 
-                        style="width: 100%; height: calc(100% - 120px); border: none; border-radius: 4px; background: #f1f1f1; margin-top: 20px;">
-                </iframe>
-                
+                <iframe id="modal-iframe" src="" style="width: 100%; height: calc(100% - 120px); border: none; border-radius: 4px; background: #f1f1f1; margin-top: 20px;"></iframe>
             </div>
         </div>
     </div>

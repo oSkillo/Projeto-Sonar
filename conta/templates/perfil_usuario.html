@@ -491,18 +491,15 @@
 
     @media (max-width: 380px) {
         
-        /* 1. Ganha espaço nas laterais da tela */
         .container-perfil {
             padding-left: 10px !important;
             padding-right: 10px !important;
         }
 
-        /* 2. Diminui a "gordura" interna do card para caber mais coisa */
         .card-perfil {
-            padding: 25px 15px !important; /* Reduz padding lateral de 40px para 15px */
+            padding: 25px 15px !important; 
         }
 
-        /* 3. Garante que o header esteja zerado e centralizado */
         .perfil-header {
             padding-left: 0 !important;
             margin-left: 0 !important;
@@ -510,7 +507,6 @@
             justify-content: center;
         }
 
-        /* 4. Reduz levemente a foto para não estourar */
         .avatar-wrapper img {
             width: 40vw; /* Um pouco menor que os 180px do tablet */
             height: auto !important;     
@@ -519,14 +515,12 @@
             display: block;
         }
 
-        /* 5. Ajusta o tamanho da fonte do título para não quebrar */
         .titulo-perfil {
             font-size: 1.5rem;
         }
     }
 
 
-    /* --- ESTILOS DO MODAL DE LOGOUT --- */
     .modal-overlay {
         position: fixed;
         top: 0; left: 0; width: 100%; height: 100%;
@@ -536,13 +530,11 @@
         justify-content: center;
         align-items: center;
         
-        /* Transição de opacidade */
         opacity: 0;
         transition: opacity 0.3s ease;
         pointer-events: none; /* Não clica quando invisível */
     }
 
-    /* Quando está ativo */
     .modal-overlay.ativo {
         opacity: 1;
         pointer-events: all;
@@ -558,8 +550,6 @@
         max-width: 400px;
         width: 90%;
         box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-        
-        /* Efeito de zoom ao abrir */
         transform: scale(0.9);
         transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
@@ -592,7 +582,6 @@
         gap: 15px;
     }
 
-    /* Botão Cancelar (Cinza) */
     .btn-cancelar-modal {
         background: transparent;
         border: 1px solid rgba(255, 255, 255, 0.2);
@@ -605,7 +594,6 @@
     }
     .btn-cancelar-modal:hover { background: rgba(255, 255, 255, 0.1); }
 
-    /* Botão Sim, Sair (Vermelho) */
     .btn-sair-confirmar {
         background: #ff6b6b;
         border: none;

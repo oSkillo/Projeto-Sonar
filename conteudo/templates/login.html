@@ -3,15 +3,6 @@
 
 {% block mensagens_globais %}
     {% endblock %}
-    
-{% block wallpaper_css %}
-<style>
-    main::before {
-            background-image: url('{% static "img/Sonar-Wallpaper-superficie.jpg"%}');
-    }
-</style>
-{% endblock %}
-
 {% block conteudo %}
 <div class="login-container">
     
@@ -52,25 +43,21 @@
             </button>
 
         </form>
-
     </div>
 
 </div>
 
 <style>
-
-    main {
-        padding-top: 0 !important;
-    }
-
+    /* Centraliza na tela */
     .login-container {
-        min-height: 80vh;
+        min-height: 80vh; /* Ocupa a altura da tela */
         display: flex;
         align-items: center;
         justify-content: center;
         padding: 20px;
     }
 
+    /* Cartão de Vidro */
     .card-login {
         background: rgba(0, 0, 0, 0.6);
         backdrop-filter: blur(10px);
@@ -78,10 +65,11 @@
         border-radius: 20px;
         padding: 40px;
         width: 100%;
-        max-width: 450px;
+        max-width: 450px; /* Largura máxima ideal */
         box-shadow: 0 10px 40px rgba(0,0,0,0.5);
     }
 
+    /* Labels */
     .campo-input label {
         display: block;
         color: var(--accent-color);
@@ -92,6 +80,7 @@
         letter-spacing: 1px;
     }
 
+    /* Wrapper para ícone + input */
     .input-wrapper {
         position: relative;
         display: flex;
@@ -102,15 +91,16 @@
         position: absolute;
         left: 15px;
         color: #aaa;
-        pointer-events: none;
+        pointer-events: none; /* Deixa clicar através do ícone */
     }
 
+    /* Input Estilizado */
     .input-estilizado {
         width: 100%;
         background: rgba(0, 0, 0, 0.3);
         border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 50px;
-        padding: 12px 20px 12px 45px; 
+        border-radius: 50px; /* Bem redondo */
+        padding: 12px 20px 12px 45px; /* Padding extra na esquerda pro ícone */
         color: #fff;
         font-size: 1rem;
         outline: none;
@@ -123,6 +113,7 @@
         background: rgba(0, 0, 0, 0.5);
     }
 
+    /* Botão */
     .btn-entrar-login {
         margin-top: 10px;
         padding: 12px;
@@ -141,6 +132,7 @@
         box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
     }
 
+    /* Mensagem de Erro */
     .msg-erro-login {
         background: rgba(255, 99, 71, 0.2);
         color: #ff6347;

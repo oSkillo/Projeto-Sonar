@@ -1,6 +1,14 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block wallpaper_css %}
+<style>
+    main::before {
+            background-image: url('{% static "img/Sonar-Wallpaper-superficie.jpg"%}');
+    }
+</style>
+{% endblock %}
+
 {% block conteudo %}
 
 <style>
@@ -119,14 +127,24 @@
         <h1>Projeto Sonar</h1>
         
         <p>
-            Uma plataforma dedicada a conectar conhecimentos e facilitar o aprendizado para crianças neurodivergentes. 
-            Aqui centralizamos materiais didáticos adaptados, guias essenciais e atividades focadas em Autismo, TDAH e Síndrome de Down.
+            Uma plataforma educacional para professores, mediadores escolares e equipes pedagógicas, que apoia a construção de práticas inclusivas desde o Ensino Fundamental ao Ensino Médio, alinhadas à BNCC.
+
+            Aqui cada recurso é pensado para escutar o estudante, identificar barreiras visíveis e invisíveis e orientar o percurso da aprendizagem de acordo com suas necessidades, níveis e potencialidades.
+
+            Aprender é encontrar o próprio rumo.
         </p>
 
         <div class="botoes-wrapper">
-            <a href="{% url 'base' %}" class="btn-landing btn-comecar">
-                Começar
-            </a>
+            
+            {% if user.is_authenticated %}
+                <a href="{% url 'divergencias' 'autismo' %}" class="btn-landing btn-comecar">
+                    Começar
+                </a>
+            {% else %}
+                <a href="{% url 'entrar' %}" class="btn-landing btn-comecar">
+                    Entrar
+                </a>
+            {% endif %}
 
             <a href="{% url 'sobre' %}" class="btn-landing btn-sobre">
                 Sobre
