@@ -1,7 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Divergencia, Grau, Serie, Materia, MaterialPDF, Perfil
 from .forms import DivergenciaForm, GrauForm, SerieForm, MateriaForm, MaterialPDFForm
-from .forms import DivergenciaForm, GrauForm, SerieForm, MateriaForm, MaterialPDFForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import JsonResponse
@@ -21,10 +20,6 @@ def base_view(request):
     divergencias_capa = Divergencia.objects.filter(destaque_home=True)
     return render(request, 'divergencias.html', {'items': divergencias_capa})
 
-def check_admin(user):
-    # Permite se for Superuser OU se for do grupo 'Administrador'
-    return user.is_superuser or user.groups.filter(name='Administrador').exists()
-
 
 @login_required
 def check_admin(user):
@@ -36,7 +31,6 @@ def check_admin(user):
 def grau_view(request):
     return render(request, 'graus.html')
 
-@login_required
 @login_required
 def busca_view(request):
     query = request.GET.get('q')
