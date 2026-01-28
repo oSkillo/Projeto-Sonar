@@ -9,7 +9,9 @@ from django.db.models import Q
 from unidecode import unidecode
 from django.contrib.auth.decorators import user_passes_test
 
-
+def check_admin(user):
+    # Permite se for Superuser OU se for do grupo 'Administrador'
+    return user.is_superuser or user.groups.filter(name='Administrador').exists()
 
 def home_view(request):    
     return render(request, 'home.html')
@@ -19,10 +21,6 @@ def base_view(request):
     # Pega só quem tem a caixinha marcadasS
     divergencias_capa = Divergencia.objects.filter(destaque_home=True)
     return render(request, 'divergencias.html', {'items': divergencias_capa})
-
-def check_admin(user):
-    # Permite se for Superuser OU se for do grupo 'Administrador'
-    return user.is_superuser or user.groups.filter(name='Administrador').exists()
 
 
 @login_required

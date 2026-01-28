@@ -14,7 +14,6 @@ urlpatterns = [
     path('materia/<slug:materia_slug>/', views.visualizar_material, name='visualizar_material'),
     path('categoria/outras/', views.outras_divergencias, name='outras'),
     path('criar-divergencia/', views.criar_divergencia, name='criar_divergencia'),
-    path('criar-divergencia/', views.criar_divergencia, name='criar_divergencia'),
     path('criar-grau/', views.criar_grau, name='criar_grau'),
     path('criar-serie/', views.criar_serie, name='criar_serie'),
     path('criar-materia/', views.criar_materia, name='criar_materia'),
