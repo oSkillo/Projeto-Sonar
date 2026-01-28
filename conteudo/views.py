@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Divergencia, Grau, Serie, Materia, MaterialPDF, Perfil
 from .forms import DivergenciaForm, GrauForm, SerieForm, MateriaForm, MaterialPDFForm
+from .forms import DivergenciaForm, GrauForm, SerieForm, MateriaForm, MaterialPDFForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import JsonResponse
@@ -10,7 +11,7 @@ from unidecode import unidecode
 from django.contrib.auth.decorators import user_passes_test
 
 
-@login_required
+
 def home_view(request):    
     return render(request, 'home.html')
 
@@ -26,9 +27,16 @@ def check_admin(user):
 
 
 @login_required
+def check_admin(user):
+    # Permite se for Superuser OU se for do grupo 'Administrador'
+    return user.is_superuser or user.groups.filter(name='Administrador').exists()
+
+
+@login_required
 def grau_view(request):
     return render(request, 'graus.html')
 
+@login_required
 @login_required
 def busca_view(request):
     query = request.GET.get('q')
@@ -87,7 +95,7 @@ def buscar_dados_json(request):
                 data['materias'].append({
                     'nome': item.nome,
                     'info': f"{qtd} arquivos encontrados",
-                    'url': reverse('visualizar_materia', args=[item.slug])
+                    'url': reverse('visualizar_material', args=[item.slug])
                 })
                 nomes_mat_vistos.add(item.nome) 
             
@@ -123,7 +131,7 @@ def texto_bate(busca, texto_banco):
     return busca_limpa in alvo_limpo
 
 @login_required
-def visualizar_materia(request, materia_slug):
+def visualizar_material(request, materia_slug):
     materias_encontradas = Materia.objects.filter(slug=materia_slug)
     if not materias_encontradas.exists():
         from django.http import Http404
@@ -131,7 +139,7 @@ def visualizar_materia(request, materia_slug):
     materia_principal = materias_encontradas.first()
     pdfs = MaterialPDF.objects.filter(materia__in=materias_encontradas).order_by('serie__nome')
     form_pdf = MaterialPDFForm() 
-    return render(request, 'visualizar_materia.html', {
+    return render(request, 'visualizar_material.html', {
         'materia': materia_principal,
         'pdfs': pdfs,
         'form_pdf': form_pdf
@@ -463,55 +471,76 @@ def editar_divergencia(request, id):
 @user_passes_test(check_admin)
 def editar_grau(request, id):
     item = get_object_or_404(Grau, id=id)
+    
     if request.method == 'POST':
         if 'deletar' in request.POST:
             item.delete()
+            messages.success(request, 'Grau removido.')
             return redirect(request.META.get('HTTP_REFERER', '/'))
         
-        form = GrauForm(request.POST, instance=item)
-        if form.is_valid():
-            form.save()
-            return redirect(request.META.get('HTTP_REFERER', '/'))
+        item.nome = request.POST.get('nome')
+        item.slug = request.POST.get('slug')
+        item.save()
+        
+        messages.success(request, 'Grau atualizado!')
+        return redirect(request.META.get('HTTP_REFERER', '/'))
+
     return redirect('/')
 
 @user_passes_test(check_admin)
 def editar_serie(request, id):
     item = get_object_or_404(Serie, id=id)
+    
     if request.method == 'POST':
         if 'deletar' in request.POST:
             item.delete()
+            messages.success(request, 'Série removida.')
             return redirect(request.META.get('HTTP_REFERER', '/'))
         
-        form = SerieForm(request.POST, instance=item)
-        if form.is_valid():
-            form.save()
-            return redirect(request.META.get('HTTP_REFERER', '/'))
+        item.nome = request.POST.get('nome')
+        item.slug = request.POST.get('slug')
+        item.save()
+        
+        messages.success(request, 'Série atualizada!')
+        return redirect(request.META.get('HTTP_REFERER', '/'))
+
     return redirect('/')
 
 @user_passes_test(check_admin)
 def editar_materia(request, id):
     item = get_object_or_404(Materia, id=id)
+    
     if request.method == 'POST':
         if 'deletar' in request.POST:
             item.delete()
+            messages.success(request, 'Matéria removida.')
             return redirect(request.META.get('HTTP_REFERER', '/'))
         
-        form = MateriaForm(request.POST, instance=item)
-        if form.is_valid():
-            form.save()
-            return redirect(request.META.get('HTTP_REFERER', '/'))
+        item.nome = request.POST.get('nome')
+        item.slug = request.POST.get('slug')
+        item.save()
+        
+        messages.success(request, 'Matéria atualizada!')
+        return redirect(request.META.get('HTTP_REFERER', '/'))
+
     return redirect('/')
 
 @user_passes_test(check_admin)
 def editar_pdf(request, id):
     item = get_object_or_404(MaterialPDF, id=id)
+    
     if request.method == 'POST':
         if 'deletar' in request.POST:
             item.delete()
+            messages.success(request, 'PDF removido com sucesso.')
             return redirect(request.META.get('HTTP_REFERER', '/'))
-        
-        form = MaterialPDFForm(request.POST, instance=item)
-        if form.is_valid():
-            form.save()
-            return redirect(request.META.get('HTTP_REFERER', '/'))
+        novo_titulo = request.POST.get('titulo')
+        if novo_titulo:
+            item.titulo = novo_titulo
+        if 'arquivo_pdf' in request.FILES:
+            item.arquivo_pdf = request.FILES['arquivo_pdf']
+        item.save()
+        messages.success(request, 'PDF atualizado com sucesso!')
+        return redirect(request.META.get('HTTP_REFERER', '/'))
+            
     return redirect('/')

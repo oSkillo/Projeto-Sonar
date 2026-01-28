@@ -4,6 +4,11 @@
     --accent-color: #38BDF8;
     --text-main: #F9FAFB;
     --text-secondary: #9CA3AF;
+    --background-color: #0F172A;
+    --primary-surface: #1E293B;
+    --accent-color: #38BDF8;
+    --text-main: #F9FAFB;
+    --text-secondary: #9CA3AF;
 }
 
 * {
@@ -19,7 +24,15 @@ html, body {
     padding: 0;
 }
 
+html, body {
+    overflow-x: hidden;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
 body {
+    background-color: #1a0b2e;
     background-color: #1a0b2e;
     color: var(--text-main);
     font-family: 'Segoe UI';
@@ -29,12 +42,16 @@ body {
     width: 100%;
     overflow-x: hidden;
 }
+    width: 100%;
+    overflow-x: hidden;
+}
 
 header {
     height: 80px;
     background-color: rgba(15, 23, 42, 0.50);
-    /* backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px); */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     z-index: 3000;
     top: 0;
     position: fixed;
@@ -62,7 +79,12 @@ header {
     display: flex;
     align-items: center;
     gap: 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
     height: 100%;
+    position: relative;
+    z-index: 4000;
     position: relative;
     z-index: 4000;
 }
@@ -71,6 +93,42 @@ header {
     display: flex;
     align-items: center;
 }
+
+.icon-menu-hamburguer {
+    font-size: 32px;            
+    color: #fff;               
+    transition: transform 0.3s ease, color 0.3s ease;
+    vertical-align: middle;
+}
+
+.icon-menu-hamburguer {
+    font-size: 28px !important;            /* Tamanho ajustado para igualar ao mobile (era 32px) */
+    color: #fff;  
+    transition: transform 0.3s ease, color 0.3s ease;
+    vertical-align: middle;
+}
+
+/* Efeito ao passar o mouse: Fica azul (Acento) para indicar clique */
+.sidebar-toggle button:hover .icon-menu-hamburguer {
+    transform: scale(1.1);
+    color: var(--accent-color); /* Fica azulzinho ao passar o mouse */
+    cursor: pointer;
+}
+
+.navbar-logo > a {
+    display: flex;              /* Alinha o texto e a imagem na mesma linha */
+    align-items: center;        /* Centraliza verticalmente */
+    gap: 12px;                  /* Espaço entre a palavra SONAR e o Submarino */
+    text-decoration: none;      /* Remove sublinhado */
+}
+
+.logo-icon-right {
+    height: 35px;               /* Altura do submarino */
+    width: auto;
+    object-fit: contain;
+    display: block;             /* Garante que apareça */
+}
+
 
 .icon-menu-hamburguer {
     font-size: 32px;            
@@ -119,6 +177,7 @@ header {
 
 .logo-icon-mini {
     display: none;
+    display: none;
 }
 
 .logo-text {
@@ -163,6 +222,7 @@ header {
     max-width: 100%;
     height: 100%;
     padding: 0 32px 0 0;
+    padding: 0 32px 0 0;
     gap: 20px;
 }
 
@@ -191,11 +251,13 @@ header {
     border-color: rgba(255, 255, 255, 0.3);    /* Borda brilha */
     color: var(--accent-color);                /* Texto fica azul neon */
 
+
     transform: translateY(-2px);               /* Sobe levemente */
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Sombra suave */
 }
 
 .header-navbar__btn.btn-destaque {
+    padding: 10px 40px;
     padding: 10px 40px;
     font-size: 1.1rem;
     border-color: rgba(255, 255, 255, 0.3);
@@ -221,6 +283,7 @@ header {
 
 .header-navbar__btn {
     width: auto;
+    width: auto;
     white-space: nowrap; /* Impede que o texto quebre linha */
 }
 
@@ -240,13 +303,18 @@ header {
     flex-direction: column;    /* Organiza itens em coluna (um embaixo do outro) */
     justify-content: space-between; /* Empurra o footer para o final */
 
+
     position: fixed;
     top: 0;
     left: 0;
     z-index: 2000;
+    z-index: 2000;
     width: 320px;
     height: 100dvh;
+    height: 100dvh;
     background: rgba(0, 0, 0, 0.75);
+    /* backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px); */
     /* backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px); */
     border-right: 1px solid rgba(255, 255, 255, 0.1);
@@ -254,6 +322,20 @@ header {
     transform: translateX(-100%);
     transition: transform 0.3s ease-in-out, visibility 0.3s ease-in-out;
     visibility: hidden;
+}
+
+.sidebar-overlay {
+    display: none; /* Escondido por padrão */
+    position: fixed; /* Fica fixo na tela mesmo se rolar */
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5); /* Preto com transparência */
+    /* backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px); */
+    z-index: 1500;
+    top: 0;
+    left: 0;
+
 }
 
 .sidebar-overlay {
@@ -280,6 +362,10 @@ header {
 }
 
 .sidebar-menu__wrapper {
+    flex: 1;
+    overflow-y: auto;
+    margin-top: 100px;
+    height: auto;
     flex: 1;
     overflow-y: auto;
     margin-top: 100px;
@@ -313,12 +399,16 @@ li {
     display: flex;
     align-items: center;
     height: 56px;
+    height: 56px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     line-height: 40px;
     margin-bottom: 8px;
+    margin-bottom: 8px;
     padding: 0 16px;
+    background: rgba(56, 189, 248, 0.30);
+    border: 1px solid rgba(56, 189, 248, 0.3);
     background: rgba(56, 189, 248, 0.30);
     border: 1px solid rgba(56, 189, 248, 0.3);
     border-radius: 12px;
@@ -326,9 +416,12 @@ li {
     font-weight: 500;
     transition: all 0.3s ease;
     cursor: pointer;
+    cursor: pointer;
 }
 
+
 .main-menu__item:hover {
+    background: rgba(56, 189, 248, 0.15);
     background: rgba(56, 189, 248, 0.15);
     color: var(--accent-color);
     border-color: rgba(56, 189, 248, 0.3);
@@ -351,11 +444,14 @@ li {
 main {
     transition: padding-left 0.3s ease-in-out;
     padding-top: 120px;
+    padding-top: 120px;
 }
 
 @media (min-width: 1600px) {
 
+
     main {
+        transition: padding-left 0.3s ease-in-out;
         transition: padding-left 0.3s ease-in-out;
     }
     main.is-open {
@@ -364,6 +460,30 @@ main {
     }
 
     .sidebar-menu {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 320px;
+    z-index: 2000;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out, visibility 0.3s ease-in-out;
+    visibility: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+    .sidebar-menu.is-open {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    transform: translateX(0);
+    visibility: visible;
+    overflow-y: auto;
+}
+
     position: fixed !important;
     top: 0;
     left: 0;
@@ -398,11 +518,15 @@ main {
     }
     .header-navbar__content {
         width: 100%;
+        width: 100%;
     }
 }
 
 .sidebar-footer {
     padding: 20px 24px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.2);
+    flex-shrink: 0;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     background: rgba(0, 0, 0, 0.2);
     flex-shrink: 0;
@@ -413,10 +537,13 @@ main {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
+    flex-wrap: wrap;
+    gap: 8px;
 }
 
 .footer-links a {
     font-size: 12px;
+    color: #aaa;
     color: #aaa;
     text-decoration: none;
     font-weight: 600;
@@ -431,6 +558,7 @@ main {
 .footer-copyright {
     font-size: 11px;
     color: #717171;
+    color: #717171;
     margin-top: 16px;
     font-family: sans-serif;
 }
@@ -438,32 +566,46 @@ main {
 ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
+    width: 8px;
+    height: 8px;
 }
 
 ::-webkit-scrollbar-track {
     background: transparent;
+    background: transparent;
 }
+
 
 
 ::-webkit-scrollbar-thumb {
     border-radius: 20px;
     border: 2px solid transparent;
     background-clip: content-box;
+    border-radius: 20px;
+    border: 2px solid transparent;
+    background-clip: content-box;
 
+    background-color: transparent;
+    transition: background-color 0.3s;
     background-color: transparent;
     transition: background-color 0.3s;
 }
 
 body:hover::-webkit-scrollbar-thumb {
     background-color: #475569;
+    background-color: #475569;
 }
+
 
 
 ::-webkit-scrollbar-thumb:hover {
     background-color: var(--accent-color);
+    background-color: var(--accent-color);
 }
 
 * {
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent
     scrollbar-width: thin;
     scrollbar-color: transparent transparent
 }
@@ -477,20 +619,29 @@ div:hover {
 .cards-container {
     display: flex;
     justify-content: center;
+    justify-content: center;
     align-items: center;
     flex-wrap: wrap;
+    gap: 2%;
     gap: 2%;
     width: 95%;
     max-width: 95%;
     margin: 0 auto;
     padding: 1% 0 20vh 0;
+    max-width: 95%;
+    margin: 0 auto;
+    padding: 1% 0 20vh 0;
 }
+
 
 .card-opcao {
     flex: 0 0 23%;
     aspect-ratio: 1 / 1;
+    flex: 0 0 23%;
+    aspect-ratio: 1 / 1;
     background: rgba(0, 0, 0, 0.75);
     backdrop-filter: blur(6px);
+    border-radius: 12%;
     border-radius: 12%;
     display: flex;
     align-items: center;
@@ -499,10 +650,12 @@ div:hover {
     color: #fff;
     text-decoration: none;
     font-size: clamp(16px, 1.8vw, 24px);
+    font-size: clamp(16px, 1.8vw, 24px);
     font-weight: 600;
     line-height: 1.2;
     box-shadow: 0 10px 20px rgba(0,0,0,0.6);
     transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s;
+    margin: 2% auto 0 auto;
     margin: 2% auto 0 auto;
     padding: 0% 0;
 }
@@ -521,9 +674,11 @@ div:hover {
 .card-opcao:hover {
     transform: scale(1.05);
     box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.4);
     background: rgba(56, 189, 248, 0.1);
 }
 
+/* Removemos a regra antiga do span que estava com font-size: 10%,
 /* Removemos a regra antiga do span que estava com font-size: 10%,
    pois ela pode deixar o texto minúsculo ou ilegível no novo formato */
 .card-opcao span {
@@ -550,12 +705,33 @@ div:hover {
     }
 }
 
+    justify-content: center;
+    gap: 15px;
+}
+
+.cards-container.modo-series .card-opcao {
+    flex: 0 0 14% !important;
+    max-width: 240px !important;
+    min-width: 180px !important;
+    font-size: 1.1rem !important;
+}
+
+@media (min-width: 1600px) {
+    .cards-container.modo-series .card-opcao {
+        flex: 0 0 12% !important;
+        max-width: 260px !important;
+    }
+}
+
 .cards-container.modo-materias {
+    max-width: 1460px;
     max-width: 1460px;
     gap: 0%;
 }
 
 .cards-container.modo-materias .card-opcao {
+    flex: 0 0 18%;
+    font-size: clamp(16px, 1.8vw, 24px);
     flex: 0 0 18%;
     font-size: clamp(16px, 1.8vw, 24px);
 }
@@ -572,14 +748,23 @@ div:hover {
     justify-content: center; /* Centraliza os cards na tela */
     align-items: center;
 
+
     /* Remove a barra de rolagem lateral */
+    overflow-x: visible;
+
     overflow-x: visible;
 
     /* Aumenta o espaçamento entre os cards grandes */
     gap: 40px;
 
+    gap: 40px;
+
     /* Ocupa quase toda a largura para dar sensação de preenchimento */
     width: 95%;
+    max-width: 1600px;
+
+    margin: 0% auto 0 auto;
+
     max-width: 1600px;
 
     margin: 0% auto 0 auto;
@@ -591,6 +776,8 @@ div:hover {
     /* Mantém o formato retangular (Vertical) */
     aspect-ratio: 2 / 3 !important;
 
+    aspect-ratio: 2 / 3 !important;
+
     /* MÁGICA DO TAMANHO:
        flex: 1 1 300px;
        - O primeiro 1: Pode crescer para ocupar espaço vazio.
@@ -599,10 +786,14 @@ div:hover {
     */
     flex: 1 1 300px !important;
 
+
     /* Limite máximo para não ficarem gigantes em monitores ultrawide */
     max-width: 20%;
 
+    max-width: 20%;
+
     /* Garante que não fiquem muito pequenos */
+    min-width: 250px;
     min-width: 250px;
 
     border-radius: 30px; /* Bordas mais arredondadas para combinar com o tamanho */
@@ -626,7 +817,25 @@ div:hover {
         opacity: 0; 
         pointer-events: none; /* Deixa invisível mas mantém o espaço se precisar */
         /* Ou use display: none; se preferir que o espaço suma */
+@media (max-width: 1100px) {
+    
+    header {
+        position: fixed;
+        z-index: 1400 !important; /* MENOR que a Sidebar (2000) */
+        background-color: rgba(15, 23, 42, 0.50);
+        backdrop-filter: blur(10px);
+        width: 100%;
+        height: 80px;
     }
+
+    /* Esconde a logo e o menu ORIGINAIS de dentro do header (para não duplicar) */
+    header .header-navbar__content-logo {
+        opacity: 0; 
+        pointer-events: none; /* Deixa invisível mas mantém o espaço se precisar */
+        /* Ou use display: none; se preferir que o espaço suma */
+    }
+
+    body.busca-ativa-global .mobile-floating-controls {
 
     body.busca-ativa-global .mobile-floating-controls {
         display: none !important;
@@ -635,9 +844,15 @@ div:hover {
     }
 
     .mobile-floating-controls {
-        display: none; /* Escondido por padrão no PC */
+        display: none !important; 
+        align-items: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 80px;
+        padding-left: 20px;
+        z-index: 4001 !important;
         pointer-events: none !important;
-        
     }
 
     /* Quando essa classe for adicionada via JS, a logo flutuante some */
@@ -692,6 +907,8 @@ div:hover {
         /* No celular, eles vão ficar um embaixo do outro para ficarem grandes e legíveis */
         flex: 1 1 100% !important;
         max-width: 350px;
+        flex: 1 1 100% !important;
+        max-width: 350px;
     }
 }
 
@@ -712,6 +929,7 @@ div:hover {
     min-height: 350px !important;  /* Altura mínima para caber tudo */
     margin: 15px !important;       /* Espaço em volta */
 
+
     /* VISUAL "DARK GLASS" */
     background: rgba(0, 0, 0, 0.6) !important;
     backdrop-filter: blur(12px) !important;
@@ -727,6 +945,7 @@ div:hover {
     justify-content: space-between !important; /* Espalha conteúdo (Topo, Meio, Baixo) */
     padding: 20px !important;
     text-align: center !important;
+
 
     /* TRANSIÇÃO SUAVE */
     transition: transform 0.3s ease, box-shadow 0.3s ease !important;
@@ -744,6 +963,7 @@ div:hover {
 /* 3. TEXTOS DENTRO DO CARD */
 /* Título */
 .pdf-item strong,
+.pdf-item strong,
 .pdf-item h3 {
     color: #fff !important;
     font-size: 1.1rem !important;
@@ -752,6 +972,7 @@ div:hover {
 }
 
 /* Descrição (Série/Matéria) */
+.pdf-item small,
 .pdf-item small,
 .pdf-item span,
 .pdf-item p {
@@ -762,6 +983,7 @@ div:hover {
 
 /* 4. BOTÕES/LINKS DENTRO DO CARD */
 /* Transforma o link de baixar em um botão bonito no fundo */
+.pdf-item .btn-visualizar,
 .pdf-item .btn-visualizar,
 .pdf-item a {
     margin-top: auto !important; /* Empurra para o fundo do card */
@@ -775,11 +997,13 @@ div:hover {
 }
 
 .pdf-item .btn-visualizar:hover,
+.pdf-item .btn-visualizar:hover,
 .pdf-item a:hover {
     background: var(--accent-color) !important; /* Azul neon no hover */
     color: #000 !important;
 }
 
+.btn-visualizar {
 .btn-visualizar {
     background-color: #007bff;
     color: white;
@@ -789,15 +1013,17 @@ div:hover {
     font-weight: bold;
 }
 .btn-visualizar:hover { background-color: #0056b3; }
+.btn-visualizar:hover { background-color: #0056b3; }
 
 .modal-overlay {
+    position: fixed; 
     position: fixed; 
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.8); 
-    z-index: 3500;
+    z-index: 5000;
     justify-content: center;
     align-items: center;
 }
@@ -807,10 +1033,12 @@ div:hover {
     background-color: #fff;
     width: 90%;
     height: 90%;
+    height: 90%;
     max-width: 1200px;
     border-radius: 8px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     padding: 10px;
+    padding-top: 90px !important;
     padding-top: 90px !important;
 }
 
@@ -833,6 +1061,7 @@ div:hover {
 main {
     position: relative;
     flex: 1;
+    flex: 1;
 }
 
 main > * {
@@ -847,12 +1076,14 @@ main::before {
     left: -10%;
     width: 120%;
     height: 120%;
-    background:
-        url('/static/img/Sonar-Wallpaper-ultima-camada-sem-submarino.jpg');
-
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+
+    z-index: 0;
+    transform: scale(1.1);
+    pointer-events: none;
+    will-change: transform;
 
     z-index: 0;
     transform: scale(1.1);
@@ -862,6 +1093,10 @@ main::before {
 }
 
 main.is-open::before {
+    transform: scale(0.9) translateX(50px) translateY(-30px); 
+    box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+}
+
     transform: scale(0.9) translateX(50px) translateY(-30px); 
     box-shadow: -10px 0 30px rgba(0,0,0,0.5);
 }
@@ -892,6 +1127,7 @@ main.is-open::before {
 .sidebar-menu {
     background: rgba(0,0,0,0.85);
     /* backdrop-filter: blur(10px); */
+    /* backdrop-filter: blur(10px); */
 }
 
 /* Botões da sidebar */
@@ -917,7 +1153,12 @@ footer {
     margin-bottom: 0px;
     margin-top: 0px;
     background-color: var(--primary-surface);
+    margin-bottom: 0px;
+    margin-top: 0px;
+    background-color: var(--primary-surface);
     color: var(--text-main);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50px;
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 50px;
     text-decoration: none;
@@ -944,10 +1185,14 @@ footer {
     align-items: center;
     width: 25%;
     height: 48px;
+    width: 25%;
+    height: 48px;
     padding: 0 20px;
+    color: rgba(255, 255, 255, 0.4);
     color: rgba(255, 255, 255, 0.4);
     border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 50px;
+    backdrop-filter: blur(5px);
     backdrop-filter: blur(5px);
     transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -969,6 +1214,7 @@ footer {
     background: transparent;
     border: none;
     outline: none;
+
 
     /* Texto */
     color: var(--text-main);
@@ -1018,6 +1264,7 @@ footer {
     display: none; /* Escondido por padrão */
     flex-direction: column;
     z-index: 3500;
+    z-index: 3500;
     box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     padding-top: 10px;
     overflow-x: hidden;
@@ -1066,11 +1313,14 @@ footer {
 /* 1. PADRÃO (Desktop > 1200px) */
 .mobile-only, .mobile-menu-toggle, .mobile-emoji-decorative, .mobile-search-trigger, .close-search-btn {
     display: none !important;
+.mobile-only, .mobile-menu-toggle, .mobile-emoji-decorative, .mobile-search-trigger, .close-search-btn {
+    display: none !important;
 }
 .botoes-desktop, .desktop-only, .desktop-only-flex {
     display: flex !important;
 }
 
+/* 2. NOTEBOOKS (1100px - 1200px) */
 /* 2. NOTEBOOKS (1100px - 1200px) */
 @media (max-width: 1590px) {
     .esconder-cedo { display: none !important; }
@@ -1079,7 +1329,10 @@ footer {
 
 /* 3. TABLET (710px - 1100px) */
 @media (max-width: 1100px) {
+/* 3. TABLET (710px - 1100px) */
+@media (max-width: 1100px) {
     .botoes-desktop, .desktop-only, .desktop-only-flex { display: none !important; }
+    
     
     /* HEADER: Distribui: Logo (Esq) -- Busca (Meio) -- Emoji (Dir) */
     .header-navbar__content {
@@ -1090,6 +1343,7 @@ footer {
     /* ESQUERDA */
     .header-navbar__content-logo {
         width: auto !important; min-width: 0 !important; padding: 0 !important;
+        display: flex !important; align-items: center !important; flex-shrink: 0;
         display: flex !important; align-items: center !important; flex-shrink: 0;
     }
     .mobile-menu-toggle {
@@ -1114,10 +1368,42 @@ footer {
         position: fixed !important; 
         /* Mantém a transição de deslizar */
         transform: translateX(-100%); 
+        z-index: 2000 !important;
+        position: fixed !important; 
+        /* Mantém a transição de deslizar */
+        transform: translateX(-100%); 
     }
     .sidebar-menu.is-open { transform: translateX(0) !important; }
     .sidebar-menu__wrapper { margin-top: 100px; }
+    .sidebar-menu__wrapper { margin-top: 100px; }
     .grupo-conta { display: block !important; }
+
+    #main.is-open,
+    #main.is-open::before {
+        transform: none !important;     /* Site fica parado */
+        box-shadow: none !important;    /* Sem sombra 3D */
+        border-radius: 0 !important;    /* Sem bordas arredondadas */
+        padding-left: 0 !important;     /* Não empurra o conteúdo */
+    }
+
+
+    .sidebar-overlay {
+        z-index: 1500; /* Fica acima do site (1) mas abaixo da sidebar (2000) */
+        background-color: rgba(0, 0, 0, 0.6); /* Escurece o fundo */
+        /* backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px); */
+    }
+    
+    /* 3. SIDEBAR FLUTUANTE: Garante que ela passe por cima de tudo */
+    .sidebar-menu {
+        z-index: 2000 !important;
+        position: fixed !important; 
+        transform: translateX(-100%); 
+    }
+    
+    .sidebar-menu.is-open {
+        transform: translateX(0) !important;
+    }
 
     #main.is-open,
     #main.is-open::before {
@@ -1184,10 +1470,48 @@ footer {
     .search-btn {
         color: #fff !important; /* Ícone da lupa branco */
         opacity: 0.9;
+        position: relative !important;
+        left: auto !important;
+        transform: none !important;
+        width: 100% !important;
+        max-width: 400px;
+        margin: 0 10px;
+        color: rgba(255, 255, 255, 0.4);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 50px;
+        backdrop-filter: blur(5px);
+        transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Ajuste da cor do texto para combinar com o fundo claro */
+    .search-input {
+        flex: 1; /* Ocupa todo o espaço disponível */
+        background: transparent;
+        border: none;
+        outline: none;
+
+        /* Texto */
+        color: var(--text-main);
+        font-family: 'Segoe UI', sans-serif;
+        font-size: 16px; /* Letra maior */
+        font-weight: 500;
+        padding-right: 10px;
+    }
+    
+    .search-input::placeholder {
+        color: rgba(255, 255, 255, 0.4);
+        font-weight: 400;
+    }
+
+    .search-btn {
+        color: #fff !important; /* Ícone da lupa branco */
+        opacity: 0.9;
     }
 }
 
 /* 4. CELULAR (< 710px) - AQUI VIRA LUPA */
+@media (max-width: 700px) {
 @media (max-width: 700px) {
 
     /* --- GATILHO DA LUPA APARECE --- */
@@ -1200,6 +1524,8 @@ footer {
         z-index: 50;
         position: static !important;
         color: var(--accent-color);
+        margin-right: 15px;
+        margin-top: 10px;
         margin-right: 15px;
         margin-top: 10px;
     }
@@ -1215,6 +1541,7 @@ footer {
     }
 
     /* --- COMPORTAMENTO DA SEARCHBOX NO CELULAR --- */
+
 
     /* Estado Padrão (FECHADO/ESCONDIDO) */
     .search-container {
@@ -1237,6 +1564,8 @@ footer {
         left: auto;
         width: 100% !important;
         height: 75%;
+        width: 100% !important;
+        height: 75%;
         opacity: 1;
         visibility: visible;
         display: flex;
@@ -1249,9 +1578,11 @@ footer {
         max-width: none; /* Remove o limite do tablet */
     }
 
+
     /* Estilo visual da barra cinza */
     .search-container form {
         width: 100%;
+        height: 40px;
         height: 40px;
         display: flex;
         align-items: center;
@@ -1303,9 +1634,21 @@ footer {
         display: none !important;
     }
 }
+@media (max-width: 500px) {
+    .logo-icon-right {
+        display: none !important;
+    }
+}
 
 /* 5. LOGO RESPONSIVO (< 380px) */
 @media (max-width: 380px) {
+    .logo-text {
+        display: none !important;
+    }
+    .logo-icon-right {
+        display: block !important;
+        height: 30px;
+    }
     .logo-text {
         display: none !important;
     }
@@ -1350,8 +1693,16 @@ body.no-scroll {
     display: flex;
     align-items: center;      
     gap: 15px;
+    align-items: center;      
+    gap: 15px;
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    color: var(--text-main);
+    text-decoration: none;
+    border-radius: 50px;
+    padding: 5px 5px 5px 20px;
+    text-decoration: none; 
     backdrop-filter: blur(5px);
     color: var(--text-main);
     text-decoration: none;
@@ -1383,6 +1734,7 @@ body.no-scroll {
     height: 50px;
     border-radius: 50%;
     object-fit: cover;
+
 
     /* Borda Colorida (Acento) */
     border: 2px solid var(--accent-color);
@@ -1418,6 +1770,7 @@ body.no-scroll {
 /* --- ESTILO DO CARD (PDF ITEM) --- */
 
 .pdf-item {
+    /* Adicione aqui estilos específicos do card se necessário,
     /* Adicione aqui estilos específicos do card se necessário,
        como background ou borda, caso ainda não existam no css global */
     display: flex;
@@ -1484,6 +1837,7 @@ body.no-scroll {
 }
 
 .btn-visualizar-custom {
+.btn-visualizar-custom {
     background: var(--accent-color);
     color: #000;
     padding: 8px 15px;
@@ -1494,6 +1848,7 @@ body.no-scroll {
     font-size: 0.9rem;
 }
 
+.btn-visualizar-custom:hover {
 .btn-visualizar-custom:hover {
     opacity: 0.9;
 }
@@ -1723,125 +2078,6 @@ body.no-scroll {
     text-align: center;
     margin-bottom: 30px;
     color: #fff;
-    font-size: 2rem;
-}
-
-/* Labels */
-.campo-input label {
-    display: block;
-    color: var(--accent-color);
-    font-size: 0.9rem;
-    font-weight: bold;
-    margin-bottom: 8px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-/* Wrapper para ícone + input */
-.input-wrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
-}
-
-.input-icon {
-    position: absolute;
-    left: 15px;
-    color: #aaa;
-    pointer-events: none;
-}
-
-/* Input Estilizado */
-.input-estilizado {
-    width: 100%;
-    background: rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 50px;
-    padding: 12px 20px 12px 45px; /* Espaço para o ícone */
-    color: #fff;
-    font-size: 1rem;
-    outline: none;
-    transition: all 0.3s;
-}
-
-.input-estilizado:focus {
-    border-color: var(--accent-color);
-    box-shadow: 0 0 15px rgba(56, 189, 248, 0.2); /* Azul neon suave */
-    background: rgba(0, 0, 0, 0.5);
-}
-
-/* Botão */
-.btn-entrar-login {
-    margin-top: 10px;
-    padding: 12px;
-    background: var(--accent-color);
-    color: #0f172a;
-    font-weight: bold;
-    font-size: 1.1rem;
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.btn-entrar-login:hover {
-    transform: scale(1.02);
-    box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
-}
-
-/* Mensagem de Erro */
-.msg-erro-login {
-    background: rgba(255, 99, 71, 0.2);
-    color: #ff6347;
-    border: 1px solid #ff6347;
-    padding: 10px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    text-align: center;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-}
-
-.link-esqueci {
-    color: #94a3b8;
-    font-size: 0.9rem;
-    text-decoration: none;
-    transition: 0.3s;
-}
-
-.link-esqueci:hover {
-    color: #fff;
-}
-
-/* static/css/login.css */
-
-/* Centraliza na tela */
-.login-container {
-    min-height: 80vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-}
-
-/* Cartão de Vidro (Glassmorphism) */
-.card-login {
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px); /* Suporte para Safari */
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 20px;
-    padding: 40px;
-    width: 100%;
-    max-width: 450px;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-}
-
-/* Título */
-.titulo-login {
     text-align: center;
     margin-bottom: 30px;
     color: #fff;
@@ -1928,6 +2164,135 @@ body.no-scroll {
 }
 
 .link-esqueci {
+    color: #94a3b8;
+    font-size: 0.9rem;
+    color: #94a3b8;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.link-esqueci:hover {
+    color: #fff;
+}
+
+/* static/css/login.css */
+
+/* Centraliza na tela */
+.login-container {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+/* Cartão de Vidro (Glassmorphism) */
+.card-login {
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px); /* Suporte para Safari */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 40px;
+    width: 100%;
+    max-width: 450px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+}
+
+/* Título */
+.titulo-login {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 30px;
+    color: #fff;
+    font-size: 2rem;
+}
+
+/* Labels */
+.campo-input label {
+    display: block;
+    color: var(--accent-color);
+    font-size: 0.9rem;
+    font-weight: bold;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Wrapper para ícone + input */
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-icon {
+    position: absolute;
+    left: 15px;
+    color: #aaa;
+    pointer-events: none;
+}
+
+/* Input Estilizado */
+.input-estilizado {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50px;
+    padding: 12px 20px 12px 45px; /* Espaço para o ícone */
+    color: #fff;
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.3s;
+}
+
+.input-estilizado:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.2); /* Azul neon suave */
+    background: rgba(0, 0, 0, 0.5);
+}
+
+/* Botão */
+.btn-entrar-login {
+    margin-top: 10px;
+    padding: 12px;
+    background: var(--accent-color);
+    color: #0f172a;
+    font-weight: bold;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-entrar-login:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
+}
+
+/* Mensagem de Erro */
+.msg-erro-login {
+    background: rgba(255, 99, 71, 0.2);
+    color: #ff6347;
+    border: 1px solid #ff6347;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.link-esqueci {
+    color: #94a3b8;
+    font-size: 0.9rem;
     color: #94a3b8;
     font-size: 0.9rem;
     text-decoration: none;
@@ -2214,6 +2579,10 @@ body.no-scroll {
     margin: 0 !important;
 }
 
+.modal-edicao {
+  z-index: 5000;
+}
+
 .modal-confirmacao {
     background: rgba(20, 20, 20, 0.95);
     border: 1px solid rgba(255, 99, 71, 0.3); /* Borda vermelha suave */
@@ -2227,6 +2596,7 @@ body.no-scroll {
     display: flex;
     flex-direction: column;
     align-items: center;
+    z-index: 6000;
 }
 
 .icone-alerta {
@@ -2287,8 +2657,9 @@ body.no-scroll {
     .cards-container.modo-materias .card-opcao {
         flex: 0 0 30% !important; /* 30% * 3 = 90% */
         max-width: none !important; /* Destrava o limite de tamanho */
-        aspect-ratio: auto !important; /* Deixa a altura se ajustar sozinha se precisar */
-        min-height: 150px;
+        aspect-ratio: 1 / 1 !important; /* Deixa a altura se ajustar sozinha se precisar */
+        min-height: 0 !important;
+        height: auto !important;
     }
 }
 
