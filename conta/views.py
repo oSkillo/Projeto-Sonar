@@ -16,6 +16,7 @@ def perfil_usuario(request):
         perfil_form = PerfilForm(request.POST, request.FILES, instance=perfil)
         
         if user_form.is_valid() and perfil_form.is_valid():
+            # 1. Salva os dados do usuário (Nome, Email, etc)
             user_form.save()
 
             if request.POST.get('remover_foto') == 'true':

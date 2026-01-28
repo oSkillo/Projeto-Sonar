@@ -180,9 +180,11 @@ def outras_divergencias(request):
 def contato_view(request):
     return render(request, 'contato.html')
 
+@login_required
 def sobre_view(request):
     return render(request, 'sobre.html')
 
+@login_required
 def metodologia_view(request):
     return render(request, 'metodologia.html')
 
