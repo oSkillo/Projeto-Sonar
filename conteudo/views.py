@@ -22,12 +22,6 @@ def base_view(request):
 
 
 @login_required
-def check_admin(user):
-    # Permite se for Superuser OU se for do grupo 'Administrador'
-    return user.is_superuser or user.groups.filter(name='Administrador').exists()
-
-
-@login_required
 def grau_view(request):
     return render(request, 'graus.html')
 
