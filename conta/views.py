@@ -9,6 +9,7 @@ from django.contrib.auth import authenticate, login, logout
 @login_required
 def perfil_usuario(request):
     # Garante que o perfil existe
+    # Garante que o perfil existe
     perfil, created = Perfil.objects.get_or_create(usuario=request.user)
 
     if request.method == 'POST':
@@ -16,6 +17,7 @@ def perfil_usuario(request):
         perfil_form = PerfilForm(request.POST, request.FILES, instance=perfil)
         
         if user_form.is_valid() and perfil_form.is_valid():
+            # 1. Salva os dados do usuário (Nome, Email, etc)
             user_form.save()
 
             if request.POST.get('remover_foto') == 'true':
@@ -25,6 +27,7 @@ def perfil_usuario(request):
                 perfil_form.save()
             
             messages.success(request, 'Seu perfil e foto foram atualizados!')
+            return redirect('perfil_usuario')
             return redirect('perfil_usuario')
         else:
             messages.error(request, 'Por favor, corrija os erros abaixo.')
